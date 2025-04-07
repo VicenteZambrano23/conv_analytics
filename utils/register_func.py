@@ -1,0 +1,15 @@
+from autogen import register_function
+from tools.get_sql_tables_tool import get_sql_tables_tool
+from utils.create_agents import create_agents
+from utils.read_prompt import read_text_file
+
+
+
+def register_functions(agents):
+    register_function(
+        get_sql_tables_tool,
+        caller=agents[0],
+        executor=agents[1],
+        name="get_sql_tables_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/get_sql_tables_descriptions.txt')),
+    )
