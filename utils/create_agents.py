@@ -20,11 +20,18 @@ def create_agents():
         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/user_proxy_desc.txt'),
     )
 
-    intermediate_agent = ConversableAgent(
-        name="intermediate_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/get_sql_tables_prompt.txt'),
+    executor_database_schema = ConversableAgent(
+        name="executor_database_schema",
+        system_message=read_text_file('//teamspace/studios/this_studio/conv_analytics/prompts/executer_database_schema_prompt.txt'),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/intermediate_agent_desc.txt'),
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_database_schema_desc.txt'),
+    )
+
+    executor_query = ConversableAgent(
+        name="executor_query",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_query_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_query_desc.txt'),
     )
 
     sql_proxy = ConversableAgent(
@@ -34,6 +41,13 @@ def create_agents():
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/sql_proxy_desc.txt'),
     )
 
-    return get_sql_tables_agent,intermediate_agent,user_proxy,sql_proxy
+    query_agent = ConversableAgent(
+        name="query_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
+    )
+
+    return get_sql_tables_agent,executor_database_schema,user_proxy,sql_proxy,query_agent,executor_query
 
   

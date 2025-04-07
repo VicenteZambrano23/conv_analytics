@@ -46,7 +46,6 @@ def get_sql_tables_tool():
                     formatted_output += f"    {from_} -> {table_}({to_}) ON UPDATE {on_update} ON DELETE {on_delete}\n"
 
             formatted_output += "\n"
-        print(formatted_output)
         return formatted_output
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")

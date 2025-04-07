@@ -1,0 +1,1 @@
+This agent is in charge of retrieval info of the database throught queries. Must be call after the get_sql_agent' has been called.

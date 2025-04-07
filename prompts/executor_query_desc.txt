@@ -1,0 +1,1 @@
+The only task of this agent is to execute the 'query_tool()' tool. Must be called always and only after the 'query_agent'.

@@ -12,22 +12,31 @@ def create_group_chat():
     
     def state_transition(last_speaker,group_chat):
         if last_speaker is agents[2]:
-            # init -> retrieve
             return agents[0]
+
         elif last_speaker is agents[0]:
-            # retrieve: action 1 -> action 2
             return agents[1]
+
         elif last_speaker is agents[1]:
          
+            return agents[4]
+
+        elif last_speaker is agents[4]:
+
+            return agents[5]
+        
+        elif last_speaker is agents[5]:
+
             return agents[3]
         elif last_speaker is agents[3]:
+
             return agents[2]
 
             
     register_functions(agents)
 
     group_chat = GroupChat(
-        agents=[agents[0],agents[1],agents[2],agents[3]],
+        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5]],
         messages=[],
         speaker_selection_method=state_transition,
         max_round=100,
@@ -41,6 +50,6 @@ def create_group_chat():
     )
     agents[2].initiate_chat(
         group_chat_manager,
-        message="I need the tables from the database",
+        message="Hello! I want info the database",
     )
 

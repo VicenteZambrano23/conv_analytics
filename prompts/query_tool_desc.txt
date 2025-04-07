@@ -1,0 +1,1 @@
+Tool to retrieve to run and query in SQLite. retrieve an string with teh result of the query.
