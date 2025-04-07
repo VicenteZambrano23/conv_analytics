@@ -1,1 +1,1 @@
-This agent is in charge of retrieval info of the database throught queries. To call this agent, the 'get_sql_tables_agent' must have been called once in the conversation.
+This agent is in charge of retrieval info of the database throught queries.

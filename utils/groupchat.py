@@ -7,6 +7,7 @@ from tools.get_sql_tables_tool import get_sql_tables_tool
 from utils.register_func import register_functions
 
 def create_group_chat():
+    
     """
     Creates and initiates a group chat with multiple agents for a SQL querying workflow.
 

@@ -7,6 +7,7 @@ from utils.read_prompt import read_text_file
 
 
 def register_functions(agents):
+    
     """
     Registers functions as tools for specific agents in a multi-agent conversation.
 

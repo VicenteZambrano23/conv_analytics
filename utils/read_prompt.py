@@ -1,4 +1,5 @@
 def read_text_file(filepath):
+  
   """
   Reads a text file and returns its content as a string.
 
