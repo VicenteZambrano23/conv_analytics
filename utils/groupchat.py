@@ -11,26 +11,21 @@ def create_group_chat():
     agents = create_agents()
     
     def state_transition(last_speaker,group_chat):
-        if last_speaker is agents[2]:
-            return agents[0]
 
-        elif last_speaker is agents[0]:
+
+        if last_speaker is agents[0]:
             return agents[1]
 
-        elif last_speaker is agents[1]:
-         
-            return agents[4]
-
         elif last_speaker is agents[4]:
-
             return agents[5]
         
         elif last_speaker is agents[5]:
-
             return agents[3]
-        elif last_speaker is agents[3]:
 
+        elif last_speaker is agents[3]:
             return agents[2]
+        else:
+            return 'auto'
 
             
     register_functions(agents)
@@ -50,6 +45,6 @@ def create_group_chat():
     )
     agents[2].initiate_chat(
         group_chat_manager,
-        message="Hello! I want info the database",
+        message="Hello!",
     )
 

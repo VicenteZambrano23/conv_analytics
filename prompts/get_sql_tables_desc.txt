@@ -1,1 +1,1 @@
-This agent is in charge of providing the tables of the database. This agent has to be called first.
+At the start of the conversation, and only at the start, assess the user's initial query to determine if it relates to accessing or retrieving structured information. If it does, utilize the 'get_sql_tables_tool()' to gather relevant context. If the initial query does not relate to structured information, do not call this tool. This tool should only be called once at the start of the conversation.

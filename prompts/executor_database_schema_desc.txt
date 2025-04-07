@@ -1,1 +1,1 @@
-The only task of this agent is to execute the 'get_sql_tables()' tool . Must be called always and only after the 'get_sql_tables_agent'.
+The only task of this agent is to execute the 'get_sql_tables_tool()' tool . Must be called always and only after the 'get_sql_tables_agent'.

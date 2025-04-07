@@ -1,1 +1,1 @@
-This agent is in charge of provide the respond to the human.
+This agent is the final step in the conversation flow. It is responsible for generating the user-facing response. This agent should be invoked immediately before presenting the response to the user. Do not call any other agent after this one.
