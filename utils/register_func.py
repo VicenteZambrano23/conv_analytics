@@ -7,6 +7,19 @@ from utils.read_prompt import read_text_file
 
 
 def register_functions(agents):
+    """
+    Registers functions as tools for specific agents in a multi-agent conversation.
+
+    This function associates the `get_sql_tables_tool` and `query_tool` functions
+    with specific agents, making them available as tools for those agents to use.
+    It utilizes the `register_function` utility to link the functions with their
+    respective caller and executor agents, along with a name and description.
+
+    Args:
+        agents (tuple): A tuple containing the initialized agent instances.
+                        It expects the agents to be in the order:
+                        (get_sql_tables_agent, executor_database_schema, ..., query_agent, executor_query).
+    """
 
     register_function(
         get_sql_tables_tool,

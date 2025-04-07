@@ -1,6 +1,22 @@
 import sqlite3
 
 def get_sql_tables_tool():
+    """
+    Retrieves and formats the schema of a SQLite database located at 
+    '/teamspace/studios/this_studio/conv_analytics/database/chinook.db'.
+
+    This function connects to the specified SQLite database, queries the database
+    to get a list of tables, and then retrieves detailed information about each table,
+    including column names, data types, constraints (NOT NULL, DEFAULT, PRIMARY KEY),
+    and foreign key relationships.
+
+    The schema information is then formatted into a human-readable string,
+    which includes the table names, column definitions, and foreign key constraints.
+
+    Returns:
+        str: A formatted string describing the schema of the SQLite database.
+             Returns an empty string or an error message if an error occurs.
+    """
     try:
 # Connect to the database (or create it if it doesn't exist)
         connection = sqlite3.connect('/teamspace/studios/this_studio/conv_analytics/database/chinook.db')

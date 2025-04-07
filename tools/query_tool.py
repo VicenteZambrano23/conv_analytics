@@ -6,6 +6,20 @@ class QueryInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
 
 def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
+    """
+    Executes a SQL query against the Chinook SQLite database.
+
+    This function takes a SQL query as input, connects to the Chinook database,
+    executes the query, and returns the result. It handles potential SQLite errors
+    and ensures the database connection is closed properly.
+
+    Args:
+        input (QueryInput): A NamedTuple containing the SQL query to execute.
+
+    Returns:
+        list: A list of tuples representing the query result. Each tuple corresponds
+              to a row in the result set. Returns None if an error occurs.
+    """
     try:
         query = input.query
 # Connect to the database (or create it if it doesn't exist)
