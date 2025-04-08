@@ -57,6 +57,7 @@ def create_group_chat():
         groupchat=group_chat,
         llm_config=AZURE_OPENAI_CONFIG,
     )
+    
     agents[0].initiate_chat(
         group_chat_manager,
         message="Hello!",
