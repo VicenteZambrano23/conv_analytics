@@ -22,7 +22,7 @@ def register_functions(agents):
 
     register_function(
         query_tool,
-        caller=agents[2],
+        caller=agents[4],
         executor=agents[3],
         name="query_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt')),

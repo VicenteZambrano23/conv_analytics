@@ -53,6 +53,15 @@ def create_agents():
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
     )
 
-    return user_proxy,sql_proxy,query_agent,executor_query
+    eval_query_agent = ConversableAgent(
+        name="eval_query_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
+    )
+
+
+
+    return user_proxy,sql_proxy,query_agent,executor_query,eval_query_agent
 
   

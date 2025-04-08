@@ -1,1 +1,1 @@
-This agent is the final step in the conversation flow. It is responsible for generating the user-facing response. This agent should be invoked immediately before presenting the response to the user. Do not call any other agent after this one.
+This agent is the terminal point of the conversation flow, it generates the final user response, and no other agents are needed.

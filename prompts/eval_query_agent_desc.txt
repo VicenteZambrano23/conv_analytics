@@ -1,0 +1,1 @@
+Immediately after the 'query_agent' is invoked, call this agent. This agent's sole function is to evaluate the query provided by the 'query_agent'. This agent can´t finish the conversation, it must be the sql_proxy.
