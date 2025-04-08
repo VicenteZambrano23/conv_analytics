@@ -1,6 +1,7 @@
 import sqlite3
 
 def get_sql_tables():
+
     """
     Retrieves and formats the schema of a SQLite database located at 
     '/teamspace/studios/this_studio/conv_analytics/database/chinook.db'.
@@ -18,6 +19,18 @@ def get_sql_tables():
              Returns an empty string or an error message if an error occurs.
     """
     try:
+        prompt_path = '/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'
+
+        with open(prompt_path, 'r') as file:
+            lines = file.readlines()
+
+        if len(lines) >= 4:
+            with open(prompt_path, 'w') as file:
+                file.writelines(lines[:3])  # Write only the first three lines
+            print(f"Lines after the third line deleted from '{prompt_path}'.")
+        else:
+            print(f"File '{prompt_path}' has less than 4 lines. No lines deleted.")
+            
 # Connect to the database (or create it if it doesn't exist)
         connection = sqlite3.connect('/teamspace/studios/this_studio/conv_analytics/database/chinook.db')
         cursor = connection.cursor()
@@ -63,8 +76,10 @@ def get_sql_tables():
 
             formatted_output += "\n"
 
-        with open('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt', 'a') as file:  # 'a' mode for appending
+        with open(prompt_path, 'a') as file:  # 'a' mode for appending
             file.write(formatted_output)
+        
+
         return 
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")
