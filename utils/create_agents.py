@@ -26,26 +26,10 @@ def create_agents():
                (get_sql_tables_agent, executor_database_schema, user_proxy, sql_proxy, query_agent, executor_query).
     """
 
-    get_sql_tables_agent = ConversableAgent(
-        name="get_sql_tables_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/get_sql_tables_prompt.txt'),
-        llm_config=AZURE_OPENAI_CONFIG,
-        human_input_mode="NEVER",
-        description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/get_sql_tables_desc.txt'),
-    )
-
-
     user_proxy = UserProxyAgent(
         name="user_proxy",
         human_input_mode="ALWAYS",
         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/user_proxy_desc.txt'),
-    )
-
-    executor_database_schema = ConversableAgent(
-        name="executor_database_schema",
-        system_message=read_text_file('//teamspace/studios/this_studio/conv_analytics/prompts/executer_database_schema_prompt.txt'),
-        llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_database_schema_desc.txt'),
     )
 
     executor_query = ConversableAgent(
@@ -69,6 +53,6 @@ def create_agents():
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
     )
 
-    return get_sql_tables_agent,executor_database_schema,user_proxy,sql_proxy,query_agent,executor_query
+    return user_proxy,sql_proxy,query_agent,executor_query
 
   

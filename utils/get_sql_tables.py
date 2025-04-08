@@ -1,6 +1,6 @@
 import sqlite3
 
-def get_sql_tables_tool():
+def get_sql_tables():
     """
     Retrieves and formats the schema of a SQLite database located at 
     '/teamspace/studios/this_studio/conv_analytics/database/chinook.db'.
@@ -39,7 +39,7 @@ def get_sql_tables_tool():
         formatted_output = ""
         for table_name, columns_and_fk in schema.items():
             formatted_output += f"Table: {table_name}\n"
-            formatted_output += "-" * (len(f"Table: {table_name}") ) + "\n"
+            formatted_output = formatted_output + ("-" * (len(f"Table: {table_name}") ) + "\n")
             foreign_keys = [] #initialize the foreign keys list for this table.
             for column in columns_and_fk:
                 if(column[0] == "foreign_keys"):
@@ -62,7 +62,10 @@ def get_sql_tables_tool():
                     formatted_output += f"    {from_} -> {table_}({to_}) ON UPDATE {on_update} ON DELETE {on_delete}\n"
 
             formatted_output += "\n"
-        return formatted_output
+
+        with open('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt', 'a') as file:  # 'a' mode for appending
+            file.write(formatted_output)
+        return 
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")
 

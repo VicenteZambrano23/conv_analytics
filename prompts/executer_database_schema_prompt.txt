@@ -1,1 +1,0 @@
-Your only task is to execute the 'get_sql_tables_tool()' tool.
