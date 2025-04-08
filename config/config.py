@@ -11,4 +11,5 @@ AZURE_OPENAI_CONFIG = {
         }
     ],
 }
-print(AZURE_OPENAI_CONFIG["config_list"][0]["model"])
+
+db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'

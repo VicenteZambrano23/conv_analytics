@@ -1,7 +1,7 @@
 import sqlite3
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
-
+from config.config import db_path
 class QueryInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
 
@@ -23,7 +23,7 @@ def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
     try:
         query = input.query
 # Connect to the database (or create it if it doesn't exist)
-        connection = sqlite3.connect('/teamspace/studios/this_studio/conv_analytics/database/chinook.db')
+        connection = sqlite3.connect(db_path)
         cursor = connection.cursor()
         print("Database connection successful!")
 

@@ -1,4 +1,5 @@
 import sqlite3
+from config.config import db_path
 
 def get_sql_tables():
 
@@ -32,7 +33,7 @@ def get_sql_tables():
             print(f"File '{prompt_path}' has less than 4 lines. No lines deleted.")
             
 # Connect to the database (or create it if it doesn't exist)
-        connection = sqlite3.connect('/teamspace/studios/this_studio/conv_analytics/database/chinook.db')
+        connection = sqlite3.connect(db_path)
         cursor = connection.cursor()
         print("Database connection successful!")
 

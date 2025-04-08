@@ -1,136 +1,87 @@
 You´re an expert in SQLlite. Given the context of the following database, with relationships and tables schemas you have provided, you have to make a query to de database.
 Use the query_tool('query') tool to retrieve the info pf the datbase. The 'query' parameter has to be the exact SQLite query to insert in SQLite.
 Here is the schema of the database:
-Table: albums
--------------
-  AlbumId INTEGER NOT NULL PRIMARY KEY
-  Title NVARCHAR(160) NOT NULL
-  ArtistId INTEGER NOT NULL
-
-  Foreign Keys:
-    ArtistId -> artists(ArtistId) ON UPDATE NO ACTION ON DELETE NO ACTION
+Table: Categories
+-----------------
+  CategoryID INTEGER PRIMARY KEY
+  CategoryName TEXT
+  Description TEXT
 
 Table: sqlite_sequence
 ----------------------
   name 
   seq 
 
-Table: artists
---------------
-  ArtistId INTEGER NOT NULL PRIMARY KEY
-  Name NVARCHAR(120)
-
-Table: customers
+Table: Customers
 ----------------
-  CustomerId INTEGER NOT NULL PRIMARY KEY
-  FirstName NVARCHAR(40) NOT NULL
-  LastName NVARCHAR(20) NOT NULL
-  Company NVARCHAR(80)
-  Address NVARCHAR(70)
-  City NVARCHAR(40)
-  State NVARCHAR(40)
-  Country NVARCHAR(40)
-  PostalCode NVARCHAR(10)
-  Phone NVARCHAR(24)
-  Fax NVARCHAR(24)
-  Email NVARCHAR(60) NOT NULL
-  SupportRepId INTEGER
+  CustomerID INTEGER PRIMARY KEY
+  CustomerName TEXT
+  ContactName TEXT
+  Address TEXT
+  City TEXT
+  PostalCode TEXT
+  Country TEXT
 
-  Foreign Keys:
-    SupportRepId -> employees(EmployeeId) ON UPDATE NO ACTION ON DELETE NO ACTION
-
-Table: employees
+Table: Employees
 ----------------
-  EmployeeId INTEGER NOT NULL PRIMARY KEY
-  LastName NVARCHAR(20) NOT NULL
-  FirstName NVARCHAR(20) NOT NULL
-  Title NVARCHAR(30)
-  ReportsTo INTEGER
-  BirthDate DATETIME
-  HireDate DATETIME
-  Address NVARCHAR(70)
-  City NVARCHAR(40)
-  State NVARCHAR(40)
-  Country NVARCHAR(40)
-  PostalCode NVARCHAR(10)
-  Phone NVARCHAR(24)
-  Fax NVARCHAR(24)
-  Email NVARCHAR(60)
+  EmployeeID INTEGER PRIMARY KEY
+  LastName TEXT
+  FirstName TEXT
+  BirthDate DATE
+  Photo TEXT
+  Notes TEXT
 
-  Foreign Keys:
-    ReportsTo -> employees(EmployeeId) ON UPDATE NO ACTION ON DELETE NO ACTION
-
-Table: genres
--------------
-  GenreId INTEGER NOT NULL PRIMARY KEY
-  Name NVARCHAR(120)
-
-Table: invoices
+Table: Shippers
 ---------------
-  InvoiceId INTEGER NOT NULL PRIMARY KEY
-  CustomerId INTEGER NOT NULL
-  InvoiceDate DATETIME NOT NULL
-  BillingAddress NVARCHAR(70)
-  BillingCity NVARCHAR(40)
-  BillingState NVARCHAR(40)
-  BillingCountry NVARCHAR(40)
-  BillingPostalCode NVARCHAR(10)
-  Total NUMERIC(10,2) NOT NULL
+  ShipperID INTEGER PRIMARY KEY
+  ShipperName TEXT
+  Phone TEXT
 
-  Foreign Keys:
-    CustomerId -> customers(CustomerId) ON UPDATE NO ACTION ON DELETE NO ACTION
-
-Table: invoice_items
---------------------
-  InvoiceLineId INTEGER NOT NULL PRIMARY KEY
-  InvoiceId INTEGER NOT NULL
-  TrackId INTEGER NOT NULL
-  UnitPrice NUMERIC(10,2) NOT NULL
-  Quantity INTEGER NOT NULL
-
-  Foreign Keys:
-    TrackId -> tracks(TrackId) ON UPDATE NO ACTION ON DELETE NO ACTION
-    InvoiceId -> invoices(InvoiceId) ON UPDATE NO ACTION ON DELETE NO ACTION
-
-Table: media_types
-------------------
-  MediaTypeId INTEGER NOT NULL PRIMARY KEY
-  Name NVARCHAR(120)
-
-Table: playlists
+Table: Suppliers
 ----------------
-  PlaylistId INTEGER NOT NULL PRIMARY KEY
-  Name NVARCHAR(120)
+  SupplierID INTEGER PRIMARY KEY
+  SupplierName TEXT
+  ContactName TEXT
+  Address TEXT
+  City TEXT
+  PostalCode TEXT
+  Country TEXT
+  Phone TEXT
 
-Table: playlist_track
----------------------
-  PlaylistId INTEGER NOT NULL PRIMARY KEY
-  TrackId INTEGER NOT NULL PRIMARY KEY
+Table: Products
+---------------
+  ProductID INTEGER PRIMARY KEY
+  ProductName TEXT
+  SupplierID INTEGER
+  CategoryID INTEGER
+  Unit TEXT
+  Price NUMERIC DEFAULT 0
 
   Foreign Keys:
-    TrackId -> tracks(TrackId) ON UPDATE NO ACTION ON DELETE NO ACTION
-    PlaylistId -> playlists(PlaylistId) ON UPDATE NO ACTION ON DELETE NO ACTION
+    SupplierID -> Suppliers(SupplierID) ON UPDATE NO ACTION ON DELETE NO ACTION
+    CategoryID -> Categories(CategoryID) ON UPDATE NO ACTION ON DELETE NO ACTION
 
-Table: tracks
+Table: Orders
 -------------
-  TrackId INTEGER NOT NULL PRIMARY KEY
-  Name NVARCHAR(200) NOT NULL
-  AlbumId INTEGER
-  MediaTypeId INTEGER NOT NULL
-  GenreId INTEGER
-  Composer NVARCHAR(220)
-  Milliseconds INTEGER NOT NULL
-  Bytes INTEGER
-  UnitPrice NUMERIC(10,2) NOT NULL
+  OrderID INTEGER PRIMARY KEY
+  CustomerID INTEGER
+  EmployeeID INTEGER
+  OrderDate DATETIME
+  ShipperID INTEGER
 
   Foreign Keys:
-    MediaTypeId -> media_types(MediaTypeId) ON UPDATE NO ACTION ON DELETE NO ACTION
-    GenreId -> genres(GenreId) ON UPDATE NO ACTION ON DELETE NO ACTION
-    AlbumId -> albums(AlbumId) ON UPDATE NO ACTION ON DELETE NO ACTION
+    ShipperID -> Shippers(ShipperID) ON UPDATE NO ACTION ON DELETE NO ACTION
+    CustomerID -> Customers(CustomerID) ON UPDATE NO ACTION ON DELETE NO ACTION
+    EmployeeID -> Employees(EmployeeID) ON UPDATE NO ACTION ON DELETE NO ACTION
 
-Table: sqlite_stat1
+Table: OrderDetails
 -------------------
-  tbl 
-  idx 
-  stat 
+  OrderDetailID INTEGER PRIMARY KEY
+  OrderID INTEGER
+  ProductID INTEGER
+  Quantity INTEGER
+
+  Foreign Keys:
+    ProductID -> Products(ProductID) ON UPDATE NO ACTION ON DELETE NO ACTION
+    OrderID -> Orders(OrderID) ON UPDATE NO ACTION ON DELETE NO ACTION
 
