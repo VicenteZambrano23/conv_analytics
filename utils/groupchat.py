@@ -63,3 +63,5 @@ def create_group_chat():
         message="Hello!",
     )
 
+    return group_chat_manager, agents 
+
