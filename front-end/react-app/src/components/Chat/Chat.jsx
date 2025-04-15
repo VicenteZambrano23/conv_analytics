@@ -1,3 +1,4 @@
+// ./components/Chat/Chat.js
 import styles from "./Chat.module.css";
 
 const WELCOME_MESSAGE = {
@@ -5,7 +6,7 @@ const WELCOME_MESSAGE = {
   content: "Hello! How can I assist you right now?",
 };
 
-export function Chat({ messages }) {
+export function Chat({ messages, messagesEndRef }) {
   return (
     <div className={styles.Chat}>
       {[WELCOME_MESSAGE, ...messages].map(({ role, content }, index) => (
@@ -13,6 +14,7 @@ export function Chat({ messages }) {
           {content}
         </div>
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 }
