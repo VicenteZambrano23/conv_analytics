@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Chat } from "./components/Chat/Chat";
 import { Controls } from "./components/Controls/Controls";
 import styles from "./App.module.css";
+import { Graph } from "./components/Graph/Graph";
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -103,18 +104,27 @@ function App() {
   );
 
   return (
-    <div className={styles.App}>
-      <header className={styles.Header}>
-        <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
-        <h2 className={styles.Title}>Conversational Analytics</h2>
-      </header>
-      <div className={styles.ChatContainer}>
-        <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
+      <div className={styles.container}>
+        <div className={styles.row}>
+            <div className={styles.left}><div className={styles.App}>
+              <header className={styles.Header}>
+                <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
+                <h2 className={styles.Title}>Conversational Analytics</h2>
+              </header>
+              <div className={styles.ChatContainer}>
+                <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
+              </div>
+              <Controls onSend={handleContentSend} />
+              <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
+            </div></div>
+          <div className={styles.right}><div ><Graph /></div></div>
+          </div>
       </div>
-      <Controls onSend={handleContentSend} />
-      <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
-    </div>
+    
 
+ 
+    
+   
   );
 }
 
