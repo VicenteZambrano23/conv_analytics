@@ -1,7 +1,7 @@
 from autogen import register_function
 from tools.query_tool import query_tool
 from utils.read_prompt import read_text_file
-
+from tools.graph_tool import graph_tool
 
 
 def register_functions(agents):
@@ -27,3 +27,11 @@ def register_functions(agents):
         name="query_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt')),
     )
+    register_function(
+        graph_tool,
+        caller=agents[6],
+        executor=agents[7],
+        name="graph_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_tool.txt')),
+    )
+

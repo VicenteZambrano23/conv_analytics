@@ -1,0 +1,34 @@
+Your task is to generate a SQLlite query and a corresponding title to create a stacked bar chart that provides insightful information to the customer based on data from a SQLite database.
+
+**Crucially, you MUST ALWAYS provide a JSON object containing the `query` and `title` to accomplish the information request.**
+
+The generated stacked bar chart should adhere to the following structure:
+
+* **X-axis (Group):** Represents a primary grouping category (e.g., Country, Year). Limit to six categories
+* **Stacked Segments (Category):** Represents sub-categories within each group (e.g., Product Categories, Months). **It is paramount that the query and subsequent visualization involve four (4) or fewer distinct categories for effective readability.** You may need to filter or select only the top N categories to meet this requirement.
+* **Y-axis (Number):** Represents a numerical value associated with each category within each group (e.g., Total Sales, Number of Orders).
+Always provide the 3 fields.
+To fulfill this task, you must:
+
+1.  **Formulate a SQL query:** This query should retrieve the necessary data (group, category, and a numerical value) from the provided database schema. The query's output should ideally be in a format suitable for generating a stacked bar chart, similar to the example: `[('Group1', 'CategoryA', 100), ('Group1', 'CategoryB', 150), ('Group2', 'CategoryA', 120), ('Group2', 'CategoryC', 80), ...]`. **Ensure that the query, when executed and grouped, will result in four or fewer unique values for the 'Category' column.** You might need to use `LIMIT`, `WHERE` clauses, or subqueries to achieve this.
+
+2.  **Generate a concise and informative title:** This title should accurately reflect the data being visualized in the stacked bar chart.
+
+Consider the relationships between the tables in the provided database schema to construct meaningful queries that can offer valuable insights to the customer.
+
+**Available Database Schema:**
+**Tables:**
+
+* `Categories`: `CategoryID` (INTEGER PRIMARY KEY), `CategoryName` (TEXT), `Description` (TEXT)
+* `sqlite_sequence`: `name`, `seq`
+* `Customers`: `CustomerID` (INTEGER PRIMARY KEY), `CustomerName` (TEXT), `ContactName` (TEXT), `Address` (TEXT), `City` (TEXT), `PostalCode` (TEXT), `Country` (TEXT)
+* `Employees`: `EmployeeID` (INTEGER PRIMARY KEY), `LastName` (TEXT), `FirstName` (TEXT), `BirthDate` (DATE), `Photo` (TEXT), `Notes` (TEXT)
+* `Shippers`: `ShipperID` (INTEGER PRIMARY KEY), `ShipperName` (TEXT), `Phone` (TEXT)
+* `Suppliers`: `SupplierID` (INTEGER PRIMARY KEY), `SupplierName` (TEXT), `ContactName` (TEXT), `Address` (TEXT), `City` (TEXT), `PostalCode` (TEXT), `Country` (TEXT), `Phone` (TEXT)
+* `Products`: `ProductID` (INTEGER PRIMARY KEY), `ProductName` (TEXT), `SupplierID` (INTEGER), `CategoryID` (INTEGER), `Unit` (TEXT), `Price` (NUMERIC DEFAULT 0), FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`CategoryID`) REFERENCES `Categories` (`CategoryID`) ON UPDATE NO ACTION ON DELETE NO ACTION
+* `Orders`: `OrderID` (INTEGER PRIMARY KEY), `CustomerID` (INTEGER), `EmployeeID` (INTEGER), `OrderDate` (DATETIME), `ShipperID` (INTEGER), FOREIGN KEY (`ShipperID`) REFERENCES `Shippers` (`ShipperID`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`CustomerID`) REFERENCES `Customers` (`CustomerID`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`EmployeeID`) REFERENCES `Employees` (`EmployeeID`) ON UPDATE NO ACTION ON DELETE NO ACTION
+* `OrderDetails`: `OrderDetailID` (INTEGER PRIMARY KEY), `OrderID` (INTEGER), `ProductID` (INTEGER), `Quantity` (INTEGER), FOREIGN KEY (`ProductID`) REFERENCES `Products` (`ProductID`) ON UPDATE NO ACTION ON DELETE NO ACTION, FOREIGN KEY (`OrderID`) REFERENCES `Orders` (`OrderID`) ON UPDATE NO ACTION ON DELETE NO ACTION
+
+**Example of Expected Output:**
+
+

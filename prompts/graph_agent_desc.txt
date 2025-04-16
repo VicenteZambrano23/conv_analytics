@@ -1,0 +1,1 @@
+This agent is in charge of give the info to plot a graph. Call it after the 'graph_executor' agent

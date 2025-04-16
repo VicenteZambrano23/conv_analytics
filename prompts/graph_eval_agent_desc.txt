@@ -1,0 +1,1 @@
+This agent must to be called after 'graph_agent' to evaluate the query proposed. Iff is correct the agents call 'graph_tool()' and the next agent must be 'executor_graph_agent'.

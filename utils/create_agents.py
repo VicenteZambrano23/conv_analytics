@@ -60,8 +60,29 @@ def create_agents():
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
     )
 
+    graph_agent = ConversableAgent(
+        name="graph_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_desc.txt'),
+    )
+
+    graph_eval_agent = ConversableAgent(
+        name="graph_eval_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_desc.txt'),
+    )
+
+    graph_executor = ConversableAgent(
+        name="graph_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt'),
+    )
 
 
-    return user_proxy,sql_proxy,query_agent,executor_query,eval_query_agent
+
+    return user_proxy,sql_proxy,query_agent,executor_query,eval_query_agent, graph_agent, graph_eval_agent, graph_executor
 
   
