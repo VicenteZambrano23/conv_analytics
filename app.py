@@ -11,9 +11,14 @@ import queue
 from autogen import ConversableAgent
 from utils.read_prompt import read_text_file
 from config.config import AZURE_OPENAI_CONFIG
-from utils.register_func import register_functions
 from autogen import register_function
 from tools.query_tool import query_tool
+from tools.graph_tool import graph_tool
+from utils.clean_graph import graph_clean
+from utils.get_sql_tables import get_sql_tables
+
+graph_clean()
+get_sql_tables()
 
 app = Flask(__name__)
 cors=CORS(app)
@@ -164,13 +169,60 @@ def create_groupchat(user_proxy):
         ) 
 
     assistants.append(eval_query_agent)
+    graph_agent = ConversableAgent(
+        name="graph_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_desc.txt'),
+    )
+    graph_agent.register_reply(
+            [autogen.Agent, None],
+            reply_func=print_messages, 
+            config={"callback": None},
+        ) 
 
+    assistants.append(graph_agent)
+
+    graph_eval_agent = ConversableAgent(
+        name="graph_eval_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_desc.txt'),
+    )
+    graph_eval_agent.register_reply(
+            [autogen.Agent, None],
+            reply_func=print_messages, 
+            config={"callback": None},
+        ) 
+
+    assistants.append(graph_eval_agent)
+
+    graph_executor = ConversableAgent(
+        name="graph_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt'),
+    )
+    graph_executor.register_reply(
+            [autogen.Agent, None],
+            reply_func=print_messages, 
+            config={"callback": None},
+        ) 
+
+    assistants.append(graph_executor)
     register_function(
         query_tool,
         caller=eval_query_agent,
         executor=executor_query,
         name="query_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt')),
+    )
+    register_function(
+        graph_tool,
+        caller=graph_eval_agent,
+        executor=graph_executor,
+        name="graph_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_tool_desc.txt')),
     )
 
     def state_transition(last_speaker,group_chat):
@@ -179,10 +231,16 @@ def create_groupchat(user_proxy):
             return eval_query_agent
         
         elif last_speaker is executor_query:
-            return sql_proxy
+            return graph_agent
 
         elif last_speaker is sql_proxy:
             return user_proxy
+
+        elif last_speaker is graph_agent:
+            return graph_eval_agent
+
+        elif last_speaker is graph_executor:
+            return sql_proxy
         else:
             return 'auto'
     if len(assistants) == 1: 

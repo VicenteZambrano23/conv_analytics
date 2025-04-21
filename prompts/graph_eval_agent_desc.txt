@@ -1,1 +1,4 @@
-This agent must to be called after 'graph_agent' to evaluate the query proposed. Iff is correct the agents call 'graph_tool()' and the next agent must be 'executor_graph_agent'.
+This agent must to be called after 'graph_agent' to evaluate the query proposed. 
+This agent only can be called after 'graph_agent'.
+If is correct the agents call 'graph_tool()' and the next agent must be 'executor_graph_agent'.
+If this agent don´t use the tool call 'graph_agent' again

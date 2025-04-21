@@ -1,1 +1,1 @@
-The only task of this agent is to execute 'graph_tool()'
+"Invoke the 'graph_tool()' tool exclusively after the 'query_agent' has been called. Do not call any other tools or agents. This agent's sole purpose is to execute the 'query_tool()'."
