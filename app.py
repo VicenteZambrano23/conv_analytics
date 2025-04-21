@@ -13,9 +13,11 @@ from utils.read_prompt import read_text_file
 from config.config import AZURE_OPENAI_CONFIG
 from autogen import register_function
 from tools.query_tool import query_tool
-from tools.graph_tool import graph_tool
+from tools.graph_bar_tool import graph_bar_tool
 from utils.clean_graph import graph_clean
 from utils.get_sql_tables import get_sql_tables
+from tools.graph_line_tool import graph_line_tool
+from tools.graph_pie_tool import graph_pie_tool
 
 graph_clean()
 get_sql_tables()
@@ -218,11 +220,25 @@ def create_groupchat(user_proxy):
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt')),
     )
     register_function(
-        graph_tool,
+        graph_bar_tool,
         caller=graph_eval_agent,
         executor=graph_executor,
-        name="graph_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_tool_desc.txt')),
+        name="graph_bar_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_tool_desc.txt')),
+    )
+    register_function(
+        graph_line_tool,
+        caller=graph_eval_agent,
+        executor=graph_executor,
+        name="graph_line_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_line_tool_desc.txt')),
+    )
+    register_function(
+        graph_pie_tool,
+        caller=graph_eval_agent,
+        executor=graph_executor,
+        name="graph_pie_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_pie_tool_desc.txt')),
     )
 
     def state_transition(last_speaker,group_chat):

@@ -1,0 +1,78 @@
+import sqlite3
+from pydantic import BaseModel, Field
+from typing import Annotated, Literal
+
+db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
+class GraphInput(BaseModel):
+    query: Annotated[str, Field(description="Query in SQLite")]
+    title: Annotated[str, Field(description="Title for the graph")]
+    y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
+
+def graph_line_tool(input: Annotated[GraphInput, "Input to the graph tool."] ):
+  query = input.query
+  title = input.title
+  y_axis_title = input.y_axis_title
+
+  connection = sqlite3.connect(db_path)
+  cursor = connection.cursor()
+  cursor.execute(query)
+  query_result = cursor.fetchall()
+  category_element = [item[0] for item in query_result]
+  num_element= [item[1] for item in query_result]
+
+  jsx_code = f"""
+  import React, {{ useState }} from "react";
+ import Chart from 'react-apexcharts';
+
+ export function Graph() {{
+ var options = {{
+ series: [{{
+ name: '{y_axis_title}',
+data: {num_element}
+ }}],
+ chart: {{
+ height: 350,
+ type: 'line',
+ zoom: {{
+ enabled: false
+ }}
+  }},
+ dataLabels: {{
+enabled: false
+ }},
+ stroke: {{
+curve: 'straight',
+ colors: ['#0000FF']
+ }},
+
+ grid: {{
+row: {{
+colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+ opacity: 0.5
+}},
+ }},
+ xaxis: {{
+categories: {category_element},
+ }}
+ }};
+
+ return (
+<div style={{{{ textAlign: 'center' }}}}>
+ <h1 style={{{{ textAlign: 'center' }}}}>{title}</h1>
+ <Chart
+ type= 'line'
+width={{800}} // Adjusted width to match your options
+ height={{500}} // Adjusted height to match your options
+ series={{options.series}}
+ options={{options}}
+ align= 'center'
+ ></Chart></div>)
+ }}
+
+  """
+
+  try:
+    with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
+      file.write(jsx_code)
+  except Exception as e:
+    print(f"An error occurred: {e}")

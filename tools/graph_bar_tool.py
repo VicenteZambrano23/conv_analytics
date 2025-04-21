@@ -8,7 +8,7 @@ class GraphInput(BaseModel):
     title: Annotated[str, Field(description="Title for the graph")]
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
 
-def graph_tool(input: Annotated[GraphInput, "Input to the graph tool."] ):
+def graph_bar_tool(input: Annotated[GraphInput, "Input to the graph tool."] ):
   query = input.query
   title = input.title
   y_axis_title = input.y_axis_title
