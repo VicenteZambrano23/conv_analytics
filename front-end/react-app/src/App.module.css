@@ -34,7 +34,13 @@
 .right {
   display: inline-block;
   flex: 5;
-  margin: auto;
+  justify-content: center; /* Centers horizontally */
+  align-items: center;
+  background: #ffffff;
+  border-radius: 16px;
+  margin-right: 3%;
+  margin-bottom: 10%;
+  margin-top: 10%;
 }
 .row {
   display: flex;
@@ -42,11 +48,11 @@
 }
 .container {
   position: fixed;
-  height: 99vh;
+  height: 100vh;
   left: 0;
   background-color: lightgrey;
   font-size: 10px;
-  width: 99vw;
+  width: 102vw;
   margin: 0;
   display: inline-block;
 
