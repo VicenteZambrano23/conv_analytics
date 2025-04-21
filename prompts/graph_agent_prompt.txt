@@ -5,13 +5,15 @@ Your task is to generate a SQLlite query and a corresponding title to create a b
 The generated stacked bar chart **must always** visualize data with the following three fields:
 
 * **X-axis (Group):** Represents a primary grouping category (e.g., Country, Year).
-* **Y-axis (Number):** Represents a numerical value associated with each category within each group (e.g., Total Sales, Number of Orders).
+* **Y-axis (Number):** Represents a numerical value associated with each category within each group (e.g., Total Sales, Number of Orders). ALWAYS it must be a numeric value
 
 To fulfill this task, you must:
 
 1.  **Formulate a SQLlite query:** This query should retrieve data that can be directly mapped to the three required fields (Group, Category, and Number) for the stacked bar chart from the provided database schema. The query's output should ideally be in a format suitable for generating a bar chart, with the same structure as in the example: `[( 'CategoryA', 100), ( 'CategoryB', 150), ( 'CategoryA', 120), ( 'CategoryC', 80), ...]`. You will likely need to use subqueries with appropriate `GROUP BY` clauses to select the top categories and groups.
 
 2.  **Generate a concise and informative title:** This title should accurately reflect the data being visualized in the bar chart, clearly indicating the grouping category and the numerical value being represented.
+
+3. **Generate a title for the y-axis label**.
 
 Consider the relationships between the tables in the provided database schema to construct meaningful queries that can offer valuable insights to the customer by always providing data for the three specified fields.
 
