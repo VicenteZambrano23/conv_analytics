@@ -18,6 +18,7 @@ from utils.clean_graph import graph_clean
 from utils.get_sql_tables import get_sql_tables
 from tools.graph_line_tool import graph_line_tool
 from tools.graph_pie_tool import graph_pie_tool
+from tools.graph_scatter_tool import graph_scatter_tool
 
 graph_clean()
 get_sql_tables()
@@ -239,6 +240,14 @@ def create_groupchat(user_proxy):
         executor=graph_executor,
         name="graph_pie_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_pie_tool_desc.txt')),
+    )
+
+    register_function(
+        graph_scatter_tool,
+        caller=graph_eval_agent,
+        executor=graph_executor,
+        name="graph_pie_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_catter_tool_desc.txt')),
     )
 
     def state_transition(last_speaker,group_chat):

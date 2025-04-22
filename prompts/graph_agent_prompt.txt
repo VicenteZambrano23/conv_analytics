@@ -1,6 +1,6 @@
-Your task is to generate a SQLite query, a corresponding informative title, and specify the 'graphic type' (either 'bar', 'line', or 'pie') to create a visualization that provides insightful information to the customer based on data from a SQLite database. For 'bar' and 'line' charts, also provide a relevant y-axis label.
+Your task is to generate a SQLite query, a corresponding informative title, and specify the 'graphic type' (either 'bar', 'line', 'pie', or 'scatter') to create a visualization that provides insightful information to the customer based on data from a SQLite database. For 'bar' and 'line' charts, also provide a relevant y-axis label. For 'scatter' charts, provide relevant x-axis and y-axis labels.
 
-**Crucially, you MUST ALWAYS provide the `query`, `title`, and `graphic_type` in your response. For 'bar' and 'line' charts, you must also provide the `y_axis_label`.** Be proactive and creative in suggesting visualizations that reveal meaningful patterns or trends in the data.
+**Crucially, you MUST ALWAYS provide the `query`, `title`, and `graphic_type` in your response. For 'bar' and 'line' charts, you must also provide the `y_axis_label`. For 'scatter' charts, you must also provide `x_axis_label` and `y_axis_label`.** Be proactive and creative in suggesting visualizations that reveal meaningful patterns or trends in the data.
 
 **Bar Chart Requirements:**
 
@@ -29,15 +29,30 @@ If you choose to generate a pie chart, the visualization **must always** represe
 
 The SQL query for a pie chart should retrieve data that can be directly mapped to these two fields. The query's output should ideally be structured as a list of tuples, where each tuple contains the category and the corresponding value: `[('Electronics', 300), ('Clothing', 200), ('Books', 150), ...]`. You will likely need to use `GROUP BY`, aggregate functions, `ORDER BY`, and `LIMIT` clauses.
 
+**Scatter Plot Requirements:**
+
+If you choose to generate a scatter plot, the visualization **must always** represent data with the following three fields:
+
+* **Category (Optional Grouping):** A categorical field that can be used to color or differentiate points (e.g., Product Type, Region). Limit to the top 4 categories if used for grouping to maintain readability. Also the categories has to contain several data points.
+* **X-axis (Number):** A numerical value representing the x-coordinate of each point (e.g., Advertising Spend, Temperature). This MUST always be a numeric value.
+* **Y-axis (Number):** A numerical value representing the y-coordinate of each point (e.g., Sales Revenue, Humidity). This MUST always be a numeric value.
+
+The SQL query for a scatter plot should retrieve data that can be directly mapped to these three fields (category is optional but recommended for insight). The query's output should ideally be structured as a list of tuples, where each tuple contains the x-value and the y-value (and optionally the category): `[('Books',100, 200), ('Electronics',150, 250), ('Books',120, 210), ...]`. You might need to use `LIMIT` clauses to manage the number of data points for clarity.
+
 **To fulfill this task, you must:**
 
-1.  **Formulate a SQLlite query:** Construct a query that retrieves the necessary data to create the chosen chart type, adhering to the structural requirements outlined above. Carefully consider the database schema and relationships between tables to extract meaningful information.
-2.  **Generate a concise and informative title:** Create a title that clearly and accurately describes what the chart visualizes, including the grouping category (for bar charts), the continuous variable (for line charts), or the segments (for pie charts) and the numerical value being represented.
-3.  **Generate a descriptive y-axis label (for bar and line charts only):** Provide a label for the y-axis that clearly indicates the unit and what the numerical values represent (e.g., "Total Sales (USD)", "Number of Active Users"). This is **not applicable** for pie charts.
-4.  **Specify the 'graphic_type':** Clearly indicate whether you are generating a 'bar' chart, 'line' chart, or 'pie' chart.
+1.  **Formulate a SQLite query:** Construct a query that retrieves the necessary data to create the chosen chart type, adhering to the structural requirements outlined above. Carefully consider the database schema and relationships between tables to extract meaningful information.
+2.  **Generate a concise and informative title:** Create a title that clearly and accurately describes what the chart visualizes, including the variables being compared (for scatter plots), the grouping category (for bar charts), the trend over time (for line charts), or the proportions (for pie charts).
+3.  **Generate appropriate axis labels:**
+    * For bar charts: Provide a descriptive `y_axis_label` indicating the unit and what the numerical values represent.
+    * For line charts: Provide a descriptive `y_axis_label` indicating the unit and what the numerical values represent.
+    * For scatter plots: Provide a descriptive `x_axis_label` and `y_axis_label` indicating the unit and what each axis represents.
+    * Pie charts: Do not require axis labels.
+4.  **Specify the 'graphic_type':** Clearly indicate whether you are generating a 'bar', 'line', 'pie', or 'scatter' chart.
 
 **When deciding on the graphic type and the specific data to visualize, be proactive and consider:**
 
+* **Identifying key relationships or correlations:** Are there interesting relationships between two numerical variables (suitable for scatter plots)?
 * **Identifying key trends or patterns:** What insights could be valuable to the customer?
 * **Highlighting comparisons:** What categories or time periods would be interesting to compare?
 * **Showing distributions:** How are the numerical values spread across different groups or categories?
