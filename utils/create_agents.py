@@ -28,20 +28,14 @@ def create_agents():
                (get_sql_tables_agent, executor_database_schema, user_proxy, sql_proxy, query_agent, executor_query).
     """
 
-    from utils.front_class import MyConversableAgent
 
-def create_userproxy():
-    user_proxy = MyConversableAgent(
+    user_proxy = ConversableAgent(
         name="User_Proxy",
         code_execution_config=False,
         is_termination_msg=lambda msg: "TERMINATE" in msg["content"],
         human_input_mode="ALWAYS",
     )
-    user_proxy.register_reply(
-        [autogen.Agent, None],
-        reply_func=print_messages, 
-        config={"callback": None},
-    )
+    
 
     executor_query = ConversableAgent(
         name="executor_query",
@@ -50,11 +44,7 @@ def create_userproxy():
          description=read_text_file(os.path.join(prompt_path, 'executor_query_desc.txt')),
     )
 
-    executor_query.register_reply(
-            [autogen.Agent, None],
-            reply_func=print_messages, 
-            config={"callback": None},
-        )
+    
 
     sql_proxy = ConversableAgent(
         name="sql_proxy",
@@ -63,11 +53,7 @@ def create_userproxy():
          description=read_text_file(os.path.join(prompt_path, 'sql_proxy_desc.txt')),
     )
 
-    sql_proxy.register_reply(
-            [autogen.Agent, None],
-            reply_func=print_messages, 
-            config={"callback": None},
-        )
+    
 
 
     query_agent = ConversableAgent(
@@ -77,11 +63,7 @@ def create_userproxy():
          description=read_text_file(os.path.join(prompt_path, 'query_agent_desc.txt')),
     )
 
-    query_agent.register_reply(
-            [autogen.Agent, None],
-            reply_func=print_messages, 
-            config={"callback": None},
-        )
+    
 
     eval_query_agent = ConversableAgent(
         name="eval_query_agent",
