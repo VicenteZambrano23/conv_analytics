@@ -20,17 +20,29 @@ def get_sql_tables():
              Returns an empty string or an error message if an error occurs.
     """
     try:
-        prompt_path = '/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'
+        prompt_path_1 = '/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'
+        prompt_path_2 = '/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'
 
-        with open(prompt_path, 'r') as file:
+
+        with open(prompt_path_1, 'r') as file:
             lines = file.readlines()
 
         if len(lines) >= 4:
-            with open(prompt_path, 'w') as file:
+            with open(prompt_path_1, 'w') as file:
                 file.writelines(lines[:3])  # Write only the first three lines
-            print(f"Lines after the third line deleted from '{prompt_path}'.")
+            print(f"Lines after the third line deleted from '{prompt_path_1}'.")
         else:
-            print(f"File '{prompt_path}' has less than 4 lines. No lines deleted.")
+            print(f"File '{prompt_path_1}' has less than 4 lines. No lines deleted.")
+        
+        with open(prompt_path_2, 'r') as file:
+            lines = file.readlines()
+
+        if len(lines) >= 68:
+            with open(prompt_path_2, 'w') as file:
+                file.writelines(lines[:68])  # Write only the first three lines
+            print(f"Lines after the third line deleted from '{prompt_path_2}'.")
+        else:
+            print(f"File '{prompt_path_2}' has less than 4 lines. No lines deleted.")
             
 # Connect to the database (or create it if it doesn't exist)
         connection = sqlite3.connect(db_path)
@@ -77,7 +89,10 @@ def get_sql_tables():
 
             formatted_output += "\n"
 
-        with open(prompt_path, 'a') as file:  # 'a' mode for appending
+        with open(prompt_path_1, 'a') as file:  # 'a' mode for appending
+            file.write(formatted_output)
+        
+        with open(prompt_path_2, 'a') as file:  # 'a' mode for appending
             file.write(formatted_output)
         
 

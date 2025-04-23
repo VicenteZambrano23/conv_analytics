@@ -1,58 +1,17 @@
 
+    
   import React, { useState } from "react";
- import Chart from 'react-apexcharts';
+  import Chart from 'react-apexcharts';
 
- export function Graph() {
- var options = {
- series: [{
- name: 'Number of Orders',
-data: [22, 25, 23, 26, 25, 31, 33, 11]
- }],
- chart: {
- height: 350,
- type: 'line',
- zoom: {
- enabled: false
- }
-  },
- dataLabels: {
-enabled: false
- },
- stroke: {
-curve: 'smooth',
-colors: ['#008FFB']
- },
+  export function Graph() {
+    
 
- grid: {
-row: {
-colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
- opacity: 0.5
-},
- },
- xaxis: {
-categories: ['1996-07', '1996-08', '1996-09', '1996-10', '1996-11', '1996-12', '1997-01', '1997-02'],
-title: {
-  text: 'Month'
-}
- },
- yaxis :{
-  title :{
-    text: 'Number of Orders'
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' ,textAlign: 'center'}}>
+        <img  style = {{width: 400, height: 400,  justifyContent: 'center',display: 'block', // Or potentially 'inline-block' depending on context
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 100}} src="/visual-data.png" alt="AI Chatbot Logo" />
+     </div>)
   }
- }
- };
-
- return (
-<div style={{ textAlign: 'center' }}>
- <h1 style={{ textAlign: 'center' }}>Monthly Trend of Number of Orders</h1>
- <Chart
- type= 'line'
-width={800} // Adjusted width to match your options
- height={500} // Adjusted height to match your options
- series={options.series}
- options={options}
- align= 'center'
- ></Chart></div>)
- }
-
-  
+    

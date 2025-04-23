@@ -150,4 +150,3 @@ Table: OrderDetails
     ProductID -> Products(ProductID) ON UPDATE NO ACTION ON DELETE NO ACTION
     OrderID -> Orders(OrderID) ON UPDATE NO ACTION ON DELETE NO ACTION
 
-
