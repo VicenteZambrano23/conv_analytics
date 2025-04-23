@@ -3,13 +3,13 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
-class GraphInput(BaseModel):
+class GraphScatterInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
     x_axis: Annotated[str, Field(description="X-Axis name for the graph")]
     y_axis: Annotated[str, Field(description="Y-Axis name for the graph")]
 
-def graph_scatter_tool(input: Annotated[GraphInput, "Input to the graph tool."] ):
+def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph scatter tool."] ):
   query= input.query
   title = input.title
   x_axis = input.x_axis
@@ -21,17 +21,28 @@ def graph_scatter_tool(input: Annotated[GraphInput, "Input to the graph tool."] 
   data_dict = {}
   rows = cursor.fetchall()
 
-  for row in rows:
-    category = row[0]
-    value_1 = row[1]
-    value_2 = row[2]
+  if len(rows[0]) == 3:
 
-    if category not in data_dict:
+    for row in rows:
+      category = row[0]
+      value_1 = row[1]
+      value_2 = row[2]
+
+      if category not in data_dict:
         data_dict[category] = []
-    data_dict[category].append([value_1, value_2])
+      data_dict[category].append([value_1, value_2])
 
+  else:
+    data_dict['value'] = []
+    for row in rows:
+      value_1 = row[0]
+      value_2 = row[1]
+
+    
+      data_dict['value'].append([value_1, value_2])
 
   output_string = ""
+  
   for key, value in data_dict.items():
     output_string += f"""\
     {{
@@ -46,6 +57,7 @@ import Chart from 'react-apexcharts';
 
 export function Graph() {{
 var options = {{
+  colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
  series: [{output_string}],
  chart: {{
  height: 350,
@@ -67,6 +79,11 @@ xaxis: {{
         }}
 }},
 yaxis: {{
+  labels: {{
+    formatter: function(val) {{
+    return parseFloat(val).toFixed(1)
+    }}
+    }},
 tickAmount: 7,
 title: {{
           text: '{y_axis}'
@@ -94,5 +111,4 @@ align= 'center'
       file.write(jsx_code)
   except Exception as e:
     print(f"An error occurred: {e}")
-
 

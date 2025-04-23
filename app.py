@@ -246,17 +246,14 @@ def create_groupchat(user_proxy):
         graph_scatter_tool,
         caller=graph_eval_agent,
         executor=graph_executor,
-        name="graph_pie_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_catter_tool_desc.txt')),
+        name="graph_scatter_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_scatter_tool_desc.txt')),
     )
 
     def state_transition(last_speaker,group_chat):
 
         if last_speaker is query_agent:
             return eval_query_agent
-        
-        elif last_speaker is executor_query:
-            return graph_agent
 
         elif last_speaker is sql_proxy:
             return user_proxy
@@ -277,7 +274,14 @@ def create_groupchat(user_proxy):
             messages=[], 
             max_round=100,
             speaker_selection_method=state_transition,
-            
+            allowed_or_disallowed_speaker_transitions = {
+            eval_query_agent : [user_proxy],
+            executor_query : [user_proxy],
+            graph_executor : [user_proxy],
+            query_agent : [user_proxy],
+            graph_eval_agent : [user_proxy],
+            graph_agent : [user_proxy],
+        },
         speaker_transitions_type="disallowed",
         )
         manager = autogen.GroupChatManager(

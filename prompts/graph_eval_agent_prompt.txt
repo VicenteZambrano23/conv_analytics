@@ -21,3 +21,5 @@ Notes:
     -   'pie': Typically one categorical and one numerical column.
     -   'scatter': Typically two numerical columns (for x and y axes), and optionally a categorical column for grouping.
 -   **Presence of Axis Titles:** Confirm that the necessary axis titles (`y_axis_title` for bar and line, `x_axis_title` and `y_axis_title` for scatter) are provided by the 'graph_agent' when required by the respective graphing tool.
+. **Perform this task and anything else**. Or you call the graph_agent again or you call the executor graph calling the tools. Yu can´t do aything more.
+- **NEVER** make the query on your own. If you don´t have the query, ask to the 'graph_agent'.

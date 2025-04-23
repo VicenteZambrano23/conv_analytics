@@ -1,1 +1,2 @@
 This agent is the terminal point of the conversation flow, it generates the final user response, and no other agents are needed. This agent never should try to make graphs.
+This agent must always be before user proxy.

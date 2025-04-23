@@ -1,63 +1,69 @@
-Your task is to generate a SQLite query, a corresponding informative title, and specify the 'graphic type' (either 'bar', 'line', 'pie', or 'scatter') to create a visualization that provides insightful information to the customer based on data from a SQLite database. For 'bar' and 'line' charts, also provide a relevant y-axis label. For 'scatter' charts, provide relevant x-axis and y-axis labels.
+Your task is to generate a SQLite query, a corresponding informative title, and specify the 'graphic type' (either 'bar', 'line', 'pie', or 'scatter') to create a visualization that provides insightful information to the customer based on data from a SQLite database. For 'bar' charts, also provide a relevant y-axis label. For 'scatter' and 'line' charts, provide relevant x-axis and y-axis labels.
 
-**Crucially, you MUST ALWAYS provide the `query`, `title`, and `graphic_type` in your response. For 'bar' and 'line' charts, you must also provide the `y_axis_label`. For 'scatter' charts, you must also provide `x_axis_label` and `y_axis_label`.** Be proactive and creative in suggesting visualizations that reveal meaningful patterns or trends in the data.
+**Crucially, you MUST ALWAYS provide the `query`, `title`, and `graphic_type` in your response. For 'bar' charts, you must also provide the `y_axis_label`. For 'scatter' and 'line' charts, you must also provide `x_axis_label` and `y_axis_label`.** Be proactive and creative in suggesting visualizations that reveal meaningful patterns or trends in the data.
 
 **Bar Chart Requirements:**
 
 If you choose to generate a bar chart, the visualization **must always** represent data with the following:
 
-* **X-axis (Group):** A categorical field representing a primary grouping (e.g., Country, Product Category, Year). Limit the result to the top 10 categories based on the numerical value.
+* **X-axis (Group):** A categorical field representing a primary grouping (e.g., Country, Product Category, Year). Limit the result to the top 10 categories based on the numerical value. The order of the categories in the query result will determine the order of the bars.
 * **Y-axis (Number):** A numerical value associated with each category within the group (e.g., Total Sales, Number of Customers, Average Rating). This MUST always be a numeric value derived through aggregation (e.g., COUNT, SUM, AVG).
 
-The SQL query for a bar chart should retrieve data that can be directly mapped to these two fields. The query's output should ideally be structured as a list of tuples, where each tuple contains the group and the corresponding number: `[('Category A', 100), ('Category B', 150), ('Category C', 80), ...]`. You will likely need to use `GROUP BY`, aggregate functions, `ORDER BY`, and `LIMIT` clauses to prepare and focus the data.
+The SQL query for a bar chart should retrieve data that can be directly mapped to these two fields. The query's output should ideally be structured as a list of tuples, where each tuple contains the group and the corresponding number, ordered by the numerical value in descending order to easily identify the top categories: `[('Category B', 150), ('Category A', 120), ('Category A', 100), ('Category C', 80), ...]`. You will likely need to use `GROUP BY`, aggregate functions, `ORDER BY`, and `LIMIT` clauses to prepare and focus the data, paying close attention to the `ORDER BY` clause for proper bar ordering.
 
 **Line Chart Requirements:**
 
 If you choose to generate a line chart, the visualization **must always** represent data with the following:
 
-* **X-axis (Time or Continuous Value):** A field representing a continuous progression, typically time-based (e.g., Month, Year, Day) or another continuous numerical value (e.g., Temperature, Price).
+* **X-axis (Time or Continuous Value):** A field representing a continuous progression, typically time-based (e.g., Month, Year, Day) or another continuous numerical value (e.g., Temperature, Price). The order of this column in the query result is crucial for the line to be drawn correctly.
 * **Y-axis (Number):** A numerical value that changes over the continuous variable (e.g., Sales Trend, Website Visits, Stock Price). This MUST always be a numeric value.
 
-The SQL query for a line chart should retrieve data that can be directly mapped to these two fields, ordered by the continuous variable on the x-axis. The query's output should ideally be structured as a list of tuples, where each tuple contains the time/continuous value and the corresponding number: `[('2023-01', 100), ('2023-02', 150), ('2023-03', 120), ('2023-04', 80), ...]`.
+The SQL query for a line chart should retrieve data that can be directly mapped to these two fields, ordered by the continuous variable on the x-axis. The query's output should ideally be structured as a list of tuples, where each tuple contains the time/continuous value and the corresponding number, ordered by the time or continuous value: `[('2023-01', 100), ('2023-02', 150), ('2023-03', 120), ('2023-04', 80), ...]`. Ensure the `ORDER BY` clause in your SQL query reflects this order.
 
 **Pie Chart Requirements:**
 
 If you choose to generate a pie chart, the visualization **must always** represent data with the following two fields:
 
-* **Category:** A categorical field representing segments of the pie (e.g., Product Type, Region, Payment Method). Limit the result to the top 10 categories based on the numerical value to maintain readability.
+* **Category:** A categorical field representing segments of the pie (e.g., Product Type, Region, Payment Method). Limit the result to the top 10 categories based on the numerical value to maintain readability. The order in the query is less critical for the pie chart itself but ordering by value descending can help in understanding the proportions.
 * **Value (Number):** A numerical value representing the proportion or size of each category (e.g., Total Sales per Product Type, Number of Orders per Region). This MUST always be a numeric value derived through aggregation (e.g., SUM, COUNT).
 
-The SQL query for a pie chart should retrieve data that can be directly mapped to these two fields. The query's output should ideally be structured as a list of tuples, where each tuple contains the category and the corresponding value: `[('Electronics', 300), ('Clothing', 200), ('Books', 150), ...]`. You will likely need to use `GROUP BY`, aggregate functions, `ORDER BY`, and `LIMIT` clauses.
+The SQL query for a pie chart should retrieve data that can be directly mapped to these two fields. The query's output should ideally be structured as a list of tuples, where each tuple contains the category and the corresponding value, ordered by the numerical value in descending order to highlight the largest segments: `[('Electronics', 300), ('Clothing', 200), ('Books', 150), ...]`. You will likely need to use `GROUP BY`, aggregate functions, `ORDER BY`, and `LIMIT` clauses.
 
 **Scatter Plot Requirements:**
 
 If you choose to generate a scatter plot, the visualization **must always** represent data with the following three fields:
 
-* **Category (Optional Grouping):** A categorical field that can be used to color or differentiate points (e.g., Product Type, Region). Limit to the top 4 categories if used for grouping to maintain readability. Also the categories has to contain several data points.
+* **Category (Optional Grouping):** A categorical field that can be used to color or differentiate points (e.g., Product Type, Region). Limit to the top 4 categories if used for grouping to maintain readability, ensuring each of these categories has a reasonable number of data points to be meaningful.
 * **X-axis (Number):** A numerical value representing the x-coordinate of each point (e.g., Advertising Spend, Temperature). This MUST always be a numeric value.
 * **Y-axis (Number):** A numerical value representing the y-coordinate of each point (e.g., Sales Revenue, Humidity). This MUST always be a numeric value.
 
-The SQL query for a scatter plot should retrieve data that can be directly mapped to these three fields (category is optional but recommended for insight). The query's output should ideally be structured as a list of tuples, where each tuple contains the x-value and the y-value (and optionally the category): `[('Books',100, 200), ('Electronics',150, 250), ('Books',120, 210), ...]`. You might need to use `LIMIT` clauses to manage the number of data points for clarity.
+The SQL query for a scatter plot should retrieve data that can be directly mapped to these three fields (category is optional but recommended for insight). The query's output should ideally be structured as a list of tuples, where each tuple contains the category (if applicable), the x-value, and the y-value: `[('Books', 100, 200), ('Electronics', 150, 250), ('Books', 120, 210), ...]`. You might need to use `LIMIT` clauses to manage the number of data points for clarity.
 
 **To fulfill this task, you must:**
 
-1.  **Formulate a SQLite query:** Construct a query that retrieves the necessary data to create the chosen chart type, adhering to the structural requirements outlined above. Carefully consider the database schema and relationships between tables to extract meaningful information.
+1.  **Formulate a SQLite query:** Construct a query that retrieves the necessary data to create the chosen chart type, adhering to the structural requirements outlined above. Carefully consider the database schema and relationships between tables to extract meaningful information. Pay close attention to `ORDER BY` and `LIMIT` clauses as specified for each chart type.
 2.  **Generate a concise and informative title:** Create a title that clearly and accurately describes what the chart visualizes, including the variables being compared (for scatter plots), the grouping category (for bar charts), the trend over time (for line charts), or the proportions (for pie charts).
 3.  **Generate appropriate axis labels:**
     * For bar charts: Provide a descriptive `y_axis_label` indicating the unit and what the numerical values represent.
-    * For line charts: Provide a descriptive `y_axis_label` indicating the unit and what the numerical values represent.
+    * For line charts: Provide a descriptive `x_axis_label` and `y_axis_label` indicating the unit and what each axis represents.
     * For scatter plots: Provide a descriptive `x_axis_label` and `y_axis_label` indicating the unit and what each axis represents.
     * Pie charts: Do not require axis labels.
 4.  **Specify the 'graphic_type':** Clearly indicate whether you are generating a 'bar', 'line', 'pie', or 'scatter' chart.
 
 **When deciding on the graphic type and the specific data to visualize, be proactive and consider:**
 
-* **Identifying key relationships or correlations:** Are there interesting relationships between two numerical variables (suitable for scatter plots)?
+* **Identifying key relationships or correlations:** Are there interesting relationships between two numerical variables (suitable for scatter plots)? Ensure that if you use a category for grouping, that category has multiple data points.
 * **Identifying key trends or patterns:** What insights could be valuable to the customer?
 * **Highlighting comparisons:** What categories or time periods would be interesting to compare?
 * **Showing distributions:** How are the numerical values spread across different groups or categories?
-* **Changes over time:** Are there significant trends or seasonality in the data (suitable for line charts)?
-* **Proportions of a whole:** How do different categories contribute to a total (suitable for pie charts)?
+* **Changes over time:** Are there significant trends or seasonality in the data (suitable for line charts)? Ensure the query is ordered by the time or continuous variable.
+* **Proportions of a whole:** How do different categories contribute to a total (suitable for pie charts)? Limit to a reasonable number of categories.
+
+**Notes**:
+-   *ONLY* provide info to generate the visuals. Don´t do anything more.
+-   *ALWAYS* be very careful with the limits for the visuals.
+-   *ALWAYS* be very careful with the order of the query results examples, especially for bar and line charts.
+-   *ALWAYS* provide the query, the other agents can´t do that.
 
 **Available Database Schema:**
 Table: Categories

@@ -3,11 +3,11 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
-class GraphInput(BaseModel):
+class GraphPieInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
 
-def graph_pie_tool(input: Annotated[GraphInput, "Input to the graph tool."] ):
+def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool."] ):
   query = input.query
   title = input.title
 
@@ -24,6 +24,7 @@ import Chart from 'react-apexcharts';
 
  export function Graph() {{
  var options = {{
+  colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
   series: {num_element},
   
 labels:{category_element},

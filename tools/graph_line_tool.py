@@ -3,15 +3,17 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
-class GraphInput(BaseModel):
+class GraphLineInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
+    x_axis_title: Annotated[str, Field(description="Title for the x-axis")]
 
-def graph_line_tool(input: Annotated[GraphInput, "Input to the graph tool."] ):
+def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line tool."] ):
   query = input.query
   title = input.title
   y_axis_title = input.y_axis_title
+  x_axis_title = input.x_axis_title
 
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
@@ -41,8 +43,8 @@ data: {num_element}
 enabled: false
  }},
  stroke: {{
-curve: 'straight',
- colors: ['#0000FF']
+curve: 'smooth',
+colors: ['#008FFB']
  }},
 
  grid: {{
@@ -53,6 +55,14 @@ colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on 
  }},
  xaxis: {{
 categories: {category_element},
+title: {{
+  text: '{x_axis_title}'
+}}
+ }},
+ yaxis :{{
+  title :{{
+    text: '{y_axis_title}'
+  }}
  }}
  }};
 

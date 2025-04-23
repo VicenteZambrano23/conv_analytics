@@ -8,7 +8,7 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [chatStatus, setChatStatus] = useState("ended");
   const messagesEndRef = useRef(null);
-  const lastSentUserMessage = useRef(null); // To track the last message sent by the user
+  const lastSentUserMessage = useRef(null);
 
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
@@ -93,6 +93,8 @@ function App() {
     return () => clearInterval(intervalId);
   }, [messages]);
 
+
+
   // Scroll to bottom when new messages are added
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -117,7 +119,7 @@ function App() {
               <Controls onSend={handleContentSend} />
               <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
             </div></div>
-          <div className={styles.right}><div ><Graph /></div></div>
+          <div className={styles.right}><div ><Graph key={messages.length}/></div></div>
           </div>
       </div>
     
