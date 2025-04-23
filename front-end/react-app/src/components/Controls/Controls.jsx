@@ -1,25 +1,18 @@
+// ./components/Controls/Controls.js
 import { useState } from "react";
 import styles from "./Controls.module.css";
-import { Chat } from "../Chat/Chat";
 
 export function Controls({ onSend }) {
   const [content, setContent] = useState("");
-
-  function addMessage(message){
-    setMessages((prevMessages) => [...prevMessages, message])
-  }
 
   function handleContentChange(event) {
     setContent(event.target.value);
   }
 
-  async function handleContentSend(content) {
-    addMessage({content, role : 'user'})
-    try {
-      const result = await chat.sendMessage(content);
-      addMessage({content: result.response.text(), role : 'assistant'});
-    } catch(error){
-      addMessage({content: "Sorry, doesn´t work", role : 'system'});
+  function handleContentSend() {
+    if (content.length > 0) {
+      onSend(content);
+      setContent("");
     }
   }
 
@@ -35,7 +28,7 @@ export function Controls({ onSend }) {
       <div className={styles.TextAreaContainer}>
         <textarea
           className={styles.TextArea}
-          placeholder="Message AI Chatbot"
+          placeholder=""
           value={content}
           onChange={handleContentChange}
           onKeyDown={handleEnterPress}

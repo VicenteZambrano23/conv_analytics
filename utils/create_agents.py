@@ -2,9 +2,7 @@ from autogen import ConversableAgent, UserProxyAgent
 from config.config import AZURE_OPENAI_CONFIG
 from utils.read_prompt import read_text_file
 import os
-from utils.print_messages import print_messages
 import autogen
-from utils.front_class import MyConversableAgent
 prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts')
 
 def create_agents():
@@ -87,19 +85,34 @@ def create_userproxy():
 
     eval_query_agent = ConversableAgent(
         name="eval_query_agent",
-        system_message=read_text_file(os.path.join(prompt_path, 'eval_query_agent_prompt.txt')),
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file(os.path.join(prompt_path, 'eval_query_agent_desc.txt')),
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
     )
 
-    eval_query_agent.register_reply(
-            [autogen.Agent, None],
-            reply_func=print_messages, 
-            config={"callback": None},
-        )
+    graph_agent = ConversableAgent(
+        name="graph_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_desc.txt'),
+    )
+
+    graph_eval_agent = ConversableAgent(
+        name="graph_eval_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_desc.txt'),
+    )
+
+    graph_executor = ConversableAgent(
+        name="graph_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt'),
+    )
 
 
 
-    return user_proxy,sql_proxy,query_agent,executor_query,eval_query_agent
+    return user_proxy,sql_proxy,query_agent,executor_query,eval_query_agent, graph_agent, graph_eval_agent, graph_executor
 
   
