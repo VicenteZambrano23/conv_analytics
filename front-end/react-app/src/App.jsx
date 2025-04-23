@@ -82,7 +82,7 @@ function App() {
           if (isGraphExecutor) {
             setTimeout(() => {
               setShouldRenderGraph((prev) => !prev);
-            }, 3000);// Toggle state to force re-render
+            }, 100);// Toggle state to force re-render
           }
           // Reset the last sent user message after a short delay to avoid potential issues
           setTimeout(() => {
@@ -128,7 +128,7 @@ function App() {
               <Controls onSend={handleContentSend} />
               <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
             </div></div>
-          <div className={styles.right}>  <Graph key={shouldRenderGraph} messages={messages.filter(msg => msg.agent === "graph_executor")} /></div>
+          <div className={styles.right}>  <Graph key={shouldRenderGraph} /></div>
           </div>
       </div>
     

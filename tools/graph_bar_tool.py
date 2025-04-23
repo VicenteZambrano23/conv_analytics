@@ -36,7 +36,7 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
   export function Graph() {{
     var options = {{
       series: [{{
-      name: '{y_axis_title}',
+      name: "{y_axis_title}",
       data: {num_element}
       }}],
       chart: {{
@@ -92,7 +92,7 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
         }}
       }},
       title: {{
-          text: '{y_axis_title}'
+          text: "{y_axis_title}"
         }}
     
     }}

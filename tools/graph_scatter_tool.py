@@ -46,7 +46,7 @@ def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph s
   for key, value in data_dict.items():
     output_string += f"""\
     {{
-          name: '{key}',
+          name: "{key}",
           data: {value}
     }},
     """
@@ -75,7 +75,7 @@ xaxis: {{
  }}
  }},
  title: {{
-          text: '{x_axis}'
+          text: "{x_axis}"
         }}
 }},
 yaxis: {{
@@ -86,7 +86,7 @@ yaxis: {{
     }},
 tickAmount: 7,
 title: {{
-          text: '{y_axis}'
+          text: "{y_axis}"
         }}
 }}
 }};

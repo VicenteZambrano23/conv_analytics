@@ -29,7 +29,7 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
  export function Graph() {{
  var options = {{
  series: [{{
- name: '{y_axis_title}',
+ name: "{y_axis_title}",
 data: {num_element}
  }}],
  chart: {{
@@ -61,7 +61,7 @@ title: {{
  }},
  yaxis :{{
   title :{{
-    text: '{y_axis_title}'
+    text: "{y_axis_title}"
   }}
  }}
  }};
