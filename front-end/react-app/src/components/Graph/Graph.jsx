@@ -1,83 +1,59 @@
 
   import React, { useState } from "react";
-  import Chart from 'react-apexcharts';
+import Chart from 'react-apexcharts';
 
-  export function Graph() {
-    var options = {
-      series: [{
-      name: 'Total Sales (in monetary units)',
-      data: [67764.5, 37487.87, 37067.2, 33650, 19043.5, 17207.8, 16785.0, 14638.0, 14208.7, 13498.0]
-      }],
-      chart: {
-      height: 350,
-      type: 'bar',
-      },
-    plotOptions: {
-      bar: {
-        borderRadius: 10,
-        dataLabels: {
-          position: 'top', // top, center, bottom
-        },
-      }
+ export function Graph() {
+ var options = {
+  colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
+  series: [69611.75, 51671.96, 47241.82, 40215.25, 31326.35, 29549.15, 17870.85, 16695.79, 15391.02, 13556.28],
+  
+labels:['USA', 'Austria', 'Germany', 'Brazil', 'Canada', 'France', 'Denmark', 'UK', 'Ireland', 'Venezuela'],
+responsive: [{
+  breakpoint: 480,
+  options: {
+    chart: {
+      width: 200
     },
-    
-    
-    xaxis: {
-      categories: ['Aux joyeux ecclésiastiques', 'Plutzer Lebensmittelgroßmärkte AG', 'Pavlova, Ltd.', 'Gai pâturage', "Forêts d'érables", "G'day, Mate", 'Formaggi Fortini s.r.l.', 'Norske Meierier', 'Specialty Biscuits, Ltd.', 'Pasta Buttini s.r.l.'],
-      position: 'bottom',
-      axisBorder: {
-        show: true
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: 'gradient',
-          gradient: {
-            colorFrom: '#D8E3F0',
-            colorTo: '#BED1E6',
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
-          }
-        }
-      },
-      tooltip: {
-        enabled: true,
-      }
-    },
-    yaxis: {
-      axisBorder: {
-        show: true
-      },
-      axisTicks: {
-        show: true,
-      },
-      labels: {
-        show: true,
-        formatter: function (val) {
-          return val;
-        }
-      },
-      title: {
-          text: 'Total Sales (in monetary units)'
-        }
-    
+    legend: {
+      position: 'bottom'
     }
-    };
-
-    return (
-      <div style={{ textAlign: 'center' }}>
-      <h1 style={{ textAlign: 'center' }}>Top 10 Suppliers by Total Sales</h1>
-      <Chart
-      type='bar'
-      width={800} // Adjusted width to match your options
-      height={500} // Adjusted height to match your options
-      series={options.series}
-      options={options}
-      align= 'center'
-  ></Chart></div>)
   }
+}],
+dataLabels: {
+  enabled: true,
+  formatter: function (val) {
+    return val.toFixed(1) + "%";
+  },
+  style: {
+    colors: ['#fff'] // Set the text color to white
+  },
+  dropShadow: {
+    enabled: true,
+    top: 1,
+    left: 1,
+    blur: 2,
+    color: '#000',
+    opacity: 0.4
+  }
+},
+
+    stroke: {
+      width: 2, // Adjust the width of the separation line (in pixels)
+      color: '#000' // Set the color of the separation line (e.g., white)
+    },
+};
+
+ return (
+<div style={{ textAlign: 'center' }}>
+ <h1 style={{ textAlign: 'center' }}>Top 10 Countries by Total Revenue</h1>
+ <Chart
+ type= 'pie'
+width={800} // Adjusted width to match your options
+ height={500} // Adjusted height to match your options
+ series={options.series}
+ options={options}
+ align= 'center'
+ ></Chart></div>)
+ }
 
   

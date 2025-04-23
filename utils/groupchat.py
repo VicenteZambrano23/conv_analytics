@@ -28,13 +28,10 @@ def create_group_chat():
 
         if last_speaker is agents[2]:
             return agents[4]
-        
-        elif last_speaker is agents[3]:
-            return agents[5]
 
         elif last_speaker is agents[1]:
             return agents[0]
-        
+
         elif last_speaker is agents[5]:
             return agents[6]
 
@@ -52,8 +49,12 @@ def create_group_chat():
         speaker_selection_method=state_transition,
         max_round=100,
         allowed_or_disallowed_speaker_transitions = {
-            agents[4] : [agents[0]]
-        },
+            agents[4] : [agents[0]],
+            agents[2] : [agents[0]],
+            agents[7] : [agents[0]],
+            agents[1] : [agents[0]],
+            agents[6] : [agents[0]],
+            agents[5] : [agents[0]],        },
         speaker_transitions_type="disallowed",
        
     )

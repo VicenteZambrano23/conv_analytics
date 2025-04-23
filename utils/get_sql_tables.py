@@ -52,7 +52,6 @@ def get_sql_tables():
         # Execute a simple query
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         tables = [row[0] for row in cursor.fetchall()]
-        print(f"Table list: {tables}")
         schema = {}
         for table in tables:
             cursor.execute(f"PRAGMA table_info({table});")
