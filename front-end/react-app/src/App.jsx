@@ -9,6 +9,7 @@ function App() {
   const [chatStatus, setChatStatus] = useState("ended");
   const messagesEndRef = useRef(null);
   const lastSentUserMessage = useRef(null);
+  const [shouldRenderGraph, setShouldRenderGraph] = useState(true);
 
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
@@ -66,14 +67,22 @@ function App() {
         const messageContent = data.message.message;
 
         // Only add messages from 'User_Proxy' or 'sql_proxy'
-        if (messageUser === "User_Proxy" || messageUser === "sql_proxy") {
+        if (messageUser === "User_Proxy" || messageUser === "sql_proxy"|| messageUser === "graph_executor") {
           const isUserProxy = messageUser === "User_Proxy";
+          const isGraphExecutor = messageUser === "graph_executor";
+
           // Only add the message if it's not the echoed user message from User_Proxy
           if (!isUserProxy || messageContent !== lastSentUserMessage.current) {
             setMessages((prevMessages) => [
               ...prevMessages,
               { content: messageContent, role: isUserProxy ? "user" : "assistant", agent: messageUser },
             ]);
+          }
+          // Trigger graph re-render specifically for 'graph_executor' messages
+          if (isGraphExecutor) {
+            setTimeout(() => {
+              setShouldRenderGraph((prev) => !prev);
+            }, 3000);// Toggle state to force re-render
           }
           // Reset the last sent user message after a short delay to avoid potential issues
           setTimeout(() => {
@@ -119,7 +128,7 @@ function App() {
               <Controls onSend={handleContentSend} />
               <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
             </div></div>
-          <div className={styles.right}><div ><Graph key={messages.length}/></div></div>
+          <div className={styles.right}>  <Graph key={shouldRenderGraph} messages={messages.filter(msg => msg.agent === "graph_executor")} /></div>
           </div>
       </div>
     

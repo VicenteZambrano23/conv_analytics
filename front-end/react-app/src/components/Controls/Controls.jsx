@@ -28,7 +28,7 @@ export function Controls({ onSend }) {
       <div className={styles.TextAreaContainer}>
         <textarea
           className={styles.TextArea}
-          placeholder="Message AI Chatbot"
+          placeholder=""
           value={content}
           onChange={handleContentChange}
           onKeyDown={handleEnterPress}
