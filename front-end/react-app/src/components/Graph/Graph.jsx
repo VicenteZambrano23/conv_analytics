@@ -5,9 +5,9 @@ import Chart from 'react-apexcharts';
  export function Graph() {
  var options = {
   colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
-  series: [69611.75, 51671.96, 47241.82, 40215.25, 31326.35, 29549.15, 17870.85, 16695.79, 15391.02, 13556.28],
+  series: [29, 25, 19, 18, 13, 12, 9, 9, 9, 8],
   
-labels:['USA', 'Austria', 'Germany', 'Brazil', 'Canada', 'France', 'Denmark', 'UK', 'Ireland', 'Venezuela'],
+labels:['USA', 'Germany', 'Brazil', 'France', 'Austria', 'UK', 'Venezuela', 'Mexico', 'Canada', 'Finland'],
 responsive: [{
   breakpoint: 480,
   options: {
@@ -45,7 +45,7 @@ dataLabels: {
 
  return (
 <div style={{ textAlign: 'center' }}>
- <h1 style={{ textAlign: 'center' }}>Top 10 Countries by Total Revenue</h1>
+ <h1 style={{ textAlign: 'center' }}>Proportion of Orders by Country</h1>
  <Chart
  type= 'pie'
 width={800} // Adjusted width to match your options

@@ -109,6 +109,7 @@ align= 'center'
   try:
     with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
       file.write(jsx_code)
+    return "Scatter graph correctly added"
   except Exception as e:
     print(f"An error occurred: {e}")
 

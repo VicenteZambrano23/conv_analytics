@@ -9,6 +9,7 @@ class GraphBarInput(BaseModel):
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
 
 def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool."] ):
+  
   query = input.query
   title = input.title
   y_axis_title = input.y_axis_title
@@ -115,6 +116,8 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
   try:
     with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
       file.write(jsx_code)
+    
+    return "Bar graph correctly added"
   except Exception as e:
     print(f"An error occurred: {e}")
 
