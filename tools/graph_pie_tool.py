@@ -1,6 +1,7 @@
 import sqlite3
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
+from utils.summary_func import summary_query
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
 class GraphPieInput(BaseModel):
@@ -15,6 +16,8 @@ def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool.
   cursor = connection.cursor()
   cursor.execute(query)
   query_result = cursor.fetchall()
+  query_summary = summary_query(str(query_result))
+
   category_element = [item[0] for item in query_result]
   num_element= [item[1] for item in query_result]
 
@@ -81,6 +84,6 @@ width={{800}} // Adjusted width to match your options
   try:
     with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
       file.write(jsx_code)
-    return "Pie graph correctly added"
+    return f"Pie graph correctly added. Title: {title}. Data:{query_summary}"
   except Exception as e:
     print(f"An error occurred: {e}")

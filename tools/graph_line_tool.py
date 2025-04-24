@@ -1,6 +1,7 @@
 import sqlite3
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
+from utils.summary_func import summary_query
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
 class GraphLineInput(BaseModel):
@@ -19,6 +20,8 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
   cursor = connection.cursor()
   cursor.execute(query)
   query_result = cursor.fetchall()
+  query_summary = summary_query(str(query_result))
+
   category_element = [item[0] for item in query_result]
   num_element= [item[1] for item in query_result]
 
@@ -84,6 +87,6 @@ width={{800}} // Adjusted width to match your options
   try:
     with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
       file.write(jsx_code)
-    return "Line graph correctly added"
+    return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
   except Exception as e:
     print(f"An error occurred: {e}")

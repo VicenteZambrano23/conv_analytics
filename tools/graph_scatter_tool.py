@@ -1,6 +1,7 @@
 import sqlite3
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
+from utils.summary_func import summary_query
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
 class GraphScatterInput(BaseModel):
@@ -20,6 +21,8 @@ def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph s
   cursor.execute(query)
   data_dict = {}
   rows = cursor.fetchall()
+  query_summary = summary_query(str(rows))
+
 
   if len(rows[0]) == 3:
 
@@ -109,7 +112,7 @@ align= 'center'
   try:
     with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
       file.write(jsx_code)
-    return "Scatter graph correctly added"
+    return f"Scatter graph correctly added.Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"
   except Exception as e:
     print(f"An error occurred: {e}")
 

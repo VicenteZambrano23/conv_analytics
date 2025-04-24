@@ -2,6 +2,8 @@ import sqlite3
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 from config.config import db_path
+from utils.summary_func import summary_query
+
 class QueryInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
 
@@ -31,7 +33,9 @@ def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
         cursor.execute(query)
         query_result = cursor.fetchall()
         
-        return query_result
+        query_summary = summary_query(str(query_result))
+        
+        return query_summary
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")
 
