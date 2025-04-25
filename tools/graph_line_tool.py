@@ -1,9 +1,10 @@
 import sqlite3
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, config
 from typing import Annotated, Literal
 from utils.summary_func import summary_query
-
-db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
+from config.config import db_path
+from utils.update_counter import update_counter, get_counter
+from utils.update_graph import update_graph
 class GraphLineInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
@@ -11,6 +12,10 @@ class GraphLineInput(BaseModel):
     x_axis_title: Annotated[str, Field(description="Title for the x-axis")]
 
 def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line tool."] ):
+
+  update_counter()
+  counter = get_counter()
+
   query = input.query
   title = input.title
   y_axis_title = input.y_axis_title
@@ -29,7 +34,7 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
   import React, {{ useState }} from "react";
  import Chart from 'react-apexcharts';
 
- export function Graph() {{
+ export function Graph_{counter}() {{
  var options = {{
  series: [{{
  name: "{y_axis_title}",
@@ -85,8 +90,10 @@ width={{800}} // Adjusted width to match your options
   """
 
   try:
-    with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
+    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
       file.write(jsx_code)
+    
+    update_graph()
     return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
   except Exception as e:
     print(f"An error occurred: {e}")

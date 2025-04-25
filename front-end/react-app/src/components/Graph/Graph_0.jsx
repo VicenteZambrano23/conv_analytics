@@ -1,11 +1,9 @@
 
-def graph_clean():
-    code = """
     
   import React, { useState } from "react";
   import Chart from 'react-apexcharts';
 
-  export function Graph() {
+  export function Graph_0() {
     
 
     return (
@@ -16,6 +14,4 @@ def graph_clean():
     marginTop: 100}} src="/visual-data.png" alt="AI Chatbot Logo" />
      </div>)
   }
-    """
-    with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_0.jsx', 'w') as file:
-      file.write(code)
+    

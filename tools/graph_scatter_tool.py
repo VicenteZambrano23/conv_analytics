@@ -2,8 +2,9 @@ import sqlite3
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 from utils.summary_func import summary_query
-
-db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
+from config.config import db_path
+from utils.update_counter import update_counter, get_counter
+from utils.update_graph import update_graph
 class GraphScatterInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
@@ -11,6 +12,10 @@ class GraphScatterInput(BaseModel):
     y_axis: Annotated[str, Field(description="Y-Axis name for the graph")]
 
 def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph scatter tool."] ):
+
+  update_counter()
+  counter = get_counter()
+
   query= input.query
   title = input.title
   x_axis = input.x_axis
@@ -58,7 +63,7 @@ def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph s
 import React, {{ useState }} from "react";
 import Chart from 'react-apexcharts';
 
-export function Graph() {{
+export function Graph__{counter}() {{
 var options = {{
   colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
  series: [{output_string}],
@@ -110,8 +115,9 @@ align= 'center'
   """
 
   try:
-    with open('/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph.jsx', 'w') as file:
+    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
       file.write(jsx_code)
+    update_graph()
     return f"Scatter graph correctly added.Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"
   except Exception as e:
     print(f"An error occurred: {e}")

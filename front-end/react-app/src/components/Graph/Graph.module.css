@@ -1,0 +1,10 @@
+.ButtonImage {
+    width: 64px;
+    height: 64px;
+  }
+
+.Button{
+    display: 'flex';
+    position: fixed;
+    height: '100vh';
+}
