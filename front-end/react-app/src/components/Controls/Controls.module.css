@@ -1,11 +1,11 @@
-.Controls {
+.Controls.Controls {
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
 }
 
-.TextAreaContainer {
+.TextAreaContainer.TextAreaContainer {
   flex-grow: 1;
   padding: 8px 16px;
   line-height: 0;
@@ -13,7 +13,7 @@
   background: #ffffff;
 }
 
-.TextArea {
+.TextArea.TextArea {
   width: 100%;
   height: 100%;
   border: none;
@@ -22,7 +22,7 @@
   background: #ffffff;
 }
 
-.Button {
+.Button.Button {
   display: flex;
   justify-content: center;
   align-items: center;
