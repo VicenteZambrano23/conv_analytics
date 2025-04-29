@@ -63,7 +63,7 @@ def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph s
 import React, {{ useState }} from "react";
 import Chart from 'react-apexcharts';
 
-export function Graph__{counter}() {{
+export function Graph_{counter}() {{
 var options = {{
   colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
  series: [{output_string}],
@@ -101,11 +101,11 @@ title: {{
 
 return (
 <div style={{{{ textAlign: 'center' }}}}>
-<h1 style={{{{ textAlign: 'center' }}}}>{title}</h1>
+<h1 style={{{{ textAlign: 'center', fontSize:'35px' }}}}>{title}</h1>
 <Chart
 type= 'scatter'
-width={{800}} // Adjusted width to match your options
-height={{500}} // Adjusted height to match your options
+width={{750}} // Adjusted width to match your options
+height={{475}} // Adjusted height to match your options
 series={{options.series}}
 options={{options}}
 align= 'center'

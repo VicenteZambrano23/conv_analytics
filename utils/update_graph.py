@@ -27,7 +27,7 @@ export function Graph() {{
 
   
   return (<div>
-      <Carousel interval = {{null}} data-bs-theme="dark">
+      <Carousel indicators = {{false}} interval = {{null}} data-bs-theme="dark">
       {second_graph_str}
       
         

@@ -73,11 +73,11 @@ dataLabels: {{
 
  return (
 <div style={{{{ textAlign: 'center' }}}}>
- <h1 style={{{{ textAlign: 'center' }}}}>{title}</h1>
+ <h1 style={{{{ textAlign: 'center', fontSize:'35px' }}}}>{title}</h1>
  <Chart
  type= 'pie'
-width={{800}} // Adjusted width to match your options
- height={{500}} // Adjusted height to match your options
+width={{750}} // Adjusted width to match your options
+ height={{475}} // Adjusted height to match your options
  series={{options.series}}
  options={{options}}
  align= 'center'
