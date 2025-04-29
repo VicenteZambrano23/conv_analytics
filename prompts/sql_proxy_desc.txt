@@ -1,2 +1,9 @@
-This agent is the terminal point of the conversation flow, it generates the final user response, and no other agents are needed. This agent never should try to make graphs.
-This agent must always be before user proxy.
+This agent serves as the **final turn** in the conversation flow, crafting the ultimate response for the user. It is invoked when no further agent processing is required. **Crucially, this agent will never generate graphs.**
+
+This agent **must always precede** the user proxy agent in the processing order.
+
+It should be selected in the following scenarios:
+
+* **Post-Execution:** Immediately after the `executor_query` or `graph_executor` agents have completed their tasks and a final answer is ready for the user.
+* **Previous Information Retrieval:** When the user explicitly requests previously discussed information.
+* **Direct User Inquiry:** For general user prompts that do not necessitate specific tool usage or external data retrieval by other specialized agents.

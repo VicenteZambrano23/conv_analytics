@@ -122,7 +122,7 @@ function App() {
             <div className={styles.left}><div className={styles.App}>
               <header className={styles.Header}>
                 <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
-                <h2 className={styles.Title}>Conversational Analytics</h2>
+                <h2 className={styles.Title}>Virtual Data Analyst</h2>
               </header>
               <div className={styles.ChatContainer}>
                 <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
