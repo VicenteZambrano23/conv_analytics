@@ -4,12 +4,13 @@ import { Controls } from "./components/Controls/Controls";
 import styles from "./App.module.css";
 import { Graph } from "./components/Graph/Graph";
 
+
 function App() {
   const [messages, setMessages] = useState([]);
   const [chatStatus, setChatStatus] = useState("ended");
   const messagesEndRef = useRef(null);
   const lastSentUserMessage = useRef(null);
-  const [shouldRenderGraph, setShouldRenderGraph] = useState(true);
+  const [shouldRenderGraph, setShouldRenderGraph] = useState(0);
 
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
@@ -69,6 +70,7 @@ function App() {
         // Only add messages from 'User_Proxy' or 'sql_proxy'
         if (messageUser === "User_Proxy" || messageUser === "sql_proxy"|| messageUser === "graph_executor") {
           const isUserProxy = messageUser === "User_Proxy";
+          const isSqlProxy = messageUser === "sql_proxy";
           const isGraphExecutor = messageUser === "graph_executor";
 
           // Only add the message if it's not the echoed user message from User_Proxy
@@ -81,7 +83,7 @@ function App() {
           // Trigger graph re-render specifically for 'graph_executor' messages
           if (isGraphExecutor) {
             setTimeout(() => {
-              setShouldRenderGraph((prev) => !prev);
+              setShouldRenderGraph((prev) => prev + 1);
             }, 100);// Toggle state to force re-render
           }
           // Reset the last sent user message after a short delay to avoid potential issues
@@ -120,7 +122,7 @@ function App() {
             <div className={styles.left}><div className={styles.App}>
               <header className={styles.Header}>
                 <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
-                <h2 className={styles.Title}>Conversational Analytics</h2>
+                <h2 className={styles.Title}>Virtual Data Analyst</h2>
               </header>
               <div className={styles.ChatContainer}>
                 <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
@@ -128,7 +130,7 @@ function App() {
               <Controls onSend={handleContentSend} />
               <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
             </div></div>
-          <div className={styles.right}>  <Graph key={shouldRenderGraph} /></div>
+          <div className={styles.right}>  { <Graph/>}</div>
           </div>
       </div>
     

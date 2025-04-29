@@ -19,9 +19,14 @@ from utils.get_sql_tables import get_sql_tables
 from tools.graph_line_tool import graph_line_tool
 from tools.graph_pie_tool import graph_pie_tool
 from tools.graph_scatter_tool import graph_scatter_tool
+from utils.update_counter import reset_counter
+from utils.update_graph import update_graph
+from utils.clean_graph import graph_clean
 
 graph_clean()
 get_sql_tables()
+reset_counter()
+
 
 app = Flask(__name__)
 cors=CORS(app)

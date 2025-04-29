@@ -24,17 +24,16 @@ export function Controls({ onSend }) {
   }
 
   return (
-    <div className={styles.Controls}>
-      <div className={styles.TextAreaContainer}>
+    <div className={styles.row}>
+      <div className={styles.left}>
         <textarea
-          className={styles.TextArea}
-          placeholder=""
+          placeholder="Message"
           value={content}
           onChange={handleContentChange}
           onKeyDown={handleEnterPress}
         />
       </div>
-      <button className={styles.Button} onClick={handleContentSend}>
+      <button className={styles.right} onClick={handleContentSend}>
         <SendIcon />
       </button>
     </div>
