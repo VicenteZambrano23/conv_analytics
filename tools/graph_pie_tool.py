@@ -11,10 +11,14 @@ class GraphPieInput(BaseModel):
 
 def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool."] ):
 
+  query = input.query
+
+  if query.find('SELECT') == -1:
+    return "Not SELECT statement"
+  
   update_counter()
   counter = get_counter()
 
-  query = input.query
   title = input.title
 
   connection = sqlite3.connect(db_path)

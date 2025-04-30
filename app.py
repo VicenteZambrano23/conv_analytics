@@ -163,20 +163,7 @@ def create_groupchat(user_proxy):
 
     assistants.append(query_agent)
 
-    eval_query_agent = ConversableAgent(
-        name="eval_query_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'),
-        llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt'),
-    )
 
-    eval_query_agent.register_reply(
-            [autogen.Agent, None],
-            reply_func=print_messages, 
-            config={"callback": None},
-        ) 
-
-    assistants.append(eval_query_agent)
     graph_agent = ConversableAgent(
         name="graph_agent",
         system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'),
@@ -190,20 +177,6 @@ def create_groupchat(user_proxy):
         ) 
 
     assistants.append(graph_agent)
-
-    graph_eval_agent = ConversableAgent(
-        name="graph_eval_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_prompt.txt'),
-        llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_eval_agent_desc.txt'),
-    )
-    graph_eval_agent.register_reply(
-            [autogen.Agent, None],
-            reply_func=print_messages, 
-            config={"callback": None},
-        ) 
-
-    assistants.append(graph_eval_agent)
 
     graph_executor = ConversableAgent(
         name="graph_executor",
@@ -220,28 +193,28 @@ def create_groupchat(user_proxy):
     assistants.append(graph_executor)
     register_function(
         query_tool,
-        caller=eval_query_agent,
+        caller=query_agent,
         executor=executor_query,
         name="query_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt')),
     )
     register_function(
         graph_bar_tool,
-        caller=graph_eval_agent,
+        caller=graph_agent,
         executor=graph_executor,
         name="graph_bar_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_tool_desc.txt')),
     )
     register_function(
         graph_line_tool,
-        caller=graph_eval_agent,
+        caller=graph_agent,
         executor=graph_executor,
         name="graph_line_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_line_tool_desc.txt')),
     )
     register_function(
         graph_pie_tool,
-        caller=graph_eval_agent,
+        caller=graph_agent,
         executor=graph_executor,
         name="graph_pie_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_pie_tool_desc.txt')),
@@ -249,7 +222,7 @@ def create_groupchat(user_proxy):
 
     register_function(
         graph_scatter_tool,
-        caller=graph_eval_agent,
+        caller=graph_agent,
         executor=graph_executor,
         name="graph_scatter_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_scatter_tool_desc.txt')),
@@ -257,19 +230,25 @@ def create_groupchat(user_proxy):
 
     def state_transition(last_speaker,group_chat):
 
-        if last_speaker is query_agent:
-            return eval_query_agent
+   
 
-        elif last_speaker is sql_proxy:
+        if last_speaker is sql_proxy:
             return user_proxy
 
-        elif last_speaker is graph_agent:
-            return graph_eval_agent
+        elif last_speaker is executor_query:
+            return sql_proxy
 
         elif last_speaker is graph_executor:
             return sql_proxy
+
+        elif last_speaker is query_agent:
+            return executor_query
+
+        elif last_speaker is graph_agent:
+            return graph_executor
         else:
             return 'auto'
+
     if len(assistants) == 1: 
         manager = assistants[0]
 
@@ -280,11 +259,9 @@ def create_groupchat(user_proxy):
             max_round=100,
             speaker_selection_method=state_transition,
             allowed_or_disallowed_speaker_transitions = {
-            eval_query_agent : [user_proxy],
             executor_query : [user_proxy],
             graph_executor : [user_proxy],
             query_agent : [user_proxy],
-            graph_eval_agent : [user_proxy],
             graph_agent : [user_proxy],
         },
         speaker_transitions_type="disallowed",

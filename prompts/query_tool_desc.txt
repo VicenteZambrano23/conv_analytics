@@ -1,1 +1,16 @@
-Tool to retrieve to run and query in SQLlite. retrieve an string with teh result of the query.
+SQLite Query Executor Tool
+
+This tool executes read-only SQLite queries against the connected database and returns the query results as a formatted string. It provides secure access to database information without allowing data or schema modifications.
+
+Parameters:
+- query: A valid SQLite SELECT statement to be executed
+
+Returns:
+- A string containing the formatted summary results of the executed query
+
+Usage:
+query_tool("SELECT column1, column2 FROM table WHERE condition")
+
+Notes:
+- Only SELECT statements are permitted; any data modification attempts will be rejected
+- Complex queries with JOINs, subqueries, and aggregate functions are supported

@@ -1,53 +1,52 @@
 
   import React, { useState } from "react";
-import Chart from 'react-apexcharts';
+ import Chart from 'react-apexcharts';
 
  export function Graph_2() {
  var options = {
-  colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
-  series: [100, 93, 84, 67, 50, 49, 42, 33],
-  
-labels:['Dairy Products', 'Beverages', 'Confections', 'Seafood', 'Meat/Poultry', 'Condiments', 'Grains/Cereals', 'Produce'],
-responsive: [{
-  breakpoint: 480,
-  options: {
-    chart: {
-      width: 200
-    },
-    legend: {
-      position: 'bottom'
-    }
-  }
-}],
-dataLabels: {
-  enabled: true,
-  formatter: function (val) {
-    return val.toFixed(1) + "%";
+ series: [{
+ name: "Revenue (USD)",
+data: [37779.85, 33285.49, 34565.6, 51528.69, 62163.99, 63721.23, 83400.47, 19978.91]
+ }],
+ chart: {
+ height: 350,
+ type: 'line',
+ zoom: {
+ enabled: false
+ }
   },
-  style: {
-    colors: ['#fff'] // Set the text color to white
-  },
-  dropShadow: {
-    enabled: true,
-    top: 1,
-    left: 1,
-    blur: 2,
-    color: '#000',
-    opacity: 0.4
-  }
-},
+ dataLabels: {
+enabled: false
+ },
+ stroke: {
+curve: 'smooth',
+colors: ['#008FFB']
+ },
 
-    stroke: {
-      width: 2, // Adjust the width of the separation line (in pixels)
-      color: '#000' // Set the color of the separation line (e.g., white)
-    },
-};
+ grid: {
+row: {
+colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+ opacity: 0.5
+},
+ },
+ xaxis: {
+categories: ['1996-07', '1996-08', '1996-09', '1996-10', '1996-11', '1996-12', '1997-01', '1997-02'],
+title: {
+  text: 'Month'
+}
+ },
+ yaxis :{
+  title :{
+    text: "Revenue (USD)"
+  }
+ }
+ };
 
  return (
 <div style={{ textAlign: 'center' }}>
- <h1 style={{ textAlign: 'center', fontSize:'35px' }}>Distribution of Product Categories in Orders</h1>
+ <h1 style={{ textAlign: 'center',fontSize:'35px' }}>Monthly Revenue Trend</h1>
  <Chart
- type= 'pie'
+ type= 'line'
 width={750} // Adjusted width to match your options
  height={475} // Adjusted height to match your options
  series={options.series}

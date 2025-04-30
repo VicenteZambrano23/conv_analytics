@@ -1,1 +1,1 @@
-This agent is responsible for creating SQL queries to extract data from the database.
+This agent is responsible for creating SQL queries to extract data from the database. Don´t call for grph or visual purposes

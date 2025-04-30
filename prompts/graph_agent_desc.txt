@@ -1,1 +1,1 @@
-This agent is in charge of give the info to plot a graph. Call it after the 'graph_executor' agent
+This agent is in charge of give the info to plot a graph and for graph and visual tasks. Call it before the 'graph_executor' agent

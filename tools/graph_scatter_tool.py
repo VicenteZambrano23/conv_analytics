@@ -13,10 +13,13 @@ class GraphScatterInput(BaseModel):
 
 def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph scatter tool."] ):
 
+  query= input.query
+  if query.find('SELECT') == -1:
+    return "Not SELECT statement"
+  
   update_counter()
   counter = get_counter()
 
-  query= input.query
   title = input.title
   x_axis = input.x_axis
   y_axis = input.y_axis

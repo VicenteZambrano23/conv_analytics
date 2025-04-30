@@ -1,1 +1,33 @@
-Tool to show a pie chart trought the UI.
+Pie Chart Visualization Tool
+
+This tool renders a pie chart in the user interface based on query results from the SQLite database. It visualizes proportional relationships between parts of a whole, showing how different categories contribute to a total.
+
+Parameters:
+- query: A valid SQLite SELECT statement that returns exactly two columns:
+  * First column: Category names for the pie segments (text/categorical data)
+  * Second column: Numeric values representing the size of each segment (must be positive numbers)
+- title: A descriptive chart title explaining what the proportional relationship represents
+
+Returns:
+- A rendered pie chart displayed in the user interface
+- Each category is represented as a slice of the pie with a distinct color
+- The size of each slice is proportional to its value relative to the total sum
+- Categories and their percentage contributions are displayed in a legend
+- Also a summary of the data displayed and if the graphic is correctly added
+
+Usage:
+graph_pie_tool(
+  "SELECT CategoryName, SUM(Price * Quantity) AS Revenue FROM OrderDetails 
+   JOIN Products ON OrderDetails.ProductID = Products.ProductID 
+   JOIN Categories ON Products.CategoryID = Categories.CategoryID 
+   GROUP BY CategoryName ORDER BY Revenue DESC LIMIT 8",
+  "Revenue Distribution by Product Category"
+)
+
+Requirements:
+- Query must return exactly 2 columns in the format: [(category1, value1), (category2, value2), ...]
+- Results should be limited to 8 or fewer categories for optimal readability
+- Values must be numeric and positive (representing counts, sums, or other aggregates)
+- All values together should represent a meaningful whole
+- Query should include ORDER BY [value] DESC to arrange segments from largest to smallest
+- Small categories may be grouped as "Other" if they would create tiny, hard-to-read slices

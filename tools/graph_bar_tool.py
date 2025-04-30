@@ -11,11 +11,13 @@ class GraphBarInput(BaseModel):
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
 
 def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool."] ):
-  
-  update_counter()
-  counter = get_counter()
 
   query = input.query
+  if query.find('LIMIT') == -1:
+    return "Not SELECT statement"
+
+  update_counter()
+  counter = get_counter()
   title = input.title
   y_axis_title = input.y_axis_title
 

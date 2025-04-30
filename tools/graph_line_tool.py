@@ -13,10 +13,14 @@ class GraphLineInput(BaseModel):
 
 def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line tool."] ):
 
+  query = input.query
+
+  if query.find('SELECT') == -1:
+    return "Not SELECT statement"
+
   update_counter()
   counter = get_counter()
 
-  query = input.query
   title = input.title
   y_axis_title = input.y_axis_title
   x_axis_title = input.x_axis_title
