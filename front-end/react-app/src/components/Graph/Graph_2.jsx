@@ -1,0 +1,59 @@
+
+  import React, { useState } from "react";
+import Chart from 'react-apexcharts';
+
+ export function Graph_2() {
+ var options = {
+  colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
+  series: [100, 93, 84, 67, 50, 49, 42, 33],
+  
+labels:['Dairy Products', 'Beverages', 'Confections', 'Seafood', 'Meat/Poultry', 'Condiments', 'Grains/Cereals', 'Produce'],
+responsive: [{
+  breakpoint: 480,
+  options: {
+    chart: {
+      width: 200
+    },
+    legend: {
+      position: 'bottom'
+    }
+  }
+}],
+dataLabels: {
+  enabled: true,
+  formatter: function (val) {
+    return val.toFixed(1) + "%";
+  },
+  style: {
+    colors: ['#fff'] // Set the text color to white
+  },
+  dropShadow: {
+    enabled: true,
+    top: 1,
+    left: 1,
+    blur: 2,
+    color: '#000',
+    opacity: 0.4
+  }
+},
+
+    stroke: {
+      width: 2, // Adjust the width of the separation line (in pixels)
+      color: '#000' // Set the color of the separation line (e.g., white)
+    },
+};
+
+ return (
+<div style={{ textAlign: 'center' }}>
+ <h1 style={{ textAlign: 'center', fontSize:'35px' }}>Distribution of Product Categories in Orders</h1>
+ <Chart
+ type= 'pie'
+width={750} // Adjusted width to match your options
+ height={475} // Adjusted height to match your options
+ series={options.series}
+ options={options}
+ align= 'center'
+ ></Chart></div>)
+ }
+
+  
