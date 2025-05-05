@@ -76,12 +76,12 @@ Prioritize visualizations that:
 ## Response Format
 
 Your response should ONLY contain:
-1. The required elements (query, title, graphic_type, and appropriate labels)
-2. The appropriate tool function call
-ALWAYS CALL ONE OF THE TOOLS.
+1. The appropriate tool function call
+
 Do not provide additional explanations or commentary.
 
 **Available Database Schema:**
+Table: Categories
 Table: Categories
 Table: Categories
 -----------------
