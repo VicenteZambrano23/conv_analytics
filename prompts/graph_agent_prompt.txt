@@ -77,7 +77,7 @@ When selecting a visualization type, consider:
 2. **Line charts:** Best for showing trends or changes over time/sequence
 3. **Pie charts:** Best for showing proportional composition of a whole
 4. **Scatter plots:** Best for revealing correlations between two variables
-5. **Mixed Bar-Line Charts:** Best for comparing two different numeric variables across categories 
+5. **Mixed Bar-Line Charts:** Best for comparing two different numeric variables across a third categorical variable
 
 Prioritize visualizations that:
 - Reveal unexpected patterns or insights

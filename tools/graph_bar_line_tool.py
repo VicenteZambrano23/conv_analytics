@@ -38,9 +38,10 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
   print(query_result)
   query_summary = summary_query(str(query_result))
   category_element = [item[0] for item in query_result]
-  num_element_bar= [int(item[2]) for item in query_result]
-  num_element_line= [int(item[1]) for item in query_result]
-
+  num_element_bar= [int(item[1]) for item in query_result]
+  num_element_line= [int(item[2]) for item in query_result]
+  print(num_element_bar)
+  print(num_element_line)
   jsx_code = f"""
   import React, {{ useState }} from "react";
   import Chart from 'react-apexcharts';
@@ -62,6 +63,10 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
         }},
         stroke: {{
           width: [0, 4]
+        }},
+        markers: {{
+          shape: 'square',
+          size: 12
         }},
         dataLabels: {{
           enabled: true,

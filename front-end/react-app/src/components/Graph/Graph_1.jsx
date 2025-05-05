@@ -4,72 +4,47 @@
 
   export function Graph_1() {
     var options = {
-      series: [{
-      name: "Number of Orders",
-      data: [10, 7, 7, 7, 6, 6, 5, 5, 5, 4]
-      }],
-      chart: {
-      height: 350,
-      type: 'bar',
-      },
-    plotOptions: {
-      bar: {
-        borderRadius: 10,
-        dataLabels: {
-          position: 'top', // top, center, bottom
+          series: [{
+          name: "Average Quantity",
+          type: 'column',
+          data: [28, 26, 25, 25, 24, 21, 21, 21]
+        }, {
+          name: "Average Price (USD)",
+          type: 'line',
+          data: [22, 28, 44, 25, 35, 24, 33, 20]
+        }],
+          chart: {
+          height: 350,
+          type: 'line',
         },
-      }
-    },
-    
-    
-    xaxis: {
-      categories: ['Ernst Handel', 'Wartian Herkku', 'Rattlesnake Canyon Grocery', 'QUICK-Stop', 'Split Rail Beer & Ale', 'Hungry Owl All-Night Grocers', 'Mère Paillarde', "La maison d''Asie", 'LILA-Supermercado', 'Tortuga Restaurante'],
-      position: 'bottom',
-      axisBorder: {
-        show: true
-      },
-      axisTicks: {
-        show: false
-      },
-      crosshairs: {
-        fill: {
-          type: 'gradient',
-          gradient: {
-            colorFrom: '#D8E3F0',
-            colorTo: '#BED1E6',
-            stops: [0, 100],
-            opacityFrom: 0.4,
-            opacityTo: 0.5,
+        stroke: {
+          width: [0, 4]
+        },
+        markers: {
+          shape: 'square',
+          size: 12
+        },
+        dataLabels: {
+          enabled: true,
+          enabledOnSeries: [1]
+        },
+        labels: ['Condiments', 'Dairy Products', 'Meat/Poultry', 'Confections', 'Beverages', 'Grains/Cereals', 'Produce', 'Seafood'],
+        yaxis: [{
+          title: {
+            text: "Average Quantity",
+          },
+        
+        }, {
+          opposite: true,
+          title: {
+            text: "Average Price (USD)",
           }
-        }
-      },
-      tooltip: {
-        enabled: true,
-      }
-    },
-    yaxis: {
-      axisBorder: {
-        show: true
-      },
-      axisTicks: {
-        show: true,
-      },
-      labels: {
-        show: true,
-        formatter: function (val) {
-          return val;
-        }
-      },
-      title: {
-          text: "Number of Orders"
-        }
-    
-    }
-    };
+        }]
+        };
 
     return (
       <div style={{ textAlign: 'center' }}>
-      <h1 style={{ textAlign: 'center',fontSize:'35px' }}>Top 10 Customers by Number of Orders</h1>
+      <h1 style={{ textAlign: 'center',fontSize:'35px' }}>Average Quantity and Price by Product Category</h1>
       <Chart
       type='bar'
       width={750} // Adjusted width to match your options
