@@ -40,7 +40,8 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
   jsx_code = f"""
   import React, {{ useState }} from "react";
   import Chart from 'react-apexcharts';
-
+  import styles from "./Graph.module.css";
+  
   export function Graph_{counter}() {{
     var options = {{
       series: [{{
@@ -107,16 +108,22 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
     }};
 
     return (
-      <div style={{{{ textAlign: 'center' }}}}>
-      <h1 style={{{{ textAlign: 'center',fontSize:'35px' }}}}>{title}</h1>
-      <Chart
-      type='bar'
-      width={{750}} // Adjusted width to match your options
-      height={{475}} // Adjusted height to match your options
-      series={{options.series}}
-      options={{options}}
-      align= 'center'
-  ></Chart></div>)
+    
+      <div className={{styles.graphContainer}}>
+        <div>
+          <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
+        </div>
+        <div className={{styles.graphSubContainer}}>
+          <Chart
+          type='bar'
+          width='220%'
+          height='95%' 
+          series={{options.series}}
+          options={{options}}
+          align= 'center'>
+          </Chart>
+        </div>
+        </div>)
   }}
 
   """
