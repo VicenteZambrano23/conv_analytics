@@ -58,6 +58,17 @@ Your role is to generate effective SQLite queries and visualization specificatio
   - If using categories, ensure each has multiple data points
   - LIMIT results appropriately to prevent overcrowding
 
+### Mixed Bar-Line Charts
+- **Data structure:** `[('Category B', 15, 430), ('Category A', 22, 380), ...]`
+- **X-axis:** Categorical field (e.g., Product, Country, Year)
+- **Y-Line-axis:** Numeric value using aggregation (COUNT, SUM, AVG)
+- **Y-Bar-axis:** Numeric value using aggregation (COUNT, SUM, AVG)
+- **Query requirements:**
+  - MUST use GROUP BY for categories
+  - MUST use ORDER BY [numeric_value] DESC to show top categories
+  - MUST use LIMIT to show top 10 categories maximum
+  - Y-Line-axis and Y-Bar-axis value MUST be numeric and aggregated
+
 ## Decision Guidance
 
 When selecting a visualization type, consider:
@@ -66,23 +77,12 @@ When selecting a visualization type, consider:
 2. **Line charts:** Best for showing trends or changes over time/sequence
 3. **Pie charts:** Best for showing proportional composition of a whole
 4. **Scatter plots:** Best for revealing correlations between two variables
+5. **Mixed Bar-Line Charts:** Best for comparing two different numeric variables across categories 
 
 Prioritize visualizations that:
 - Reveal unexpected patterns or insights
 - Answer practical business questions
 - Show clear relationships between variables
-- Present information in the most intuitive format
-
-## Response Format
-
-Your response should ONLY contain:
-1. The required elements (query, title, graphic_type, and appropriate labels)
-2. The appropriate tool function call
-
-Do not provide additional explanations or commentary.
-
-**Available Database Schema:**
-Table: Categories
 Table: Categories
 -----------------
   CategoryID INTEGER PRIMARY KEY
