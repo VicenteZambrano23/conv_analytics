@@ -13,7 +13,7 @@ class GraphBarInput(BaseModel):
 def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool."] ):
 
   query = input.query
-  if query.find('LIMIT') == -1:
+  if query.find('SELECT') == -1:
     return "Not SELECT statement"
 
   update_counter()

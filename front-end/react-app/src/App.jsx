@@ -3,7 +3,10 @@ import { Chat } from "./components/Chat/Chat";
 import { Controls } from "./components/Controls/Controls";
 import styles from "./App.module.css";
 import { Graph } from "./components/Graph/Graph";
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ReactLogo from '../public/title.svg';
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -68,7 +71,7 @@ function App() {
         const messageContent = data.message.message;
 
         // Only add messages from 'User_Proxy' or 'sql_proxy'
-        if (messageUser === "User_Proxy" || messageUser === "sql_proxy"|| messageUser === "graph_executor") {
+        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_executor") {
           const isUserProxy = messageUser === "User_Proxy";
           const isSqlProxy = messageUser === "sql_proxy";
           const isGraphExecutor = messageUser === "graph_executor";
@@ -117,27 +120,34 @@ function App() {
   );
 
   return (
-      <div className={styles.container}>
-        <div className={styles.row}>
-            <div className={styles.left}><div className={styles.App}>
-              <header className={styles.Header}>
-                <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
-                <h2 className={styles.Title}>Virtual Data Analyst</h2>
-              </header>
-              <div className={styles.ChatContainer}>
-                <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
-              </div>
-              <Controls onSend={handleContentSend} />
-              <p className={styles.ChatStatus}>Chat Status: {chatStatus}</p>
-            </div></div>
-          <div className={styles.right}>  { <Graph/>}</div>
-          </div>
-      </div>
-    
 
- 
+    <div className={styles.MainContainer}>
+      <div className={styles.HeaderContainer}>
+        <div className={styles.LogoContainer}>
+          <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
+        </div>
+        <div className={styles.TitleContainer}>
+          <img className={styles.Title} src={ReactLogo} alt="Title" />
+        </div>
+      </div>
+
+      <div className={styles.ChatGraphContainer}>
+        <div className={styles.ChatControlsContainer}>
+          <div className={styles.ChatContainer}>
+            <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
+          </div>
+          <div className={styles.ControlsContainer}>
+            <Controls onSend={handleContentSend} />
+          </div>
     
-   
+        </div>
+        <div className={styles.GraphContainer}>
+          {<Graph />}
+        </div>
+      </div>
+    </div>
+
+
   );
 }
 

@@ -1,0 +1,42 @@
+
+.graphContainer{
+display: flex; 
+background: white;
+align-items: center;
+align-content: center;
+justify-content: center;
+width: 48vw;
+height:70vh;
+}
+
+.graph{
+display: flex; 
+align-items: center;
+align-content: center;
+width: 50%;
+justify-content: center;
+}
+
+.graphItem{
+    margin-left: -100px;
+    margin-right: -100px;
+}
+.customPrevIcon,
+.customNextIcon {
+  color: black;
+  width: 44px;
+  /* Add more styling */
+}
+.customNextIcon {
+
+    margin-right: -300px;
+    /* Add more styling */
+  }
+  .customPrevIcon {
+  
+    margin-left: -300px;
+    /* Add more styling */
+  }
+.graphContainer{
+    border-color: blue;
+}

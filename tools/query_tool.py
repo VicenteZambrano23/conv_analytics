@@ -27,20 +27,19 @@ def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
 
         if query.find('SELECT') == -1:
             return "Not SELECT statement"
-        else: 
         
 # Connect to the database (or create it if it doesn't exist)
-            connection = sqlite3.connect(db_path)
-            cursor = connection.cursor()
-            print("Database connection successful!")
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        print("Database connection successful!")
 
             # Execute a simple query
-            cursor.execute(query)
-            query_result = cursor.fetchall()
+        cursor.execute(query)
+        query_result = cursor.fetchall()
             
-            query_summary = summary_query(str(query_result))
+        query_summary = summary_query(str(query_result))
             
-            return query_summary
+        return query_summary
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")
 
