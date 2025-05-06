@@ -17,4 +17,21 @@
     align-self: flex-end;
     background: #f3f3f3;
   }
+  &[data-role="assistant"] {
+    
+    background: lightblue;
+  }
+}
+.AssistantMessages{
+  display: flex;
+
+}
+.Logo {
+  display: flex !important;
+  justify-content: right !important;
+  width: 4vh !important;
+  height: 4vh !important;
+  align-items: right !important;
+  margin-top: 0px  !important;
+  margin-right: 10px;
 }

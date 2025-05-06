@@ -1,20 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Chat } from "./components/Chat/Chat";
 import { Controls } from "./components/Controls/Controls";
 import styles from "./App.module.css";
 import { Graph } from "./components/Graph/Graph";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import ReactLogo from '../public/title.svg';
+import { Loader } from "./components/Loader/Loader";
+import { GraphLoader } from "./components/GraphLoader/GraphLoader";
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 function App() {
   const [messages, setMessages] = useState([]);
   const [chatStatus, setChatStatus] = useState("ended");
   const messagesEndRef = useRef(null);
   const lastSentUserMessage = useRef(null);
-  const [shouldRenderGraph, setShouldRenderGraph] = useState(0);
-
+  const [loader, setLoader] = useState(false);
+  const [loaderGraph, setLoaderGraph] = useState(false);
+  const [key, setKey] = useState('user');
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
 
@@ -42,6 +44,7 @@ function App() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestBody),
       });
+      setLoader(true)
 
       if (!response.ok) {
         throw new Error("Failed to send request");
@@ -71,10 +74,10 @@ function App() {
         const messageContent = data.message.message;
 
         // Only add messages from 'User_Proxy' or 'sql_proxy'
-        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_executor") {
+        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent") {
           const isUserProxy = messageUser === "User_Proxy";
           const isSqlProxy = messageUser === "sql_proxy";
-          const isGraphExecutor = messageUser === "graph_executor";
+          const isGraphAgent = messageUser === "graph_agent";
 
           // Only add the message if it's not the echoed user message from User_Proxy
           if (!isUserProxy || messageContent !== lastSentUserMessage.current) {
@@ -83,11 +86,13 @@ function App() {
               { content: messageContent, role: isUserProxy ? "user" : "assistant", agent: messageUser },
             ]);
           }
-          // Trigger graph re-render specifically for 'graph_executor' messages
-          if (isGraphExecutor) {
-            setTimeout(() => {
-              setShouldRenderGraph((prev) => prev + 1);
-            }, 100);// Toggle state to force re-render
+
+          if (isSqlProxy) {
+            setLoader(false)
+            setLoaderGraph(false)
+          }
+          if (isGraphAgent) {
+            setLoaderGraph(true)
           }
           // Reset the last sent user message after a short delay to avoid potential issues
           setTimeout(() => {
@@ -122,6 +127,8 @@ function App() {
   return (
 
     <div className={styles.MainContainer}>
+      {loader ? <Loader /> : <div />}
+
       <div className={styles.HeaderContainer}>
         <div className={styles.LogoContainer}>
           <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
@@ -133,19 +140,40 @@ function App() {
 
       <div className={styles.ChatGraphContainer}>
         <div className={styles.ChatControlsContainer}>
-          <div className={styles.ChatContainer}>
-            <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
-          </div>
-          <div className={styles.ControlsContainer}>
-            <Controls onSend={handleContentSend} />
-          </div>
-    
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="mb-3"
+          >
+            <Tab eventKey="user" title="User">
+              <div className={styles.ChatContainer}>
+                <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
+              </div>
+              <div className={styles.ControlsContainer}>
+
+                <Controls onSend={handleContentSend} />
+              </div>
+            </Tab>
+            <Tab eventKey="agents" title="Agents">
+              <div className={styles.ChatContainer}>
+                <Chat messages= {messages} messagesEndRef={messagesEndRef} />
+              </div>
+              <div className={styles.ControlsContainer}>
+
+                <Controls onSend={handleContentSend} />
+              </div>
+            </Tab>
+
+          </Tabs>
         </div>
+
         <div className={styles.GraphContainer}>
-          {<Graph />}
+
+          {loaderGraph ? <GraphLoader /> : <Graph />}
         </div>
       </div>
-    </div>
+    </div >
 
 
   );

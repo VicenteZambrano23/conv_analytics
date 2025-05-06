@@ -10,9 +10,23 @@ export function Chat({ messages, messagesEndRef }) {
   return (
     <div className={styles.Chat}>
       {[WELCOME_MESSAGE, ...messages].map(({ role, content }, index) => (
-        <div key={index} className={styles.Message} data-role={role}>
-          <Markdown>{content}</Markdown>
-        </div>
+        (
+          role === "user" ? (
+            <div key={index} className={styles.Message} data-role={role}>
+              <Markdown>{content}</Markdown>
+            </div>) :
+            (
+              <div key={index} className= {styles.AssistantMessages}>
+                <div>
+                  <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
+                </div>
+                <div className={styles.Message} data-role={role}>
+                  <Markdown>{content}</Markdown>
+                </div>
+              </div>
+            )
+
+        )
       ))}
       <div ref={messagesEndRef} />
     </div>

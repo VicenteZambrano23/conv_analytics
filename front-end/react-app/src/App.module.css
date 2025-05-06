@@ -56,7 +56,9 @@
   width: 45vw;
   height : 70vh;
   align-items: left;
-  border-radius: 16px;
+  border-top-left-radius: 16px; /* Adjust the radius value as needed */
+  border-top-right-radius: 16px;
+  margin-top: -10vh;
 
    
 }
@@ -72,9 +74,10 @@
   background-color: white;
   border-radius: 16px;
   width: 45vw;
-  height : 70vh;
+  height : 75.5vh;
   align-items: center;
   justify-content: center;
+  margin-top: -5vh;
 }
 
 
