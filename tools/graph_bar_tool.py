@@ -13,7 +13,7 @@ class GraphBarInput(BaseModel):
 def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool."] ):
 
   query = input.query
-  if query.find('LIMIT') == -1:
+  if query.find('SELECT') == -1:
     return "Not SELECT statement"
 
   update_counter()
@@ -36,7 +36,7 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
   query_summary = summary_query(str(query_result))
   category_element = [item[0] for item in query_result]
   num_element= [item[1] for item in query_result]
-
+  
   jsx_code = f"""
   import React, {{ useState }} from "react";
   import Chart from 'react-apexcharts';
