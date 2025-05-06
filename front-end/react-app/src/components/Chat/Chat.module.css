@@ -1,37 +1,55 @@
 .Chat {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  height: 100%;
-  padding: 8px;
-  overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    height: 100%;
+    padding: 8px;
+    overflow-y: auto;
 }
 
 .Message {
-  width: 90%;
-  padding: 0 16px;
-  border-radius: 16px;
-  font-size: 14px;
-
-  &[data-role="user"] {
-    align-self: flex-end;
-    background: #f3f3f3;
-  }
-  &[data-role="assistant"] {
-    
-    background: lightblue;
-  }
+    width: 90%;
+    padding: 0 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    &[data-role="user"] {
+        align-self: flex-end;
+        background: #f3f3f3;
+    }
+    &[data-role="assistant"] {
+        background: lightblue;
+        &[agent="sql_proxy"] {
+            background: lightblue;
+        }
+        &[agent="graph_agent"] {
+            background: thistle;
+        }
+        &[agent="graph_executor"] {
+            background: lemonchiffon;
+        }
+        &[agent="query_agent"] {
+            background: lightcoral;
+        }
+        &[agent="executor_query"] {
+            background: navajowhite;
+        }
+    }
 }
-.AssistantMessages{
-  display: flex;
 
+.AssistantMessages {
+    display: flex;
 }
+
 .Logo {
-  display: flex !important;
-  justify-content: right !important;
-  width: 4vh !important;
-  height: 4vh !important;
-  align-items: right !important;
-  margin-top: 0px  !important;
-  margin-right: 10px;
+    display: flex !important;
+    justify-content: right !important;
+    width: 4vh !important;
+    height: 4vh !important;
+    align-items: right !important;
+    margin-top: 0px !important;
+    margin-right: 10px;
+}
+
+.AgentTitle {
+    font-weight: bold;
 }

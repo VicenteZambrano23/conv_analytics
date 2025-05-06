@@ -30,11 +30,12 @@ function App() {
 
     if (chatStatus === "Chat ongoing" || chatStatus === "inputting") {
       // Send message request
-      apiEndpoint = "https://5008-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/send_message";
+      apiEndpoint = "https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/send_message";
       requestBody = { message: content };
     } else {
+
       // Start chat request
-      apiEndpoint = "https://5008-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/start_chat";
+      apiEndpoint = "https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/start_chat";
       requestBody = { ...initialChatRequest, message: content };
     }
 
@@ -45,7 +46,6 @@ function App() {
         body: JSON.stringify(requestBody),
       });
       setLoader(true)
-
       if (!response.ok) {
         throw new Error("Failed to send request");
       }
@@ -63,7 +63,7 @@ function App() {
   // Function to fetch messages from the backend
   const fetchMessages = async () => {
     try {
-      const response = await fetch("https://5008-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/get_message");
+      const response = await fetch("https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/get_message");
       if (!response.ok) {
         throw new Error("Failed to fetch messages");
       }
@@ -74,11 +74,11 @@ function App() {
         const messageContent = data.message.message;
 
         // Only add messages from 'User_Proxy' or 'sql_proxy'
-        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent") {
+        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent" || messageUser === "graph_executor" || messageUser === "query_agent"  || messageUser === "executor_query") {
           const isUserProxy = messageUser === "User_Proxy";
           const isSqlProxy = messageUser === "sql_proxy";
           const isGraphAgent = messageUser === "graph_agent";
-
+          
           // Only add the message if it's not the echoed user message from User_Proxy
           if (!isUserProxy || messageContent !== lastSentUserMessage.current) {
             setMessages((prevMessages) => [
@@ -148,7 +148,7 @@ function App() {
           >
             <Tab eventKey="user" title="User">
               <div className={styles.ChatContainer}>
-                <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} />
+                <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} eventKey="user"/>
               </div>
               <div className={styles.ControlsContainer}>
 
@@ -157,7 +157,7 @@ function App() {
             </Tab>
             <Tab eventKey="agents" title="Agents">
               <div className={styles.ChatContainer}>
-                <Chat messages= {messages} messagesEndRef={messagesEndRef} />
+                <Chat messages= {messages} messagesEndRef={messagesEndRef} eventKey="agents"/>
               </div>
               <div className={styles.ControlsContainer}>
 

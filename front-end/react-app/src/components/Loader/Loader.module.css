@@ -3,29 +3,36 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top:87.2vh;
+    top: 87.4vh;
     left: 4.5vw;
     width: 45vw;
     height: 6vh;
     background: #f3f3f3;
     opacity: 0.6;
-    border-bottom-left-radius: 16px; 
-  border-bottom-right-radius: 16px;
-  }
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+
 /* HTML: <div class="loader"></div> */
+
 .loader {
     width: 60px;
     aspect-ratio: 4;
-    --_g: no-repeat radial-gradient(circle closest-side,#000 90%,#0000);
-    background: 
-      var(--_g) 0%   50%,
-      var(--_g) 50%  50%,
-      var(--_g) 100% 50%;
+    --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
+    background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
     background-size: calc(100%/3) 100%;
     animation: l7 1s infinite linear;
-  }
-  @keyframes l7 {
-      33%{background-size:calc(100%/3) 0%  ,calc(100%/3) 100%,calc(100%/3) 100%}
-      50%{background-size:calc(100%/3) 100%,calc(100%/3) 0%  ,calc(100%/3) 100%}
-      66%{background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0%  }
-  }
+}
+
+@keyframes l7 {
+    33% {
+        background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+    }
+    50% {
+        background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+    }
+    66% {
+        background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
+    }
+}
