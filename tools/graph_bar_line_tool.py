@@ -38,8 +38,8 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
   print(query_result)
   query_summary = summary_query(str(query_result))
   category_element = [item[0] for item in query_result]
-  num_element_bar= [int(item[1]) for item in query_result]
-  num_element_line= [int(item[2]) for item in query_result]
+  num_element_bar= [item[1] for item in query_result]
+  num_element_line= [item[2] for item in query_result]
   print(num_element_bar)
   print(num_element_line)
   jsx_code = f"""
@@ -55,7 +55,7 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
         }}, {{
           name: "{y_line_axis_title}",
           type: 'line',
-          data: {num_element_line}
+          data: {num_element_line},
         }}],
           chart: {{
           height: 350,
@@ -70,18 +70,30 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
         }},
         dataLabels: {{
           enabled: true,
-          enabledOnSeries: [1]
+          enabledOnSeries: [1],
+          formatter: function (val) {{
+            return val.toFixed(0);
+          }},
         }},
         labels: {category_element},
         yaxis: [{{
           title: {{
             text: "{y_bar_axis_title}",
           }},
-        
+          labels: {{
+            formatter: function (val) {{
+              return val.toFixed(0);
+            }}
+          }}
         }}, {{
           opposite: true,
           title: {{
             text: "{y_line_axis_title}",
+          }},
+          labels: {{
+            formatter: function (val) {{
+              return val.toFixed(0);
+            }}
           }}
         }}]
         }};

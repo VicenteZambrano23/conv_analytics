@@ -1,31 +1,37 @@
-Mixed Bar Line Chart Visualization Tool
+Mixed Bar-Line Chart Visualization Tool
 
-This tool renders a mixed bar line chart in the user interface based on query results from the SQLite database. It visualizes categorical data comparisons, showing relationships between groups and their associated numeric values of two different variables.
+This tool renders a mixed bar and line chart in the user interface based on query results from the SQLite database. It visualizes two different but related numeric datasets across the same categories, displaying one dataset as bars and the other as a line connecting points. It allows for the comparison of magnitudes (bars) and trends or related values (line) across categories simultaneously. APART from this, this type of chart can also be used when the user asks for two previous visuals (a bar chart and a line chart) to be combined into a single view. 
 
 Parameters:
 - query: A valid SQLite SELECT statement that returns exactly three columns:
-  * First column: Categories for the x-axis (text/categorical data)
-  * Second column: Numeric values for the y-bar-axis (must be numbers)
-  * Third column: Numeric values for the y-line-axis (must be numbers)
+  * First column: Categories for the shared x-axis (text/categorical data)
+  * Second column: Numeric values for the bar heights (must be numbers)
+  * Third column: Numeric values for the line points (must be numbers)
 - title: A descriptive chart title explaining what the visualization represents
-- y_bar_axis_label: A clear label for the y-bar-axis indicating what the numeric values measure
-- y_line_axis_label: A clear label for the y-line-axis indicating what the numeric values measure
+- x_axis_label: A clear label for the shared x-axis indicating the categories
+- y_bar_axis_label: A clear label for the y-axis corresponding to the bar values
+- y_line_axis_label: A clear label for the y-axis corresponding to the line values
+
 Returns:
-- A rendered mixed bar-line chart displayed in the user interface
+- A rendered mixed bar and line chart displayed in the user interface
 - The chart will automatically scale to accommodate the data
-- Categories are displayed on the x-axis in the order specified by the query's ORDER BY clause
-- Values are represented by the height of each bar according to the y-bar-axis scale
+- Categories are displayed on the x-axis in the order specified by the query
+- Bar heights represent the values from the second column according to the `y_bar_axis_label` scale
+- Line points represent the values from the third column according to the `y_line_axis_label` scale, connected sequentially based on the x-axis categories
 - Also a summary of the data displayed and if the graphic is correctly added
 
 Usage:
-graph_bar_tool(
-  "SELECT Category, COUNT(*) AS Total FROM Table GROUP BY Category ORDER BY Total DESC LIMIT 10",
-  "Distribution of Items by Category",
-  "Number of Items"
+graph_bar_line_tool(
+  query="SELECT Product, TotalSales, AverageRating FROM SalesData GROUP BY Product",
+  title="Product Sales vs. Average Rating",
+  x_axis_label="Product",
+  y_bar_axis_label="Total Sales",
+  y_line_axis_label="Average Rating"
 )
 
 Requirements:
-- Query must return exactly 3 columns in the format: [(category1, valuebar1, valueline1), (category2, valuebar2, valueline2), ...]
-- Results should be limited to 10 or fewer categories for optimal readability
-- Values must be numeric and non-negative
-- Query should include ORDER BY to arrange bars in a meaningful sequence (typically descending by value)
+- Query must return exactly 3 columns in the format: [('category1', value_bar1, value_line1), ('category2', value_bar2, value_line2), ...]
+- The number of categories should be reasonable for readability. Consider limiting results if necessary.
+- The first column must be categorical. The second and third columns must be numeric.
+- The order of categories in the query determines the order on the x-axis. Use ORDER BY in your query if a specific order is required.
+- Ensure the two numeric metrics are meaningfully related when displayed together on the same categorical axis.
