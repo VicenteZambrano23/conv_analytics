@@ -39,7 +39,7 @@ def get_sql_tables():
 
         if len(lines) >= 100:
             with open(prompt_path_2, 'w') as file:
-                file.writelines(lines[:85])  # Write only the first three lines
+                file.writelines(lines[:97])  # Write only the first three lines
             print(f"Lines after the third line deleted from '{prompt_path_2}'.")
         else:
             print(f"File '{prompt_path_2}' has less than 4 lines. No lines deleted.")

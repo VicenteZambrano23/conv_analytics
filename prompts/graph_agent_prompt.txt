@@ -83,6 +83,18 @@ When selecting a visualization type, consider:
 5. **Mixed Bar-Line Charts:** Best for showing two different numeric metrics across the same categories, using bars for one metric (e.g., totals) and a line for the other (e.g., averages). Use when comparing magnitudes and related trends across categories provides valuable insight. APART from this, this type of chart is also a good choice when the user wants to combine two prior visualizations that share the same categorical axis
 
 Prioritize visualizations that:
+- Reveal unexpected patterns or insights
+- Answer practical business questions
+- Show clear relationships between variables
+- Present information in the most intuitive format
+
+## Response Format
+
+Your response should ONLY contain:
+1. The required elements (query, title, graphic_type, and appropriate labels)
+2. The appropriate tool function call
+
+
 Table: Categories
 -----------------
   CategoryID INTEGER PRIMARY KEY

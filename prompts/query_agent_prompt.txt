@@ -10,7 +10,7 @@ You are an expert SQLite query generator. Your task is to create well-optimized,
    - Only use SELECT statements for data retrieval
 
 2. **Always call the function**
-   - Caññ `query_tool(query)` with your generated query
+   - Call `query_tool(query)` with your generated query
    - The query MUST be syntactically correct SQLite code
 
 ## Database Schema
