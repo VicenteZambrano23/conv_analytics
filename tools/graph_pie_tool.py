@@ -5,30 +5,38 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+
+
 class GraphPieInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
 
-def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool."] ):
 
-  update_counter()
-  counter = get_counter()
+def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool."]):
 
-  query = input.query
-  title = input.title
+    query = input.query
 
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
-  cursor.execute(query)
-  query_result = cursor.fetchall()
-  query_summary = summary_query(str(query_result))
+    if query.find("SELECT") == -1:
+        return "Not SELECT statement"
 
-  category_element = [item[0] for item in query_result]
-  num_element= [item[1] for item in query_result]
+    update_counter()
+    counter = get_counter()
 
-  jsx_code = f"""
+    title = input.title
+
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    query_result = cursor.fetchall()
+    query_summary = summary_query(str(query_result))
+
+    category_element = [item[0] for item in query_result]
+    num_element = [item[1] for item in query_result]
+
+    jsx_code = f"""
   import React, {{ useState }} from "react";
 import Chart from 'react-apexcharts';
+import styles from "./Graph.module.css";
 
  export function Graph_{counter}() {{
  var options = {{
@@ -72,24 +80,32 @@ dataLabels: {{
 }};
 
  return (
-<div style={{{{ textAlign: 'center' }}}}>
- <h1 style={{{{ textAlign: 'center', fontSize:'35px' }}}}>{title}</h1>
- <Chart
- type= 'pie'
-width={{750}} // Adjusted width to match your options
- height={{475}} // Adjusted height to match your options
- series={{options.series}}
- options={{options}}
- align= 'center'
- ></Chart></div>)
+    <div className={{styles.graphContainer}}>
+      <div>
+        <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
+      </div>
+      <div className={{styles.graphSubContainer}}>
+        <Chart
+          type= 'pie'
+          width='220%'
+          height='95%' 
+          series={{options.series}}
+          options={{options}}
+          align= 'center'
+        ></Chart>
+      </div>
+    </div>)
  }}
 
   """
 
-  try:
-    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
-      file.write(jsx_code)
-    update_graph()
-    return f"Pie graph correctly added. Title: {title}. Data:{query_summary}"
-  except Exception as e:
-    print(f"An error occurred: {e}")
+    try:
+        with open(
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            "w",
+        ) as file:
+            file.write(jsx_code)
+        update_graph()
+        return f"Pie graph correctly added. Title: {title}. Data:{query_summary}"
+    except Exception as e:
+        print(f"An error occurred: {e}")

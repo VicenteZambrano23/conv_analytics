@@ -25,6 +25,7 @@ export function Controls({ onSend }) {
 
   return (
     <div className={styles.row}>
+    
       <div className={styles.left}>
         <textarea
           placeholder="Message"

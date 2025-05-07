@@ -27,9 +27,9 @@ def get_sql_tables():
         with open(prompt_path_1, 'r') as file:
             lines = file.readlines()
 
-        if len(lines) >= 4:
+        if len(lines) >= 21:
             with open(prompt_path_1, 'w') as file:
-                file.writelines(lines[:3])  # Write only the first three lines
+                file.writelines(lines[:21])  # Write only the first three lines
             print(f"Lines after the third line deleted from '{prompt_path_1}'.")
         else:
             print(f"File '{prompt_path_1}' has less than 4 lines. No lines deleted.")
@@ -37,9 +37,9 @@ def get_sql_tables():
         with open(prompt_path_2, 'r') as file:
             lines = file.readlines()
 
-        if len(lines) >= 68:
+        if len(lines) >= 100:
             with open(prompt_path_2, 'w') as file:
-                file.writelines(lines[:68])  # Write only the first three lines
+                file.writelines(lines[:85])  # Write only the first three lines
             print(f"Lines after the third line deleted from '{prompt_path_2}'.")
         else:
             print(f"File '{prompt_path_2}' has less than 4 lines. No lines deleted.")

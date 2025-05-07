@@ -10,23 +10,33 @@
   flex-grow: 1; /* Takes up 1 part of the available space */
   align-items: center;
   justify-content: center;
-  height: 50%;
+  height: 6vh;
   border: none;
-  background: white;
+  background: lightblue;
+  border-bottom-right-radius: 16px;
 }
 
 .row {
   display: flex;
-  height: 10vh; /* Adjust as needed */
+  height: 6vh; /* Adjust as needed */
   width: 100%;
+  border-radius: 16px;
+  background: lightblue;
+  border-bottom-left-radius: 16px; /* Adjust the radius value as needed */
+  border-bottom-right-radius: 16px;
+  
 }
 .left textarea {
   width: 100%; /* Make the textarea fill its parent .left */
-  height: 100%; /* You might want to adjust this based on your desired vertical size */
+  height: 6vh; /* You might want to adjust this based on your desired vertical size */
   box-sizing: border-box; 
-  border: none;/* Include padding and border in the element's total width and height */
+    border-bottom-left-radius: 16px; /* Adjust the radius value as needed */
+
+  border: none;
+  background: lightblue;/* Include padding and border in the element's total width and height */
   /* Add any other textarea specific styles here */
 }
 .left textarea:focus {
   outline: none;
+   border-radius: 16px;
 }

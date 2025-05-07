@@ -1,1 +1,29 @@
-Tool to show a bar chart trought the UI.
+Bar Chart Visualization Tool
+
+This tool renders a bar chart in the user interface based on query results from the SQLite database. It visualizes categorical data comparisons, showing relationships between groups and their associated numeric values.
+
+Parameters:
+- query: A valid SQLite SELECT statement that returns exactly two columns:
+  * First column: Categories for the x-axis (text/categorical data)
+  * Second column: Numeric values for the y-axis (must be numbers)
+- title: A descriptive chart title explaining what the visualization represents
+- y_axis_label: A clear label for the y-axis indicating what the numeric values measure
+Returns:
+- A rendered bar chart displayed in the user interface
+- The chart will automatically scale to accommodate the data
+- Categories are displayed on the x-axis in the order specified by the query's ORDER BY clause
+- Values are represented by the height of each bar according to the y-axis scale
+- Also a summary of the data displayed and if the graphic is correctly added
+
+Usage:
+graph_bar_tool(
+  "SELECT Category, COUNT(*) AS Total FROM Table GROUP BY Category ORDER BY Total DESC LIMIT 10",
+  "Distribution of Items by Category",
+  "Number of Items"
+)
+
+Requirements:
+- Query must return exactly 2 columns in the format: [(category1, value1), (category2, value2), ...]
+- Results should be limited to 10 or fewer categories for optimal readability
+- Values must be numeric and non-negative
+- Query should include ORDER BY to arrange bars in a meaningful sequence (typically descending by value)

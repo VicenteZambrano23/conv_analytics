@@ -1,1 +1,37 @@
-Tool to show a scatter chart trought the UI.
+Scatter Plot Visualization Tool
+
+This tool renders a scatter plot in the user interface based on query results from the SQLite database. It visualizes relationships between two numeric variables, revealing patterns, correlations, clusters, or outliers in the data.
+
+Parameters:
+- query: A valid SQLite SELECT statement that returns either two or three columns:
+  * First column (optional): Category name for grouping/coloring points (text/categorical data)
+  * Second column (required): X-axis values (must be numbers)
+  * Third column (required): Y-axis values (must be numbers)
+- title: A descriptive chart title explaining the relationship being explored
+- x_axis_label: A clear label for the x-axis indicating what the horizontal values measure
+- y_axis_label: A clear label for the y-axis indicating what the vertical values measure
+
+Returns:
+- A rendered scatter plot displayed in the user interface
+- Each data point appears as a dot positioned according to its x and y coordinates
+- If categories are provided, points are colored by category with a corresponding legend
+- The chart automatically scales to accommodate the range of both variables
+- Also a summary of the data displayed and if the graphic is correctly added
+
+Usage:
+graph_scatter_tool(
+  "SELECT CategoryName, AVG(Price) AS AvgPrice, AVG(UnitsInStock) AS AvgStock 
+   FROM Products JOIN Categories ON Products.CategoryID = Categories.CategoryID
+   GROUP BY CategoryName",
+  "Price vs. Inventory Level by Product Category",
+  "Average Price (USD)",
+  "Average Units in Stock"
+)
+
+Requirements:
+- Query must return either 2 columns [(x1, y1), (x2, y2), ...] or 3 columns [(category1, x1, y1), ...]
+- Both x-axis and y-axis values must be numeric
+- If using categories, limit to 4 or fewer distinct categories for clear differentiation
+- Each category should have multiple data points to show meaningful patterns
+- The query should return between 10-100 data points for optimal readability
+- Consider including filters in the WHERE clause to remove outliers that might skew scaling

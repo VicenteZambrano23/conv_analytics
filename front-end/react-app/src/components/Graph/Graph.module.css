@@ -1,0 +1,55 @@
+
+.graphContainer{
+display: flex; 
+background: white;
+align-items: center;
+align-content: center;
+justify-content: center;
+width: 48vw;
+height:70vh;
+}
+
+.graph{
+display: flex; 
+align-items: center;
+align-content: center;
+width: 50%;
+justify-content: center;
+}
+
+.graphItem{
+    margin-left: -100px;
+    margin-right: -100px;
+}
+.customPrevIcon,
+.customNextIcon {
+  color: black;
+  width: 44px;
+  /* Add more styling */
+}
+.customNextIcon {
+
+    margin-right: -175px;
+    /* Add more styling */
+  }
+  .customPrevIcon {
+    transform: rotate(-0.5turn);
+    margin-left: -175px;
+    /* Add more styling */
+  }
+.graphContainer{
+  display: flex;
+  text-align: 'center';
+    flex-direction: column;
+    width: 38vw;
+    height:50vh;
+ 
+  justify-content: center;
+}
+.graphSubContainer{
+  display:flex;
+  width: 50vw;
+  height:50vh;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,1 +1,35 @@
-Tool to show a line chart trought the UI.
+Line Chart Visualization Tool
+
+This tool renders a line chart in the user interface based on query results from the SQLite database. It visualizes trends and changes over time or another continuous sequence, showing how values evolve across ordered data points.
+
+Parameters:
+- query: A valid SQLite SELECT statement that returns exactly two columns:
+  * First column: Sequential values for the x-axis (time periods or ordered sequence)
+  * Second column: Numeric values for the y-axis (must be numbers)
+- title: A descriptive chart title explaining what the trend represents
+- x_axis_label: A clear label for the x-axis indicating the time period or sequence
+- y_axis_label: A clear label for the y-axis indicating what the numeric values measure
+
+Returns:
+- A rendered line chart displayed in the user interface
+- The chart will automatically scale to accommodate the data range
+- The x-axis represents the progression of time or sequence in the order specified by the query
+- The y-axis represents the values at each point, connected by lines to show the trend
+- Also a summary of the data displayed and if the graphic is correctly added
+
+
+Usage:
+graph_line_tool(
+  "SELECT strftime('%Y-%m', OrderDate) AS Month, SUM(Total) AS Revenue FROM Orders GROUP BY Month ORDER BY Month",
+  "Monthly Revenue Trend",
+  "Month",
+  "Revenue (USD)"
+)
+
+Requirements:
+- Query must return exactly 2 columns in the format: [(x1, y1), (x2, y2), ...]
+- Results should be properly ordered by the x-axis value using ORDER BY
+- X-axis values should represent a meaningful progression (typically chronological)
+- Y-axis values must be numeric
+- Data points should be sufficiently granular to show a meaningful trend
+- For time-based data, appropriate date/time formatting functions should be used

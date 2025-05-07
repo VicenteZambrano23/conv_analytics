@@ -5,27 +5,29 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+
+
 class GraphBarInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
 
 def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool."] ):
-  
+  query = input.query
+  if query.find('SELECT') == -1:
+    return "Not SELECT statement"
+
   update_counter()
   counter = get_counter()
-
-  query = input.query
   title = input.title
   y_axis_title = input.y_axis_title
 
-  if query.find('LIMIT') == -1:
-    query = query.replace(';'," ")
-    
+  if query.find("LIMIT") == -1:
+    query = query.replace(";", " ")
+
     query += " LIMIT 10;"
   else:
     query = query
-  
 
   connection = sqlite3.connect(db_path)
   cursor = connection.cursor()
@@ -33,12 +35,13 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
   query_result = cursor.fetchall()
   query_summary = summary_query(str(query_result))
   category_element = [item[0] for item in query_result]
-  num_element= [item[1] for item in query_result]
+  num_element = [item[1] for item in query_result]
 
   jsx_code = f"""
   import React, {{ useState }} from "react";
   import Chart from 'react-apexcharts';
-
+  import styles from "./Graph.module.css";
+  
   export function Graph_{counter}() {{
     var options = {{
       series: [{{
@@ -105,26 +108,34 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
     }};
 
     return (
-      <div style={{{{ textAlign: 'center' }}}}>
-      <h1 style={{{{ textAlign: 'center',fontSize:'35px' }}}}>{title}</h1>
-      <Chart
-      type='bar'
-      width={{750}} // Adjusted width to match your options
-      height={{475}} // Adjusted height to match your options
-      series={{options.series}}
-      options={{options}}
-      align= 'center'
-  ></Chart></div>)
+    
+      <div className={{styles.graphContainer}}>
+        <div>
+          <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
+        </div>
+        <div className={{styles.graphSubContainer}}>
+          <Chart
+          type='bar'
+          width='220%'
+          height='95%' 
+          series={{options.series}}
+          options={{options}}
+          align= 'center'>
+          </Chart>
+        </div>
+        </div>)
   }}
 
   """
 
   try:
-    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
-      file.write(jsx_code)
-    
+    with open(
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            "w",
+    ) as file:
+            file.write(jsx_code)
+
     update_graph()
     return f"Bar graph correctly added. Title: {title}. Y-axis title: {y_axis_title}. Data:{query_summary}"
   except Exception as e:
-    print(f"An error occurred: {e}")
-
+      print(f"An error occurred: {e}")
