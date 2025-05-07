@@ -1,1 +1,1 @@
-This agent is responsible for creating SQL queries to extract data from the database. Don´t call for grph or visual purposes
+Activate whenever data retrieval from databases is required. Call this agent for database searches, data filtering, record extraction, or any database interaction. Do not invoke for graphing or visualization purposes, as those tasks belong to separate agents.

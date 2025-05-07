@@ -1,1 +1,1 @@
-This agent is in charge of give the info to plot a graph and for graph and visual tasks. Call it before the 'graph_executor' agent
+Activate whenever a request requires data visualization. Call this agent when users mention graphs, charts, plots, visual comparisons, trends, or data relationships. Always invoke before the 'graph_executor' agent to properly configure visualization specifications.
