@@ -13,7 +13,9 @@ class GraphBarInput(BaseModel):
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
 
 
-def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool."]):
+  query = input.query
+  if query.find('SELECT') == -1:
+    return "Not SELECT statement"
 
     query = input.query
     if query.find("SELECT") == -1:

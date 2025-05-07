@@ -26,44 +26,35 @@ def create_group_chat():
 
     def state_transition(last_speaker, group_chat):
 
-        if last_speaker is agents[2]:
-            return agents[4]
-
-        elif last_speaker is agents[1]:
+        if last_speaker is agents[1]:
             return agents[0]
 
-        elif last_speaker is agents[5]:
-            return agents[6]
-
-        elif last_speaker is agents[7]:
+        elif last_speaker is agents[3]:
             return agents[1]
+        
+        elif last_speaker is agents[5]:
+            return agents[1]
+
+        elif last_speaker is agents[2]:
+            return agents[3]
+
+        elif last_speaker is agents[4]:
+            return agents[5]
         else:
             return "auto"
 
     register_functions(agents)
 
     group_chat = GroupChat(
-        agents=[
-            agents[0],
-            agents[1],
-            agents[2],
-            agents[3],
-            agents[4],
-            agents[5],
-            agents[6],
-            agents[7],
-        ],
+        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5]],
         messages=[],
         speaker_selection_method=state_transition,
         max_round=100,
-        allowed_or_disallowed_speaker_transitions={
-            agents[4]: [agents[0]],
-            agents[2]: [agents[0]],
-            agents[7]: [agents[0]],
-            agents[1]: [agents[0]],
-            agents[6]: [agents[0]],
-            agents[5]: [agents[0]],
-        },
+        allowed_or_disallowed_speaker_transitions = {
+            agents[4] : [agents[0]],
+            agents[2] : [agents[0]],
+            agents[3] : [agents[0]],
+            agents[5] : [agents[0]],        },
         speaker_transitions_type="disallowed",
     )
 
