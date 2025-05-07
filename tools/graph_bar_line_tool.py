@@ -45,6 +45,7 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
   jsx_code = f"""
   import React, {{ useState }} from "react";
   import Chart from 'react-apexcharts';
+  import styles from "./Graph.module.css";
 
   export function Graph_{counter}() {{
     var options = {{
@@ -99,16 +100,20 @@ def graph_bar_line_tool(input: Annotated[GraphBarLineInput, "Input to the graph 
         }};
 
     return (
-      <div style={{{{ textAlign: 'center' }}}}>
-      <h1 style={{{{ textAlign: 'center',fontSize:'35px' }}}}>{title}</h1>
+       <div className={{styles.graphContainer}}>
+        <div>
+          <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
+        </div>
+        <div className={{styles.graphSubContainer}}>
       <Chart
       type='bar'
-      width={{750}} // Adjusted width to match your options
-      height={{475}} // Adjusted height to match your options
+      width='220%'
+      height='95%'
       series={{options.series}}
       options={{options}}
       align= 'center'
-  ></Chart></div>)
+  ></Chart></div>
+  </div>)
   }}
 
   """
