@@ -5,36 +5,39 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+
+
 class GraphLineInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
     y_axis_title: Annotated[str, Field(description="Title for the y-axis")]
     x_axis_title: Annotated[str, Field(description="Title for the x-axis")]
 
-def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line tool."] ):
 
-  query = input.query
+def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line tool."]):
 
-  if query.find('SELECT') == -1:
-    return "Not SELECT statement"
+    query = input.query
 
-  update_counter()
-  counter = get_counter()
+    if query.find("SELECT") == -1:
+        return "Not SELECT statement"
 
-  title = input.title
-  y_axis_title = input.y_axis_title
-  x_axis_title = input.x_axis_title
+    update_counter()
+    counter = get_counter()
 
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
-  cursor.execute(query)
-  query_result = cursor.fetchall()
-  query_summary = summary_query(str(query_result))
+    title = input.title
+    y_axis_title = input.y_axis_title
+    x_axis_title = input.x_axis_title
 
-  category_element = [item[0] for item in query_result]
-  num_element= [item[1] for item in query_result]
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    query_result = cursor.fetchall()
+    query_summary = summary_query(str(query_result))
 
-  jsx_code = f"""
+    category_element = [item[0] for item in query_result]
+    num_element = [item[1] for item in query_result]
+
+    jsx_code = f"""
   import React, {{ useState }} from "react";
  import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
@@ -99,11 +102,14 @@ title: {{
 
   """
 
-  try:
-    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
-      file.write(jsx_code)
-    
-    update_graph()
-    return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
-  except Exception as e:
-    print(f"An error occurred: {e}")
+    try:
+        with open(
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            "w",
+        ) as file:
+            file.write(jsx_code)
+
+        update_graph()
+        return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
+    except Exception as e:
+        print(f"An error occurred: {e}")

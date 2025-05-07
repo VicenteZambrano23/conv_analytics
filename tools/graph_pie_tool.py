@@ -5,32 +5,35 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+
+
 class GraphPieInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
 
-def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool."] ):
 
-  query = input.query
+def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool."]):
 
-  if query.find('SELECT') == -1:
-    return "Not SELECT statement"
-  
-  update_counter()
-  counter = get_counter()
+    query = input.query
 
-  title = input.title
+    if query.find("SELECT") == -1:
+        return "Not SELECT statement"
 
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
-  cursor.execute(query)
-  query_result = cursor.fetchall()
-  query_summary = summary_query(str(query_result))
+    update_counter()
+    counter = get_counter()
 
-  category_element = [item[0] for item in query_result]
-  num_element= [item[1] for item in query_result]
+    title = input.title
 
-  jsx_code = f"""
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    query_result = cursor.fetchall()
+    query_summary = summary_query(str(query_result))
+
+    category_element = [item[0] for item in query_result]
+    num_element = [item[1] for item in query_result]
+
+    jsx_code = f"""
   import React, {{ useState }} from "react";
 import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
@@ -96,10 +99,13 @@ dataLabels: {{
 
   """
 
-  try:
-    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
-      file.write(jsx_code)
-    update_graph()
-    return f"Pie graph correctly added. Title: {title}. Data:{query_summary}"
-  except Exception as e:
-    print(f"An error occurred: {e}")
+    try:
+        with open(
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            "w",
+        ) as file:
+            file.write(jsx_code)
+        update_graph()
+        return f"Pie graph correctly added. Title: {title}. Data:{query_summary}"
+    except Exception as e:
+        print(f"An error occurred: {e}")

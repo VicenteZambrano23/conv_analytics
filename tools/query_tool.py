@@ -4,8 +4,10 @@ from typing import Annotated, Literal
 from config.config import db_path
 from utils.summary_func import summary_query
 
+
 class QueryInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
+
 
 def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
     """
@@ -25,20 +27,20 @@ def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
     try:
         query = input.query
 
-        if query.find('SELECT') == -1:
+        if query.find("SELECT") == -1:
             return "Not SELECT statement"
-        
-# Connect to the database (or create it if it doesn't exist)
+
+        # Connect to the database (or create it if it doesn't exist)
         connection = sqlite3.connect(db_path)
         cursor = connection.cursor()
         print("Database connection successful!")
 
-            # Execute a simple query
+        # Execute a simple query
         cursor.execute(query)
         query_result = cursor.fetchall()
-            
+
         query_summary = summary_query(str(query_result))
-            
+
         return query_summary
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")
