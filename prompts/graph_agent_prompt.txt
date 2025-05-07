@@ -84,7 +84,6 @@ When selecting a visualization type, consider:
 
 Prioritize visualizations that:
 Table: Categories
-Table: Categories
 -----------------
   CategoryID INTEGER PRIMARY KEY
   CategoryName TEXT
