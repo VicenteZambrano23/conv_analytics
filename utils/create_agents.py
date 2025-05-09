@@ -3,6 +3,8 @@ from config.config import AZURE_OPENAI_CONFIG
 from utils.read_prompt import read_text_file
 import os
 import autogen
+
+
 prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts')
 
 def create_agents():
@@ -76,8 +78,21 @@ def create_agents():
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt'),
     )
 
+    
+    RAG_executor = ConversableAgent(
+        name="RAG_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_desc.txt'),
+    )
 
+    RAG_agent = ConversableAgent(
+        name="RAG_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_desc.txt'),
+    )
 
-    return user_proxy,sql_proxy,query_agent,executor_query, graph_agent, graph_executor
+    return user_proxy,sql_proxy,query_agent,executor_query, graph_agent, graph_executor, RAG_agent, RAG_executor
 
   
