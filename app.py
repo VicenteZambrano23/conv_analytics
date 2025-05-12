@@ -23,7 +23,10 @@ from tools.graph_bar_line_tool import graph_bar_line_tool
 from utils.update_counter import reset_counter
 from utils.update_graph import update_graph
 from utils.clean_graph import graph_clean
+from utils.clean_graph_data import clean_graph_data
+from tools.add_filter_tool import add_filter_tool
 
+clean_graph_data()
 graph_clean()
 get_sql_tables()
 reset_counter()
@@ -220,6 +223,45 @@ def create_groupchat(user_proxy):
     )
 
     assistants.append(graph_executor)
+
+    add_filter_agent = ConversableAgent(
+        name="add_filter_agent",
+        system_message=read_text_file(
+            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_agent_prompt.txt"
+        ),
+        llm_config=AZURE_OPENAI_CONFIG,
+        description=read_text_file(
+            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_agent_desc.txt"
+        ),
+    )
+    add_filter_agent.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+
+    assistants.append(add_filter_agent)
+
+
+    add_filter_executor = ConversableAgent(
+        name="add_filter_executor",
+        system_message=read_text_file(
+            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_executor_prompt.txt"
+        ),
+        llm_config=AZURE_OPENAI_CONFIG,
+        description=read_text_file(
+            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_executor_desc.txt"
+        ),
+    )
+    add_filter_executor.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+
+    assistants.append(add_filter_executor)
+
+
     register_function(
         query_tool,
         caller=query_agent,
@@ -284,6 +326,18 @@ def create_groupchat(user_proxy):
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_line_tool_desc.txt')),
     )
 
+    register_function(
+        add_filter_tool,
+        caller=add_filter_agent,
+        executor=add_filter_executor,
+        name="add_filter_tool",
+        description=str(
+            read_text_file(
+                "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_tool_desc.txt"
+            )
+        ),
+    )
+
     def state_transition(last_speaker, group_chat):
 
         if last_speaker is sql_proxy:
@@ -300,6 +354,12 @@ def create_groupchat(user_proxy):
 
         elif last_speaker is graph_agent:
             return graph_executor
+        
+        elif last_speaker is add_filter_agent:
+            return add_filter_executor
+
+        elif last_speaker is add_filter_executor:
+            return sql_proxy
         else:
             return "auto"
 
@@ -314,9 +374,9 @@ def create_groupchat(user_proxy):
             speaker_selection_method=state_transition,
             allowed_or_disallowed_speaker_transitions={
                 executor_query: [user_proxy],
-                graph_executor: [user_proxy],
                 query_agent: [user_proxy],
                 graph_agent: [user_proxy],
+                add_filter_agent: [user_proxy],
             },
             speaker_transitions_type="disallowed",
         )

@@ -5,64 +5,79 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+from utils.update_graph_data import update_graph_data
+
+
 class GraphScatterInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
     title: Annotated[str, Field(description="Title for the graph")]
     x_axis: Annotated[str, Field(description="X-Axis name for the graph")]
     y_axis: Annotated[str, Field(description="Y-Axis name for the graph")]
 
-def graph_scatter_tool(input: Annotated[GraphScatterInput, "Input to the graph scatter tool."] ):
 
-  query= input.query
-  if query.find('SELECT') == -1:
-    return "Not SELECT statement"
-  
-  update_counter()
-  counter = get_counter()
+def graph_scatter_tool(
+    input: Annotated[GraphScatterInput, "Input to the graph scatter tool."],
+):
 
-  title = input.title
-  x_axis = input.x_axis
-  y_axis = input.y_axis
+    query = input.query
+    if query.find("SELECT") == -1:
+        return "Not SELECT statement"
 
-  connection = sqlite3.connect(db_path)
-  cursor = connection.cursor()
-  cursor.execute(query)
-  data_dict = {}
-  rows = cursor.fetchall()
-  query_summary = summary_query(str(rows))
+    update_counter()
+    counter = get_counter()
 
+    title = input.title
+    x_axis = input.x_axis
+    y_axis = input.y_axis
 
-  if len(rows[0]) == 3:
+    graph_data = {
+        str(counter): {
+            "type": "scatter",
+            "query": query,
+            "title": title,
+            "x_axis": x_axis,
+            "y_axis": y_axis,
+        }
+    }
+    update_graph_data(graph_data)
 
-    for row in rows:
-      category = row[0]
-      value_1 = row[1]
-      value_2 = row[2]
+    connection = sqlite3.connect(db_path)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    data_dict = {}
+    rows = cursor.fetchall()
+    query_summary = summary_query(str(rows))
 
-      if category not in data_dict:
-        data_dict[category] = []
-      data_dict[category].append([value_1, value_2])
+    if len(rows[0]) == 3:
 
-  else:
-    data_dict['value'] = []
-    for row in rows:
-      value_1 = row[0]
-      value_2 = row[1]
+        for row in rows:
+            category = row[0]
+            value_1 = row[1]
+            value_2 = row[2]
 
-    
-      data_dict['value'].append([value_1, value_2])
+            if category not in data_dict:
+                data_dict[category] = []
+            data_dict[category].append([value_1, value_2])
 
-  output_string = ""
-  
-  for key, value in data_dict.items():
-    output_string += f"""\
+    else:
+        data_dict["value"] = []
+        for row in rows:
+            value_1 = row[0]
+            value_2 = row[1]
+
+            data_dict["value"].append([value_1, value_2])
+
+    output_string = ""
+
+    for key, value in data_dict.items():
+        output_string += f"""\
     {{
           name: "{key}",
           data: {value}
     }},
     """
-    
-  jsx_code = f"""
+
+    jsx_code = f"""
 import React, {{ useState }} from "react";
 import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
@@ -123,11 +138,13 @@ return (
 
   """
 
-  try:
-    with open(f'/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx', 'w') as file:
-      file.write(jsx_code)
-    update_graph()
-    return f"Scatter graph correctly added.Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"
-  except Exception as e:
-    print(f"An error occurred: {e}")
-
+    try:
+        with open(
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            "w",
+        ) as file:
+            file.write(jsx_code)
+        update_graph()
+        return f"Scatter graph correctly added.Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"
+    except Exception as e:
+        print(f"An error occurred: {e}")

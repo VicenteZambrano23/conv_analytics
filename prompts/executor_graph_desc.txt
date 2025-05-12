@@ -1,1 +1,1 @@
-"Invoke the 'graph_tool()' tool exclusively after the 'query_agent' has been called. Do not call any other tools or agents. This agent's sole purpose is to execute the 'query_tool()'."
+"Invoke the graph_pie_tool()','graph_scatter_tool()','graph_line_tool()','graph_bar_tool()' or 'graph_bar_line_tool()' tool exclusively after the 'graph_agent' has been called. Do not call any other tools or agents. This agent's sole purpose is to execute the graph_pie_tool()','graph_scatter_tool()','graph_line_tool()','graph_bar_tool()' or 'graph_bar_line_tool()'.

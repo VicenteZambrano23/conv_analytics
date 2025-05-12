@@ -33,6 +33,12 @@
         &[agent="executor_query"] {
             background: navajowhite;
         }
+        &[agent="add_filter_agent"] {
+            background: #e6a4b4;
+        }
+        &[agent="add_filter_executor"] {
+            background: #d3f6d1;
+        }
     }
 }
 

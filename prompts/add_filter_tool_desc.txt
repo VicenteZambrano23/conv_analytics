@@ -1,0 +1,16 @@
+Graphic Filter Application Tool
+
+This tool applies a filter to a specific graphic within the system. It requires the identification of the target graphic using its assigned number.
+
+Parameters:
+- graphic_number: An integer representing the sequential order in which the graphic was added to the system (e.g., 1 for the first, 2 for the second).
+
+Returns:
+- A string indicating the successful application of the filter to the specified graphic, or an error message if the operation fails.
+
+Usage:
+add_filter_tool(graphic_number=1)
+add_filter_tool(graphic_number=2)
+
+Notes:
+- The `graphic_number` must correspond to an existing graphic in the system.

@@ -1,0 +1,8 @@
+{
+    "1": {
+        "type": "bar",
+        "query": "SELECT Customers.CustomerName, COUNT(Orders.OrderID) AS TotalOrders FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID GROUP BY Customers.CustomerName ORDER BY TotalOrders DESC LIMIT 10",
+        "title": "Top 10 Customers by Number of Orders",
+        "y_axis_title": "Number of Orders"
+    }
+}

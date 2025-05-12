@@ -103,6 +103,14 @@ Table: Categories
 
 Table: sqlite_sequence
 ----------------------
+Table: Categories
+-----------------
+  CategoryID INTEGER PRIMARY KEY
+  CategoryName TEXT
+  Description TEXT
+
+Table: sqlite_sequence
+----------------------
   name 
   seq 
 

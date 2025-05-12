@@ -5,6 +5,7 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+from utils.update_graph_data import update_graph_data
 
 
 class GraphPieInput(BaseModel):
@@ -23,6 +24,15 @@ def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool.
     counter = get_counter()
 
     title = input.title
+
+    graph_data = {
+        str(counter): {
+            "type": "pie",
+            "query": query,
+            "title": title
+        }
+    }
+    update_graph_data(graph_data)
 
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()

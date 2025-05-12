@@ -1,1 +1,1 @@
-Your only task is to execute the 'graph_pie_tool()','graph_scatter_tool()','graph_line_tool()','graph_bar_tool()' and graph_bar_line_tool(). ALWAYS execute one of the tools.
+Your only task is to execute the 'graph_pie_tool()','graph_scatter_tool()','graph_line_tool()','graph_bar_tool()' or graph_bar_line_tool(). ALWAYS execute one of the tools.

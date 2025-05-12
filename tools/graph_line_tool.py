@@ -5,6 +5,7 @@ from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
+from utils.update_graph_data import update_graph_data
 
 
 class GraphLineInput(BaseModel):
@@ -27,6 +28,17 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
     title = input.title
     y_axis_title = input.y_axis_title
     x_axis_title = input.x_axis_title
+
+    graph_data = {
+        str(counter): {
+            "type": "line",
+            "query": query,
+            "title": title,
+            "x_axis_title": x_axis_title,
+            "y_axis_title": y_axis_title,
+        }
+    }
+    update_graph_data(graph_data)
 
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()

@@ -74,10 +74,11 @@ function App() {
         const messageContent = data.message.message;
 
         // Only add messages from 'User_Proxy' or 'sql_proxy'
-        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent" || messageUser === "graph_executor" || messageUser === "query_agent"  || messageUser === "executor_query") {
+        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent" || messageUser === "graph_executor" || messageUser === "query_agent"  || messageUser === "executor_query" || messageUser == "add_filter_agent" || messageUser == "add_filter_executor") {
           const isUserProxy = messageUser === "User_Proxy";
           const isSqlProxy = messageUser === "sql_proxy";
           const isGraphAgent = messageUser === "graph_agent";
+          const isFilterAgent = messageUser === "add_filter_agent";
           
           // Only add the message if it's not the echoed user message from User_Proxy
           if (!isUserProxy || messageContent !== lastSentUserMessage.current) {
@@ -92,6 +93,10 @@ function App() {
             setLoaderGraph(false)
           }
           if (isGraphAgent) {
+            setLoaderGraph(true)
+          }
+
+          if (isFilterAgent) {
             setLoaderGraph(true)
           }
           // Reset the last sent user message after a short delay to avoid potential issues
@@ -167,8 +172,9 @@ function App() {
 
           </Tabs>
         </div>
-
         <div className={styles.GraphContainer}>
+
+          
 
           {loaderGraph ? <GraphLoader /> : <Graph />}
         </div>
