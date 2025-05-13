@@ -63,3 +63,14 @@
     justify-content: center;
     align-items: center;
 }
+
+.dateContainer {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2vh;
+}
+
+.toDate {
+    margin-left: 2vw;
+    margin-right: 2vw;
+}

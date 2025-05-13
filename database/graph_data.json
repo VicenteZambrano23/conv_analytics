@@ -1,8 +1,14 @@
 {
     "1": {
-        "type": "bar",
-        "query": "SELECT Customers.CustomerName, COUNT(Orders.OrderID) AS TotalOrders FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID GROUP BY Customers.CustomerName ORDER BY TotalOrders DESC LIMIT 10",
-        "title": "Top 10 Customers by Number of Orders",
-        "y_axis_title": "Number of Orders"
+        "type": "scatter",
+        "query": "SELECT P.ProductName, P.Price, COUNT(OD.OrderID) AS NumberOfOrders FROM Products P JOIN OrderDetails OD ON P.ProductID = OD.ProductID GROUP BY P.ProductName, P.Price ORDER BY NumberOfOrders DESC LIMIT 10;",
+        "title": "Relationship between Product Price and Number of Orders",
+        "x_axis": "Price (USD)",
+        "y_axis": "Number of Orders"
+    },
+    "2": {
+        "type": "pie",
+        "query": "SELECT C.Country, COUNT(O.OrderID) AS NumberOfOrders FROM Orders O JOIN Customers C ON O.CustomerID = C.CustomerID GROUP BY C.Country ORDER BY NumberOfOrders DESC LIMIT 10",
+        "title": "Proportion of Sales by Country"
     }
 }

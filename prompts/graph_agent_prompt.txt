@@ -94,15 +94,8 @@ Your response should ONLY contain:
 1. The required elements (query, title, graphic_type, and appropriate labels)
 2. The appropriate tool function call
 
+*Database schema*
 
-Table: Categories
------------------
-  CategoryID INTEGER PRIMARY KEY
-  CategoryName TEXT
-  Description TEXT
-
-Table: sqlite_sequence
-----------------------
 Table: Categories
 -----------------
   CategoryID INTEGER PRIMARY KEY

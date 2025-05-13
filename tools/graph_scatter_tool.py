@@ -30,6 +30,14 @@ def graph_scatter_tool(
     x_axis = input.x_axis
     y_axis = input.y_axis
 
+    
+    if query.find("LIMIT") == -1:
+        query = query.replace(";", " ")
+
+        query += " LIMIT 10;"
+    else:
+        query = query
+        
     graph_data = {
         str(counter): {
             "type": "scatter",
@@ -40,7 +48,6 @@ def graph_scatter_tool(
         }
     }
     update_graph_data(graph_data)
-
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
     cursor.execute(query)

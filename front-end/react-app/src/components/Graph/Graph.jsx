@@ -6,6 +6,7 @@ import Arrow from '/teamspace/studios/this_studio/conv_analytics/front-end/react
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Graph_1 } from "./Graph_1";
+import { Graph_2 } from "./Graph_2";
 
 export function Graph() {
 
@@ -15,6 +16,11 @@ export function Graph() {
       prevIcon = {<img className={styles.customPrevIcon} src={Arrow} alt="" />} 
     nextIcon = {<img className={styles.customNextIcon} src={Arrow} alt="" />}>
       
+    <Carousel.Item >
+      <div className={styles.graphContainer}>
+        <Graph_2/>
+      </div>
+    </Carousel.Item> 
     <Carousel.Item >
       <div className={styles.graphContainer}>
         <Graph_1/>

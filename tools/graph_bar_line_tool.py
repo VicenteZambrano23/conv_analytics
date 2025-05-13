@@ -53,13 +53,12 @@ def graph_bar_line_tool(
     cursor = connection.cursor()
     cursor.execute(query)
     query_result = cursor.fetchall()
-    print(query_result)
+    
     query_summary = summary_query(str(query_result))
     category_element = [item[0] for item in query_result]
     num_element_bar = [item[1] for item in query_result]
     num_element_line = [item[2] for item in query_result]
-    print(num_element_bar)
-    print(num_element_line)
+
     jsx_code = f"""
   import React, {{ useState }} from "react";
   import Chart from 'react-apexcharts';
