@@ -2,7 +2,7 @@ from utils.update_counter import get_counter
 
 def update_graph():
 
-  counter = int(get_counter())
+  counter = int(get_counter()+1)
   new_graph_str= ""
   second_graph_str = ""
 

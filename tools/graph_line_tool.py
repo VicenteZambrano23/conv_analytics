@@ -22,23 +22,12 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
     if query.find("SELECT") == -1:
         return "Not SELECT statement"
 
-    update_counter()
     counter = get_counter()
 
     title = input.title
     y_axis_title = input.y_axis_title
     x_axis_title = input.x_axis_title
 
-    graph_data = {
-        str(counter): {
-            "type": "line",
-            "query": query,
-            "title": title,
-            "x_axis_title": x_axis_title,
-            "y_axis_title": y_axis_title,
-        }
-    }
-    update_graph_data(graph_data)
 
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
@@ -54,7 +43,7 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
  import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
 
- export function Graph_{counter}() {{
+ export function Graph_{counter+1}() {{
  var options = {{
  series: [{{
  name: "{y_axis_title}",
@@ -116,12 +105,26 @@ title: {{
 
     try:
         with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
             "w",
         ) as file:
             file.write(jsx_code)
 
         update_graph()
+        update_counter()
+        count = get_counter()
+        graph_data = {
+          str(count): {
+            "type": "line",
+            "query": query,
+            "title": title,
+            "x_axis_title": x_axis_title,
+            "y_axis_title": y_axis_title,
+        }
+
+        }
+
+        update_graph_data(graph_data)
         return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
     except Exception as e:
         print(f"An error occurred: {e}")

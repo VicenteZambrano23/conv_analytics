@@ -1,0 +1,22 @@
+{
+    "1": {
+        "type": "line",
+        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS Month, SUM(OrderDetails.Quantity * Products.Price) AS Revenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY Month ORDER BY Month;",
+        "title": "Monthly Revenue Trend (July 1996 - February 1997)",
+        "x_axis_title": "Month",
+        "y_axis_title": "Revenue (USD)"
+    },
+    "2": {
+        "type": "bar",
+        "query": "SELECT strftime('%Y-%m', OrderDate) AS Month, COUNT(OrderID) AS Number_of_Orders FROM Orders GROUP BY Month ORDER BY Month  LIMIT 10;",
+        "title": "Number of Orders Per Month (July 1996 - February 1997)",
+        "y_axis_title": "Number of Orders"
+    },
+    "3": {
+        "type": "bar_line",
+        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS Month, COUNT(Orders.OrderID) AS Number_of_Orders, SUM(OrderDetails.Quantity * Products.Price) AS Revenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY Month ORDER BY Month  LIMIT 10;",
+        "title": "Monthly Orders and Revenue Trend (July 1996 - February 1997)",
+        "y_bar_axis_title": "Number of Orders",
+        "y_line_axis_title": "Revenue (USD)"
+    }
+}

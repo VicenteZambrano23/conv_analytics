@@ -20,19 +20,11 @@ def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool.
     if query.find("SELECT") == -1:
         return "Not SELECT statement"
 
-    update_counter()
     counter = get_counter()
 
     title = input.title
 
-    graph_data = {
-        str(counter): {
-            "type": "pie",
-            "query": query,
-            "title": title
-        }
-    }
-    update_graph_data(graph_data)
+    
 
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
@@ -48,7 +40,7 @@ def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool.
 import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
 
- export function Graph_{counter}() {{
+ export function Graph_{counter+1}() {{
  var options = {{
   colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
   series: {num_element},
@@ -111,11 +103,23 @@ dataLabels: {{
 
     try:
         with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
             "w",
         ) as file:
             file.write(jsx_code)
         update_graph()
+        update_counter()
+
+        title = input.title
+
+        graph_data = {
+            str(counter+1): {
+                "type": "pie",
+                "query": query,
+                "title": title
+            }
+        }
+        update_graph_data(graph_data)
         return f"Pie graph correctly added. Title: {title}. Data:{query_summary}"
     except Exception as e:
         print(f"An error occurred: {e}")

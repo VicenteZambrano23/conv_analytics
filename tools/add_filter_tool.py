@@ -174,7 +174,7 @@ def add_filter_tool(
           with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
             file.write(jsx_code)
 
-          update_graph()
+          
           return f"Filter of bar graph correctly added. Filter numeric range in {y_axis_title}"
 
         except Exception as e:
@@ -362,7 +362,7 @@ export function Graph_{counter}() {{
         with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
           file.write(jsx_code)
 
-        update_graph()
+        
         return f"Filter of scatter graph correctly added. Filter numeric range in {y_axis} and {x_axis}"
 
       except Exception as e:
@@ -525,7 +525,7 @@ export function Graph_{counter}() {{
         with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
           file.write(jsx_code)
 
-        update_graph()
+        
         return f"Filter of line graph correctly added. Filter date range in {x_axis_title}"
 
       except Exception as e:
@@ -709,7 +709,7 @@ export function Graph_{counter}() {{
         with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
           file.write(jsx_code)
 
-        update_graph()
+        
         return f"Filter of line-bar graph correctly added. Filter date range by month"
 
       except Exception as e:

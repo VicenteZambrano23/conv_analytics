@@ -23,7 +23,6 @@ def graph_scatter_tool(
     if query.find("SELECT") == -1:
         return "Not SELECT statement"
 
-    update_counter()
     counter = get_counter()
 
     title = input.title
@@ -38,16 +37,7 @@ def graph_scatter_tool(
     else:
         query = query
         
-    graph_data = {
-        str(counter): {
-            "type": "scatter",
-            "query": query,
-            "title": title,
-            "x_axis": x_axis,
-            "y_axis": y_axis,
-        }
-    }
-    update_graph_data(graph_data)
+    
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
     cursor.execute(query)
@@ -89,7 +79,7 @@ import React, {{ useState }} from "react";
 import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
 
-export function Graph_{counter}() {{
+export function Graph_{counter+1}() {{
 var options = {{
   colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
  series: [{output_string}],
@@ -147,11 +137,35 @@ return (
 
     try:
         with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
             "w",
         ) as file:
             file.write(jsx_code)
         update_graph()
+
+        update_counter()
+
+    
+
+        
+        if query.find("LIMIT") == -1:
+            query = query.replace(";", " ")
+
+            query += " LIMIT 10;"
+        else:
+            query = query
+            
+        graph_data = {
+            str(counter+1): {
+                "type": "scatter",
+                "query": query,
+                "title": title,
+                "x_axis": x_axis,
+                "y_axis": y_axis,
+            }
+        }
+        update_graph_data(graph_data)
+
         return f"Scatter graph correctly added.Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"
     except Exception as e:
         print(f"An error occurred: {e}")

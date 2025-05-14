@@ -3,11 +3,11 @@ import { Chat } from "./components/Chat/Chat";
 import { Controls } from "./components/Controls/Controls";
 import styles from "./App.module.css";
 import { Graph } from "./components/Graph/Graph";
-import ReactLogo from '../public/title.svg';
 import { Loader } from "./components/Loader/Loader";
 import { GraphLoader } from "./components/GraphLoader/GraphLoader";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import React from "react";
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -139,7 +139,7 @@ function App() {
           <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
         </div>
         <div className={styles.TitleContainer}>
-          <img className={styles.Title} src={ReactLogo} alt="Title" />
+          <img className={styles.Title} src='../public/title.svg' alt="Title" />
         </div>
       </div>
 

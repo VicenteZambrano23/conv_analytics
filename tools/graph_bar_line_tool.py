@@ -23,7 +23,6 @@ def graph_bar_line_tool(
     if query.find("SELECT") == -1:
         return "Not SELECT statement"
 
-    update_counter()
     counter = get_counter()
     title = input.title
     y_bar_axis_title = input.y_bar_axis_title
@@ -36,17 +35,6 @@ def graph_bar_line_tool(
     else:
         query = query
 
-    graph_data = {
-        str(counter): {
-            "type": "bar_line",
-            "query": query,
-            "title": title,
-            "y_bar_axis_title": y_bar_axis_title,
-            "y_line_axis_title": y_line_axis_title,
-        }
-    }
-
-    update_graph_data(graph_data)
 
 
     connection = sqlite3.connect(db_path)
@@ -64,7 +52,7 @@ def graph_bar_line_tool(
   import Chart from 'react-apexcharts';
   import styles from "./Graph.module.css";
 
-  export function Graph_{counter}() {{
+  export function Graph_{counter+1}() {{
     var options = {{
           series: [{{
           name: "{y_bar_axis_title}",
@@ -137,12 +125,24 @@ def graph_bar_line_tool(
 
     try:
         with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx",
+            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
             "w",
         ) as file:
             file.write(jsx_code)
 
         update_graph()
+        update_counter()
+        graph_data = {
+        str(counter + 1): {
+            "type": "bar_line",
+            "query": query,
+            "title": title,
+            "y_bar_axis_title": y_bar_axis_title,
+            "y_line_axis_title": y_line_axis_title,
+        }
+    }
+
+        update_graph_data(graph_data)
         return f"Bar graph correctly added. Title: {title}. Y-bar-axis title: {y_bar_axis_title}. Y-line-axis title: {y_bar_axis_title} Data:{query_summary}"
     except Exception as e:
         print(f"An error occurred: {e}")
