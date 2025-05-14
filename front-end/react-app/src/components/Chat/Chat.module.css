@@ -33,6 +33,12 @@
         &[agent="executor_query"] {
             background: navajowhite;
         }
+        &[agent="RAG_agent"] {
+            background: rgb(169, 135, 197);
+        }
+        &[agent="RAG_executor"] {
+            background: rgb(158, 233, 162);
+        }
     }
 }
 

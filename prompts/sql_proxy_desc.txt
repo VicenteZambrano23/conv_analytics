@@ -4,6 +4,6 @@ This agent **must always precede** the user proxy agent in the processing order.
 
 It should be selected in the following scenarios:
 
-* **Post-Execution:** Immediately after the `executor_query` or `graph_executor` agents have completed their tasks and a final answer is ready for the user.
+* **Post-Execution:** Immediately after the 'executor_query', 'graph_executor' agents have completed their tasks and a final answer is ready for the user.
 * **Previous Information Retrieval:** When the user explicitly requests previously discussed information.
 * **Direct User Inquiry:** For general user prompts that do not necessitate specific tool usage or external data retrieval by other specialized agents.

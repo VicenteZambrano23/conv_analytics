@@ -336,8 +336,8 @@ def create_groupchat(user_proxy):
         elif last_speaker is graph_executor:
             return sql_proxy
 
-        elif last_speaker is RAG_executor:
-            return sql_proxy
+        #elif last_speaker is RAG_executor:
+            #return sql_proxy
 
         elif last_speaker is query_agent:
             return executor_query

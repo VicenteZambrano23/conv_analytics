@@ -32,7 +32,7 @@ class RagInput(BaseModel):
 def retrieve_tool(input: Annotated[RagInput, "Input to the RAG tool."] ):
 
     #rag_agent.n_results = input.n_results  # Set the number of results to be retrieved.
-    _context = {"problem": input.message, "n_results": input.n_results}
+    _context = {"problem": input.message}
     ret_msg = retrieve_agent.message_generator(retrieve_agent, None, _context)
     return ret_msg
 

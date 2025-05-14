@@ -74,7 +74,7 @@ function App() {
         const messageContent = data.message.message;
 
         // Only add messages from 'User_Proxy' or 'sql_proxy'
-        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent" || messageUser === "graph_executor" || messageUser === "query_agent"  || messageUser === "executor_query") {
+        if (messageUser === "User_Proxy" || messageUser === "sql_proxy" || messageUser === "graph_agent" || messageUser === "graph_executor" || messageUser === "query_agent"  || messageUser === "executor_query" || messageUser === "RAG_agent"  || messageUser === "RAG_executor") {
           const isUserProxy = messageUser === "User_Proxy";
           const isSqlProxy = messageUser === "sql_proxy";
           const isGraphAgent = messageUser === "graph_agent";
