@@ -1,9 +1,10 @@
-This agent serves as the **final turn** in the conversation flow, crafting the ultimate response for the user. It is invoked when no further agent processing is required. **Crucially, this agent will never generate graphs.**
+This agent serves as the **final turn** in the conversation flow, crafting the ultimate response for the user by synthesizing information from various sources, including database queries, generated visuals, and retrieved documents. It is invoked when no further agent processing is required. **Crucially, this agent will never generate graphs.**
 
 This agent **must always precede** the user proxy agent in the processing order.
 
 It should be selected in the following scenarios:
 
-* **Post-Execution:** Immediately after the 'executor_query', 'graph_executor' agents have completed their tasks and a final answer is ready for the user.
-* **Previous Information Retrieval:** When the user explicitly requests previously discussed information.
-* **Direct User Inquiry:** For general user prompts that do not necessitate specific tool usage or external data retrieval by other specialized agents.
+* **Post-Execution:** Immediately after the 'executor_query', 'graph_executor' or 'RAG_executor' agents have completed their tasks and a final answer, potentially combining data insights with contextual information from documents, is ready for the user.
+* **Previous Information Retrieval:** When the user explicitly requests previously discussed information, including insights derived from combined data and document sources.
+* **Direct User Inquiry:** For general user prompts that do not necessitate specific tool usage or external data retrieval by other specialized agents, but may still benefit from leveraging previously retrieved document information.
+* **Synthesis and Explanation:** When the user asks for explanations or context related to previously queried data or generated visuals, requiring the agent to integrate insights from the data with information retrieved from the document collection.
