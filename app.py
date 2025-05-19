@@ -20,6 +20,7 @@ from tools.graph_line_tool import graph_line_tool
 from tools.graph_pie_tool import graph_pie_tool
 from tools.graph_scatter_tool import graph_scatter_tool
 from tools.graph_bar_line_tool import graph_bar_line_tool
+from tools.retrieve_tool import retrieve_tool
 from utils.update_counter import reset_counter
 from utils.update_graph import update_graph
 from utils.clean_graph import graph_clean
@@ -235,12 +236,26 @@ def create_groupchat(user_proxy):
         ),
     )
     add_filter_agent.register_reply(
+         [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+    assistants.append(add_filter_agent)
+    
+    RAG_agent = ConversableAgent(
+        name="RAG_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_desc.txt'),
+    )
+
+    RAG_agent.register_reply(
         [autogen.Agent, None],
         reply_func=print_messages,
         config={"callback": None},
     )
+    assistants.append(RAG_agent)
 
-    assistants.append(add_filter_agent)
 
 
     add_filter_executor = ConversableAgent(
@@ -258,9 +273,23 @@ def create_groupchat(user_proxy):
         reply_func=print_messages,
         config={"callback": None},
     )
-
     assistants.append(add_filter_executor)
 
+    RAG_executor = ConversableAgent(
+        name="RAG_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_desc.txt'),
+    )
+
+    RAG_executor.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+
+
+    assistants.append(RAG_executor)
 
     register_function(
         query_tool,
@@ -338,6 +367,14 @@ def create_groupchat(user_proxy):
         ),
     )
 
+    register_function(
+        retrieve_tool,
+        caller=RAG_agent,
+        executor=RAG_executor,
+        name="retrieve_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/retrieve_tool_desc.txt')),
+    )
+
     def state_transition(last_speaker, group_chat):
 
         if last_speaker is sql_proxy:
@@ -347,6 +384,9 @@ def create_groupchat(user_proxy):
             return sql_proxy
 
         elif last_speaker is graph_executor:
+            return sql_proxy
+
+        elif last_speaker is RAG_executor:
             return sql_proxy
 
         elif last_speaker is query_agent:
@@ -360,6 +400,9 @@ def create_groupchat(user_proxy):
 
         elif last_speaker is add_filter_executor:
             return sql_proxy
+        elif last_speaker is RAG_agent:
+            return RAG_executor
+
         else:
             return "auto"
 
@@ -434,4 +477,4 @@ def get_messages():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5009, debug=True)
+    app.run(host="0.0.0.0", port=5008, debug=True)

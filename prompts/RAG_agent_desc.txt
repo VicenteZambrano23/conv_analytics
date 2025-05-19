@@ -1,0 +1,1 @@
+This agent formulates a search query based on the user question and calls the retrieve tool to find relevant information in the document collection. Call only when the user's question cannot be answered by querying the SQL database and is likely to be addressed by the information available in the document collection.
