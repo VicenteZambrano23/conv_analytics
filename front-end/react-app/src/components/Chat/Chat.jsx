@@ -32,6 +32,10 @@ export function Chat({ messages, messagesEndRef, eventKey}) {
                         <img className={styles.Logo} src="/add_filter_agent.png" alt="Add Filter Agent" />
                       ) : agent === 'add_filter_executor' ? (
                         <img className={styles.Logo} src="/add_filter_executor.png" alt="Add Filter Executor" />
+                      ) : agent === 'RAG_agent' ? (
+                        <img className={styles.Logo} src="/RAG_agent.png" alt="RAG Agent" />
+                      ) : agent === 'RAG_executor' ? (
+                        <img className={styles.Logo} src="/RAG_executor.png" alt="RAG Executor" />
                       ) : (
                         <img className={styles.Logo} src="/robot-assistant.png" alt="Proxy" />
                       )}
@@ -52,7 +56,11 @@ export function Chat({ messages, messagesEndRef, eventKey}) {
                         <div className={styles.AgentTitle} > Add Filter Agent</div>
                       ) :agent === 'add_filter_executor' ? (
                         <div className={styles.AgentTitle} > Add Filter Executor</div>
-                      ) :(
+                      ) : agent === 'RAG_agent' ? (
+                        <div className={styles.AgentTitle} > RAG Agent</div>
+                      ) : agent === 'RAG_executor' ? (
+                        <div className={styles.AgentTitle} > RAG Executor Agent</div>
+                      ) :  (
                         <div className={styles.AgentTitle}  > Proxy</div>
                       )}
                     </div>

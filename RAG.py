@@ -34,5 +34,8 @@ ragproxyagent = RetrieveUserProxyAgent(
     },
 )
 assistant.reset()
-ragproxyagent.initiate_chat(assistant,message=ragproxyagent.message_generator, problem="What are electic fuel cell hybrid vehicles?")
+_context = {"problem": "What are electic fuel cell hybrid vehicles?"}
+ret_msg = ragproxyagent.message_generator(ragproxyagent, None, _context)
+print(ragproxyagent._results)
+#ragproxyagent.initiate_chat(assistant,message=ragproxyagent.message_generator, problem="What are electic fuel cell hybrid vehicles?")
 
