@@ -3,7 +3,9 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Literal
 
 db_path = "/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db"
+import os
 
+graph_path  = os.path.join(os.path.dirname(__file__), '..','..', 'front-end/react-app/src/components/Graph')
 
 class GraphInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]

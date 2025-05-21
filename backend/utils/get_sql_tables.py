@@ -1,5 +1,8 @@
 import sqlite3
 from config.config import db_path
+import os
+
+prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts')
 
 def get_sql_tables():
 
@@ -20,8 +23,8 @@ def get_sql_tables():
              Returns an empty string or an error message if an error occurs.
     """
     try:
-        prompt_path_1 = '/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'
-        prompt_path_2 = '/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'
+        prompt_path_1 = os.path.join(prompt_path,'query_agent_prompt.txt')
+        prompt_path_2 = os.path.join(prompt_path,'graph_agent_prompt.txt')
 
 
         with open(prompt_path_1, 'r') as file:

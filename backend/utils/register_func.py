@@ -7,6 +7,9 @@ from tools.graph_pie_tool import graph_pie_tool
 from tools.graph_scatter_tool import graph_scatter_tool
 from tools.graph_bar_line_tool import graph_bar_line_tool
 from tools.retrieve_tool import retrieve_tool
+import os
+
+prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts')
 
 
 def register_functions(agents):
@@ -30,7 +33,7 @@ def register_functions(agents):
         caller=agents[2],
         executor=agents[3],
         name="query_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/query_tool_desc.txt'))),
     )
    
     register_function(
@@ -38,21 +41,21 @@ def register_functions(agents):
         caller=agents[4],
         executor=agents[5],
         name="graph_bar_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/graph_bar_tool_desc.txt'))),
     )
     register_function(
         graph_line_tool,
         caller=agents[4],
         executor=agents[5],
         name="graph_line_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_line_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/graph_line_tool_desc.txt'))),
     )
     register_function(
         graph_pie_tool,
         caller=agents[4],
         executor=agents[5],
         name="graph_pie_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_pie_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/graph_pie_tool_desc.txt'))),
     )
 
     register_function(
@@ -60,7 +63,7 @@ def register_functions(agents):
         caller=agents[4],
         executor=agents[5],
         name="graph_scatter_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_scatter_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/graph_scatter_tool_desc.txt'))),
     )
 
     register_function(
@@ -68,7 +71,7 @@ def register_functions(agents):
         caller=agents[4],
         executor=agents[5],
         name="graph_bar_line_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_line_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/graph_bar_line_tool_desc.txt'))),
     )
 
     register_function(
@@ -76,7 +79,7 @@ def register_functions(agents):
         caller=agents[6],
         executor=agents[7],
         name="retrieve_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/retrieve_tool_desc.txt')),
+        description=str(read_text_file(os.path.join(prompt_path,'/retrieve_tool_desc.txt'))),
     )
 
 

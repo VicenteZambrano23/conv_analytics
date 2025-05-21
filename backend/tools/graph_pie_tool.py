@@ -6,7 +6,9 @@ from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
 from utils.update_graph_data import update_graph_data
+import os
 
+graph_path  = os.path.join(os.path.dirname(__file__), '..','..', 'front-end/react-app/src/components/Graph')
 
 class GraphPieInput(BaseModel):
     query: Annotated[str, Field(description="Query in SQLite")]
@@ -103,7 +105,7 @@ dataLabels: {{
 
     try:
         with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
+            os.path.join(graph_path, f"/Graph_{str(counter+1)}.jsx"),
             "w",
         ) as file:
             file.write(jsx_code)

@@ -6,7 +6,9 @@ from config.config import db_path
 from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
 from utils.get_graph_data import get_graph_data
+import os
 
+graph_path  = os.path.join(os.path.dirname(__file__), '..','..', 'front-end/react-app/src/components/Graph')
 
 class FilterInput(BaseModel):
     graphic_number: Annotated[
@@ -171,7 +173,7 @@ def add_filter_tool(
 
               """
         try:
-          with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
+          with open(os.path.join(graph_path, f"/Graph_{str(counter)}.jsx"),"w",) as file:
             file.write(jsx_code)
 
           
@@ -359,7 +361,7 @@ export function Graph_{counter}() {{
       """
 
       try:
-        with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
+        with open(os.path.join(graph_path, f"/Graph_{str(counter)}.jsx"),"w",) as file:
           file.write(jsx_code)
 
         
@@ -522,7 +524,7 @@ export function Graph_{counter}() {{
 
       """
       try:
-        with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
+        with open(os.path.join(graph_path, f"/Graph_{str(counter)}.jsx"),"w",) as file:
           file.write(jsx_code)
 
         
@@ -706,7 +708,7 @@ export function Graph_{counter}() {{
 
       """
       try:
-        with open(f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter)}.jsx","w",) as file:
+        with open(os.path.join(graph_path, f"/Graph_{str(counter)}.jsx"),"w",) as file:
           file.write(jsx_code)
 
         

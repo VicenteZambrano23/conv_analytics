@@ -1,5 +1,6 @@
+import os
 
-counter_path ="/teamspace/studios/this_studio/conv_analytics/config/counter.txt"
+counter_path = os.path.join(os.path.dirname(__file__), '..', 'config/counter.txt')
 
 def update_counter():
     with open(counter_path, 'r', encoding='utf-8') as file:

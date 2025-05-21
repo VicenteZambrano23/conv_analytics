@@ -67,30 +67,30 @@ def create_agents():
 
     graph_agent = ConversableAgent(
         name="graph_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'),
+        system_message=read_text_file(os.path.join(prompt_path,'graph_agent_prompt.txt')),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_desc.txt'),
+         description=read_text_file(os.path.join(prompt_path, 'graph_agent_desc.txt')),
     )
     graph_executor = ConversableAgent(
         name="graph_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_agent.txt'),
+        system_message=read_text_file(os.path.join(prompt_path,'executor_graph_agent.txt')),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt'),
+         description=read_text_file(os.path.join(prompt_path,'executor_graph_desc.txt')),
     )
 
     
     RAG_executor = ConversableAgent(
         name="RAG_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_agent.txt'),
+        system_message=read_text_file(os.path.join(prompt_path,'executor_RAG_agent.txt')),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_desc.txt'),
+         description=read_text_file(os.path.join(prompt_path,'executor_RAG_desc.txt')),
     )
 
     RAG_agent = ConversableAgent(
         name="RAG_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_prompt.txt'),
+        system_message=read_text_file(os.path.join(prompt_path,'RAG_agent_prompt.txt')),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_desc.txt'),
+         description=read_text_file(os.path.join(prompt_path,'RAG_agent_desc.txt')),
     )
 
     return user_proxy,sql_proxy,query_agent,executor_query, graph_agent, graph_executor, RAG_agent, RAG_executor

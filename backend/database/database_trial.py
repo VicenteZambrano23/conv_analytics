@@ -2,7 +2,7 @@ import sqlite3
 
 try:
 # Connect to the database (or create it if it doesn't exist)
-    connection = sqlite3.connect('/teamspace/studios/this_studio/conv_analytics/database/chinook.db')
+    connection = sqlite3.connect('/teamspace/studios/this_studio/conv_analytics/backend/database/chinook.db')
     cursor = connection.cursor()
     print("Database connection successful!")
 

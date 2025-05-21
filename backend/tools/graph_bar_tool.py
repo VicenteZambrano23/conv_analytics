@@ -7,6 +7,7 @@ from utils.update_counter import update_counter, get_counter
 from utils.update_graph import update_graph
 import json
 from utils.update_graph_data import update_graph_data
+import os
 
 
 class GraphBarInput(BaseModel):
@@ -133,7 +134,9 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
 
     try:
         with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
+          os.path.join(
+    os.path.dirname(__file__), "..","..",f"front-end/src/components/Graph/Graph_{str(counter+1)}.jsx"
+),
             "w",
         ) as file:
             file.write(jsx_code)

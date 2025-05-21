@@ -1,0 +1,10 @@
+autogen
+chromadb
+langchain
+flask
+flask-cors
+pydantic
+openai
+IPython
+sentence_transformers
+hf_xet
