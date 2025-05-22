@@ -21,6 +21,7 @@ from tools.graph_pie_tool import graph_pie_tool
 from tools.graph_scatter_tool import graph_scatter_tool
 from tools.graph_bar_line_tool import graph_bar_line_tool
 from tools.retrieve_tool import retrieve_tool
+from tools.internet_tool import internet_tool
 from utils.update_counter import reset_counter
 from utils.update_graph import update_graph
 from utils.clean_graph import graph_clean
@@ -288,8 +289,36 @@ def create_groupchat(user_proxy):
         config={"callback": None},
     )
 
-
     assistants.append(RAG_executor)
+
+    internet_agent = ConversableAgent(
+        name="internet_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_agent_desc.txt'),
+    )
+
+    internet_agent.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+    assistants.append(internet_agent)
+
+    internet_executor = ConversableAgent(
+        name="internet_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_internet_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_internet_desc.txt'),
+    )
+
+    internet_executor.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+
+    assistants.append(internet_executor)
 
     register_function(
         query_tool,
@@ -375,6 +404,15 @@ def create_groupchat(user_proxy):
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/retrieve_tool_desc.txt')),
     )
 
+    register_function(
+        internet_tool,
+        caller=internet_agent,
+        executor=internet_executor,
+        name="internet_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_tool_desc.txt')),
+    )
+
+
     def state_transition(last_speaker, group_chat):
 
         if last_speaker is sql_proxy:
@@ -388,6 +426,9 @@ def create_groupchat(user_proxy):
 
         elif last_speaker is RAG_executor:
             return sql_proxy
+        
+        elif last_speaker is internet_executor:
+            return sql_proxy
 
         elif last_speaker is query_agent:
             return executor_query
@@ -400,9 +441,12 @@ def create_groupchat(user_proxy):
 
         elif last_speaker is add_filter_executor:
             return sql_proxy
+
         elif last_speaker is RAG_agent:
             return RAG_executor
-
+        
+        elif last_speaker is internet_agent
+            return internet_executor
         else:
             return "auto"
 

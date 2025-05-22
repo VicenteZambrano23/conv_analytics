@@ -1,0 +1,8 @@
+{
+    "1": {
+        "type": "bar",
+        "query": "SELECT strftime('%Y-%m', OrderDate) AS Month, SUM(Price * Quantity) as Revenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY Month ORDER BY Month LIMIT 10;",
+        "title": "Monthly Revenue Trend",
+        "y_axis_title": "Revenue (USD)"
+    }
+}

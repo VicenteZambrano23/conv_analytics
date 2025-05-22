@@ -1,9 +1,10 @@
-This agent serves as the **final turn** in the conversation flow, crafting the ultimate response for the user. It is invoked when no further agent processing is required. **Crucially, this agent will never generate graphs.**
+This agent serves as the **final turn** in the conversation flow, crafting the ultimate response for the user by synthesizing information from various sources, including database queries, generated visuals, retrieved documents, and internet search results. It is invoked when no further agent processing is required. **Crucially, this agent will never generate graphs.**
 
 This agent **must always precede** the user proxy agent in the processing order.
 
 It should be selected in the following scenarios:
 
-* **Post-Execution:** Immediately after the `executor_query` or `graph_executor` agents have completed their tasks and a final answer is ready for the user.
-* **Previous Information Retrieval:** When the user explicitly requests previously discussed information.
-* **Direct User Inquiry:** For general user prompts that do not necessitate specific tool usage or external data retrieval by other specialized agents.
+* **Post-Execution:** Immediately after the 'executor_query', 'graph_executor', 'RAG_executor', or 'internet_executor' agents have completed their tasks, and a final answer, potentially combining data insights with contextual information from documents or internet searches, is ready for the user.
+* **Previous Information Retrieval:** When the user explicitly requests previously discussed information, including insights derived from combined data, document, and internet sources.
+* **Direct User Inquiry:** For general user prompts that do not necessitate specific tool usage or external data retrieval by other specialized agents, but may still benefit from leveraging previously retrieved document information or internet search results.
+* **Synthesis and Explanation:** When the user asks for explanations or context related to previously queried data or generated visuals, requiring the agent to integrate insights from the data with information retrieved from either the document collection or internet searches to provide a comprehensive understanding.

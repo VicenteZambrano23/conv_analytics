@@ -13,3 +13,5 @@ AZURE_OPENAI_CONFIG = {
 }
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
+
+TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")

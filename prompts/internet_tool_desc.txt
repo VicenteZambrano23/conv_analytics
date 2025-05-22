@@ -1,0 +1,20 @@
+## Internet Search Tool
+
+This tool performs real-time web searches to retrieve information and answers to user questions on topics not covered by the internal database or document collection. It is designed to provide up-to-date context that can be combined with structured data for comprehensive insights.
+
+Parameters:
+- `message`: The query or question to be searched on the internet.
+- `n_results`: (Optional) The maximum number of search results to return. Defaults to 10.
+
+Returns:
+- A dictionary containing:
+    - `answer`: An LLM-generated answer to the search query, based on the retrieved web content.
+    - `urls`: A list of dictionaries, where each dictionary contains the `title` and `url` of the relevant web pages found.
+
+Usage:
+`internet_tool(message="What were the major global economic events in April 2025?", n_results=10)`
+
+Notes:
+- This tool leverages the Tavily API for efficient and accurate web searching, including advanced answer generation.
+- The `answer` field provides a synthesized response, while the `urls` provide source attribution for transparency and further exploration.
+- This tool is crucial for extending the knowledge base beyond pre-existing data, allowing the system to address dynamic and external factors relevant to analysis.
