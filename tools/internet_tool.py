@@ -9,7 +9,7 @@ from config.config import TAVILY_API_KEY
 
 class InternetInput(BaseModel):
     message: Annotated[str,"query that can be used to retrieve content from internet."]
-    n_results: Annotated[int, "number of results"] = 5
+    n_results: Annotated[int, "number of results"] = 10
 
 def internet_tool(input: Annotated[InternetInput, "Input to the internet tool."] ):
 
