@@ -20,8 +20,7 @@ assistant = AssistantAgent(
     llm_config=AZURE_OPENAI_CONFIG,
 )
 
-docs=["/teamspace/studios/this_studio/conv_analytics/database/RAG_files/Example.md","/teamspace/studios/this_studio/conv_analytics/database/RAG_files/Example_2.md","/teamspace/studios/this_studio/conv_analytics/database/RAG_files/TFM (1).pdf"]
-
+docs=["/teamspace/studios/this_studio/conv_analytics/database/RAG_files/Acronyms.pdf"]
 ragproxyagent = RetrieveUserProxyAgent(
     name="ragproxyagent",
     retrieve_config={
@@ -34,8 +33,8 @@ ragproxyagent = RetrieveUserProxyAgent(
     },
 )
 assistant.reset()
-_context = {"problem": "What are electic fuel cell hybrid vehicles?"}
+_context = {"problem": "What is ANZ?"}
 ret_msg = ragproxyagent.message_generator(ragproxyagent, None, _context)
-print(ragproxyagent._results)
+print(ret_msg)
 #ragproxyagent.initiate_chat(assistant,message=ragproxyagent.message_generator, problem="What are electic fuel cell hybrid vehicles?")
 

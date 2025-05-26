@@ -46,13 +46,17 @@ def create_group_chat():
 
         elif last_speaker is agents [6]:
             return agents[7]
+        
+        elif last_speaker is agents[8]:
+            return agents[9]
+
         else:
             return "auto"
 
     register_functions(agents)
 
     group_chat = GroupChat(
-        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7]],
+        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7],agents[8], agents[9]],
         messages=[],
         speaker_selection_method=state_transition,
         max_round=100,

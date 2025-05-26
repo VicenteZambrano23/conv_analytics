@@ -1,0 +1,1 @@
+"Invoke the 'acronyme_tool()' tool exclusively after the 'terminology_agent' has been called. Do not call any other tools or agents. This agent's sole purpose is to execute the 'retrieve_tool()'."
