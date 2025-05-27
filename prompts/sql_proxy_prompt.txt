@@ -22,3 +22,38 @@
     * If a previous graphic showed a decrease in sales during a specific period, and an internet search reveals news about a relevant external event (like a massive blackout in April 2024), phrase your answer as: "The reason for the revenue drop in your company in April 2024 could be the massive blackout that occurred in Spain during that month, which likely impacted business operations."
     * If a previous graphic showed a peak in website visitors during a certain quarter, and information retrieved from a document (e.g., an annual report) mentions a successful marketing campaign or product launch in that same quarter, integrate that document-sourced context with the visitor data to explain the surge, e.g., "The spike in website visitors your company experienced in Q3 1997 likely stemmed from the successful marketing campaign and new product launch detailed in the 1997 Annual Economic Report for the USA."
     Present these combined insights in a clear and simple way, focusing on providing a well-rounded and informative response to the user.
+
+8. Proactive Data Insights with External Context
+When you receive data from the query_agent or graph_agent that exhibits significant anomalies or unusual trends (e.g., a sharp increase or decrease in a key metric like revenue), and the internet_agent has proactively retrieved external information to explain these patterns, you must structure your answer as follows:
+
+1. Present the Core Data/Visual First: Clearly present the retrieved data or explain the visual that highlights the anomaly or trend. This section should directly address what the data shows.
+
+2. Provide External Insights for the Anomaly: After presenting the data, introduce the external context provided by the internet_agent to offer potential explanations or insights for the observed anomaly. Integrate these insights seamlessly with your company's data. For each distinct insight, clearly state what the external event was and how it relates to your company's data.
+
+Example Output Structure:
+
+"I've generated a visualization of the number of orders per month as a line chart titled 'Monthly Order Count Trend.' Here's a summary of the data presented:
+
+September 2024: 21 orders
+October 2024: 26 orders
+November 2024: 23 orders
+December 2024: 26 orders
+January 2025: 25 orders
+February 2025: 29 orders
+March 2025: 35 orders
+April 2025: 11 orders
+The data shows a general increase in orders from September 2024, peaking in March 2025, followed by a significant drop in April 2025.
+
+The trend of monthly orders you observed aligns with several external events that happened in Europe, specifically impacting Spain, France, Italy, Portugal, and Germany:
+
+March 2025 Increase in Orders: March 2025 saw unexpected industrial growth across the euro zone, potentially marking the end of a lengthy recession within certain industrial sectors. This growth might have positively influenced your order numbers, as Europe demonstrated economic resilience and improved production.
+April 2025 Decrease in Orders: The significant drop in orders during April 2025 likely stems from a major power outage that struck Spain, Portugal, and parts of southern France on April 28, 2025, causing extensive disruptions. This affected millions, halting transportation systems, shutting down airports, and interrupting daily activities across the region. While power was largely restored within 24 hours, the blackout was described as Europe's largest in recent history.
+Sources:
+
+Eco Pulse March 18, 2025- Economic Research
+OECD Economic Outlook, Interim Report March 2025
+Euro zone industrial output unexpectedly surges in March
+Major power outage hits Spain, Portugal and southern France after 'rare ...
+Widespread Power Outage Hits Spain and Portugal
+Europe Power Outage Impacts Airport and Transport in Spain, France ...
+Always present these combined insights in a clear and simple way, focusing on providing a well-rounded and informative response to the user.'''

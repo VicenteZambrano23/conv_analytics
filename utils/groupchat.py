@@ -29,17 +29,17 @@ def create_group_chat():
         if last_speaker is agents[1]:
             return agents[0]
 
-        elif last_speaker is agents[3]:
-            return agents[1]
+##       elif last_speaker is agents[3]:
+##            return agents[1]
         
-        elif last_speaker is agents[5]:
-            return agents[1]
+##        elif last_speaker is agents[5]:
+##            return agents[1]
         
-        elif last_speaker is agents[7]:
-            return agents[1]
+##        elif last_speaker is agents[7]:
+##            return agents[1]
         
-        elif last_speaker is agents[9]:
-            return agents[1]
+##        elif last_speaker is agents[9]:
+##            return agents[1]
 
         elif last_speaker is agents[2]:
             return agents[3]
@@ -52,6 +52,7 @@ def create_group_chat():
         
         elif last_speaker is agents[8]:
             return agents[9]
+
         else:
             return "auto"
 
@@ -70,7 +71,15 @@ def create_group_chat():
             agents[6] : [agents[0]],
             agents[7] : [agents[0]], 
             agents[8] : [agents[0]],
-            agents[9] : [agents[0]]  },
+            agents[9] : [agents[0]],
+            agents[3] : [agents[2]], 
+            agents[3] : [agents[3]], 
+            agents[5] : [agents[4]],  
+            agents[5] : [agents[5]],  
+            agents[7] : [agents[6]],  
+            agents[7] : [agents[7]],  
+            agents[9] : [agents[8]],  
+            agents[9] : [agents[9]], },
         speaker_transitions_type="disallowed",
     )
 
