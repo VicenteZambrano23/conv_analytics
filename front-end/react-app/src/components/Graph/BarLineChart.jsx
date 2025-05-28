@@ -2,7 +2,7 @@ import React, {useState } from "react";
 import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
 
-export function BarLineChart({title,y_bar_line_axis_title,y_line_axis_title,num_element_bar,num_element_line}) {
+export function BarLineChart({title,y_bar_axis_title,y_line_axis_title,num_element_bar,num_element_line, category_element}) {
   var options = {
         series: [{
         name: y_bar_axis_title,
