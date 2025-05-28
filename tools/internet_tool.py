@@ -27,8 +27,7 @@ def internet_tool(input: Annotated[InternetInput, "Input to the internet tool."]
 
     # Crear una lista para almacenar los diccionarios de URL y título
     urls_with_titles = []
-    for result in response['results']:
-        # Crear un diccionario para cada par de URL y título
+    for result in response['results'][:2]:        # Crear un diccionario para cada par de URL y título
         url_info = {
             'title': result['title'],
             'url': result['url']

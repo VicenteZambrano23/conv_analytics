@@ -10,6 +10,6 @@ The graph_agent has successfully generated a visualization of the data.
 Upon receiving this data from either of these agents, the Internet Agent's internal logic should then analyze it for anomalies or significant patterns. This includes:
 
 Sudden spikes: A large, unexpected increase in a metric (e.g., revenue jumps by 20% in a single month).
-Sharp drops: A substantial, unanticipated decrease in a metric (e.g., number of orders falls by 15% in a quarter).
+Drops: A substantial decrease in a metric (e.g., number of orders falls by 15% in a month).
 Unusual trends: Any pattern that deviates significantly from historical averages or expected performance (e.g., consistent decline in a market that was previously stable).
 When such an anomaly or trend is detected, the Internet Agent will then automatically formulate a search query to find external information that could provide reasons, insights, or explanations for these observed changes. This ensures that the system doesn't just present data, but also offers potential context from the real world without the user needing to ask for it explicitly.
