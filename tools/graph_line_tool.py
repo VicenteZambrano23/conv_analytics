@@ -110,7 +110,6 @@ title: {{
         ) as file:
             file.write(jsx_code)
 
-        update_graph()
         update_counter()
         count = get_counter()
         graph_data = {
@@ -120,6 +119,9 @@ title: {{
             "title": title,
             "x_axis_title": x_axis_title,
             "y_axis_title": y_axis_title,
+            "x_axis": category_element,
+            "y_element": num_element,
+            "filter_added": "No"
         }
 
         }

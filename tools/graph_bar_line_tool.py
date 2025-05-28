@@ -130,7 +130,6 @@ def graph_bar_line_tool(
         ) as file:
             file.write(jsx_code)
 
-        update_graph()
         update_counter()
         graph_data = {
         str(counter + 1): {
@@ -139,6 +138,10 @@ def graph_bar_line_tool(
             "title": title,
             "y_bar_axis_title": y_bar_axis_title,
             "y_line_axis_title": y_line_axis_title,
+            "category_element": category_element,
+            "num_element_bar": num_element_bar,
+            "num_element_line": num_element_line,
+            "filter_added": "No"
         }
     }
 

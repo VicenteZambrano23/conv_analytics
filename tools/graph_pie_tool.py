@@ -107,7 +107,6 @@ dataLabels: {{
             "w",
         ) as file:
             file.write(jsx_code)
-        update_graph()
         update_counter()
 
         title = input.title
@@ -116,7 +115,10 @@ dataLabels: {{
             str(counter+1): {
                 "type": "pie",
                 "query": query,
-                "title": title
+                "title": title,
+                "category": category_element,
+                "nums": num_element,
+                "filter_added": "No"
             }
         }
         update_graph_data(graph_data)

@@ -17,6 +17,7 @@ function App() {
   const [loader, setLoader] = useState(false);
   const [loaderGraph, setLoaderGraph] = useState(false);
   const [key, setKey] = useState('user');
+  const [isGraph, setIsGraph] = useState(false)
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
 
@@ -88,6 +89,9 @@ function App() {
             ]);
           }
 
+          if (isGraphAgent){
+            setIsGraph(true)
+          }
           if (isSqlProxy) {
             setLoader(false)
             setLoaderGraph(false)
@@ -176,7 +180,7 @@ function App() {
 
           
 
-          {loaderGraph ? <GraphLoader /> : <Graph />}
+          {loaderGraph ? <GraphLoader /> : <Graph isGraph = {isGraph} />}
         </div>
       </div>
     </div >

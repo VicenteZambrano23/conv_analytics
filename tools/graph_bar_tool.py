@@ -138,7 +138,6 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
         ) as file:
             file.write(jsx_code)
 
-        update_graph()
 
         
         update_counter()
@@ -148,6 +147,9 @@ def graph_bar_tool(input: Annotated[GraphBarInput, "Input to the graph bar tool.
                 "query": query,
                 "title": title,
                 "y_axis_title": y_axis_title,
+                "x_axis": category_element,
+                "y_axis":num_element,
+                "filter_added": "No"
             }
         }
 

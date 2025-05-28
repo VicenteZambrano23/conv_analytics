@@ -141,7 +141,6 @@ return (
             "w",
         ) as file:
             file.write(jsx_code)
-        update_graph()
 
         update_counter()
 
@@ -162,6 +161,8 @@ return (
                 "title": title,
                 "x_axis": x_axis,
                 "y_axis": y_axis,
+                "data":output_string,
+                "filter_added": "No"
             }
         }
         update_graph_data(graph_data)
