@@ -40,6 +40,7 @@ export function Graph({ isGraph, graphData }) {
             y_axis_title={item.y_axis_title}
             num_element={item.y_axis}
             category_element={item.x_axis}
+            filter_added={item.filter_added}
           />
         );
       case "line":

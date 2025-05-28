@@ -32,7 +32,7 @@ function App() {
       }
       
       const jsonData = await response.json();
-      setGraphData(jsonData);
+      setGraphData(Array.isArray(jsonData) ? [...jsonData] : jsonData);
       
     } catch (err) {
       console.error('Error fetching graph data:', err);
@@ -100,6 +100,7 @@ function App() {
           const isGraphAgent = messageUser === "graph_agent";
           const isFilterAgent = messageUser === "add_filter_agent";
           const isGraphExecutor = messageUser === "graph_executor";
+          const isFilterExecutor = messageUser === "filter_executor";
           
           
           // Only add the message if it's not the echoed user message from User_Proxy
@@ -114,9 +115,11 @@ function App() {
             setIsGraph(true)
           }
 
-          if (isGraphExecutor) {
+          if (isGraphExecutor  || isFilterExecutor
+          ) {
             fetchGraphData(); // Call the API to fetch graph data
           }
+         
           
           if (isSqlProxy) {
             setLoader(false)
