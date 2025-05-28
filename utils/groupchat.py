@@ -58,29 +58,29 @@ def create_group_chat():
 
     register_functions(agents)
 
+    print(agents)
+
+    # Define allowed transitions
+    allowed_transitions = {
+        agents[0]: [agents[1],agents[2],agents[4],agents[6],agents[8]], 
+        agents[1]: [agents[0]], 
+        agents[2]: [agents[3]],  
+        agents[3]: [agents[1], agents[8]], 
+        agents[4]: [agents[5]], 
+        agents[5]: [agents[1], agents[8]],
+        agents[6]: [agents[7]],
+        agents[7]: [agents[1]], 
+        agents[8]: [agents[9]], 
+        agents[9]: [agents[1]], 
+
+    }
     group_chat = GroupChat(
         agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7],agents[8],agents[9]],
         messages=[],
         speaker_selection_method=state_transition,
         max_round=100,
-        allowed_or_disallowed_speaker_transitions = {
-            agents[4] : [agents[0]],
-            agents[2] : [agents[0]],
-            agents[3] : [agents[0]],
-            agents[5] : [agents[0]], 
-            agents[6] : [agents[0]],
-            agents[7] : [agents[0]], 
-            agents[8] : [agents[0]],
-            agents[9] : [agents[0]],
-            agents[3] : [agents[2]], 
-            agents[3] : [agents[3]], 
-            agents[5] : [agents[4]],  
-            agents[5] : [agents[5]],  
-            agents[7] : [agents[6]],  
-            agents[7] : [agents[7]],  
-            agents[9] : [agents[8]],  
-            agents[9] : [agents[9]], },
-        speaker_transitions_type="disallowed",
+        allowed_or_disallowed_speaker_transitions = allowed_transitions,
+        speaker_transitions_type="allowed",
     )
 
     group_chat_manager = GroupChatManager(
