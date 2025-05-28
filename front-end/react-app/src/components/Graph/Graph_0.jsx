@@ -3,7 +3,7 @@
 import React  from "react";
 import styles from "./Graph.module.css";
 
-export function Graph_0() {
+export default function Graph_0() {
     
 
     return (

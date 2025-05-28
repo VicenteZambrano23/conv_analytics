@@ -47,91 +47,10 @@ def graph_bar_line_tool(
     num_element_bar = [item[1] for item in query_result]
     num_element_line = [item[2] for item in query_result]
 
-    jsx_code = f"""
-  import React, {{ useState }} from "react";
-  import Chart from 'react-apexcharts';
-  import styles from "./Graph.module.css";
+    
 
-  export function Graph_{counter+1}() {{
-    var options = {{
-          series: [{{
-          name: "{y_bar_axis_title}",
-          type: 'column',
-          data: {num_element_bar}
-        }}, {{
-          name: "{y_line_axis_title}",
-          type: 'line',
-          data: {num_element_line},
-        }}],
-          chart: {{
-          height: 350,
-          type: 'line',
-        }},
-        stroke: {{
-          width: [0, 4]
-        }},
-        markers: {{
-          shape: 'square',
-          size: 12
-        }},
-        dataLabels: {{
-          enabled: true,
-          enabledOnSeries: [1],
-          formatter: function (val) {{
-            return val.toFixed(0);
-          }},
-        }},
-        labels: {category_element},
-        yaxis: [{{
-          title: {{
-            text: "{y_bar_axis_title}",
-          }},
-          labels: {{
-            formatter: function (val) {{
-              return val.toFixed(0);
-            }}
-          }}
-        }}, {{
-          opposite: true,
-          title: {{
-            text: "{y_line_axis_title}",
-          }},
-          labels: {{
-            formatter: function (val) {{
-              return val.toFixed(0);
-            }}
-          }}
-        }}]
-        }};
-
-    return (
-       <div className={{styles.graphContainer}}>
-        <div>
-          <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
-        </div>
-        <div className={{styles.graphSubContainer}}>
-      <Chart
-      type='bar'
-      width='220%'
-      height='95%'
-      series={{options.series}}
-      options={{options}}
-      align= 'center'
-  ></Chart></div>
-  </div>)
-  }}
-
-  """
-
-    try:
-        with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
-            "w",
-        ) as file:
-            file.write(jsx_code)
-
-        update_counter()
-        graph_data = {
+    update_counter()
+    graph_data = {
         str(counter + 1): {
             "type": "bar_line",
             "query": query,
@@ -145,7 +64,6 @@ def graph_bar_line_tool(
         }
     }
 
-        update_graph_data(graph_data)
-        return f"Bar graph correctly added. Title: {title}. Y-bar-axis title: {y_bar_axis_title}. Y-line-axis title: {y_bar_axis_title} Data:{query_summary}"
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    update_graph_data(graph_data)
+    return f"Bar-LIne graph correctly added. Title: {title}. Y-bar-axis title: {y_bar_axis_title}. Y-line-axis title: {y_bar_axis_title} Data:{query_summary}"
+ 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Chart from 'react-apexcharts';
 import styles from "./Graph.module.css";
 
-export function LineChart({title,y_axis_title,num_element,category_element}) {
+export default function LineChart({title, x_axis_title, y_axis_title,num_element,category_element}) {
         var options = {
             series: [{
             name: y_axis_title,

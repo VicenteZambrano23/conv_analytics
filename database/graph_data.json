@@ -1,0 +1,91 @@
+{
+    "1": {
+        "type": "line",
+        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS Month, SUM(OrderDetails.Quantity * Products.Price) AS Revenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY Month ORDER BY Month;",
+        "title": "Monthly Revenue Trend from September 2024 to April 2025",
+        "x_axis_title": "Month",
+        "y_axis_title": "Revenue (USD)",
+        "x_axis": [
+            "2024-09",
+            "2024-10",
+            "2024-11",
+            "2024-12",
+            "2025-01",
+            "2025-02",
+            "2025-03",
+            "2025-04"
+        ],
+        "y_axis": [
+            36933.85,
+            34131.49,
+            34565.6,
+            51528.69,
+            62163.99,
+            58094.23,
+            89027.47,
+            19978.91
+        ],
+        "filter_added": "No"
+    },
+    "2": {
+        "type": "bar",
+        "query": "SELECT Customers.CustomerName, SUM(OrderDetails.Quantity * Products.Price) AS TotalRevenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID JOIN Customers ON Orders.CustomerID = Customers.CustomerID GROUP BY Customers.CustomerName ORDER BY TotalRevenue DESC LIMIT 10;",
+        "title": "Top 10 Customers by Revenue",
+        "y_axis_title": "Total Revenue (USD)",
+        "x_axis": [
+            "Ernst Handel",
+            "M\u00e8re Paillarde",
+            "Save-a-lot Markets",
+            "Rattlesnake Canyon Grocery",
+            "QUICK-Stop",
+            "Queen Cozinha",
+            "Piccolo und mehr",
+            "Hungry Owl All-Night Grocers",
+            "Blondel p\u00e8re et fils",
+            "Simons bistro"
+        ],
+        "y_axis": [
+            35631.21,
+            23362.6,
+            22500.06,
+            18421.42,
+            18178.8,
+            17880.6,
+            16040.75,
+            15391.02,
+            15253.75,
+            14619.0
+        ],
+        "filter_added": "No"
+    },
+    "3": {
+        "type": "pie",
+        "query": "SELECT Customers.Country, SUM(OrderDetails.Quantity * Products.Price) AS TotalRevenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID JOIN Customers ON Orders.CustomerID = Customers.CustomerID GROUP BY Customers.Country ORDER BY TotalRevenue DESC LIMIT 10;",
+        "title": "Sales Proportion by Country",
+        "category": [
+            "USA",
+            "Austria",
+            "Germany",
+            "Brazil",
+            "Canada",
+            "France",
+            "Denmark",
+            "UK",
+            "Ireland",
+            "Venezuela"
+        ],
+        "nums": [
+            69611.75,
+            51671.96,
+            47241.82,
+            40215.25,
+            31326.35,
+            29549.15,
+            17870.85,
+            16695.79,
+            15391.02,
+            13556.28
+        ],
+        "filter_added": "No"
+    }
+}

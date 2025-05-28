@@ -18,7 +18,6 @@ class GraphScatterInput(BaseModel):
 def graph_scatter_tool(
     input: Annotated[GraphScatterInput, "Input to the graph scatter tool."],
 ):
-
     query = input.query
     if query.find("SELECT") == -1:
         return "Not SELECT statement"
@@ -29,144 +28,50 @@ def graph_scatter_tool(
     x_axis = input.x_axis
     y_axis = input.y_axis
 
-    
-    if query.find("LIMIT") == -1:
+    if "LIMIT" not in query.upper():  # Using .upper() for case-insensitive check
         query = query.replace(";", " ")
-
         query += " LIMIT 10;"
     else:
-        query = query
-        
-    
+        query = query  # No change if LIMIT is already present
+
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
     cursor.execute(query)
-    data_dict = {}
+
     rows = cursor.fetchall()
     query_summary = summary_query(str(rows))
 
-    if len(rows[0]) == 3:
+    chart_series_data = []  # Initialize an empty list to store series data
 
+    if len(rows[0]) == 3:
         for row in rows:
             category = row[0]
             value_1 = row[1]
             value_2 = row[2]
-
-            if category not in data_dict:
-                data_dict[category] = []
-            data_dict[category].append([value_1, value_2])
-
+            chart_series_data.append({"name": category, "data": [[value_1, value_2]]})
     else:
-        data_dict["value"] = []
+        # If there are only two columns, treat them as a single series
+        # You might want to refine the 'name' here based on context if possible
+        single_series_data = []
         for row in rows:
             value_1 = row[0]
             value_2 = row[1]
+            single_series_data.append([value_1, value_2])
+        chart_series_data.append({"name": "Data Points", "data": single_series_data})
 
-            data_dict["value"].append([value_1, value_2])
+    update_counter()
 
-    output_string = ""
-
-    for key, value in data_dict.items():
-        output_string += f"""\
-    {{
-          name: "{key}",
-          data: {value}
-    }},
-    """
-
-    jsx_code = f"""
-import React, {{ useState }} from "react";
-import Chart from 'react-apexcharts';
-import styles from "./Graph.module.css";
-
-export function Graph_{counter+1}() {{
-var options = {{
-  colors: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"],
- series: [{output_string}],
- chart: {{
- height: 350,
-type: 'scatter',
-zoom: {{
- enabled: true,
-type: 'xy'
- }}
-}},
-xaxis: {{
- tickAmount: 10,
- labels: {{
- formatter: function(val) {{
- return parseFloat(val).toFixed(1)
- }}
- }},
- title: {{
-          text: "{x_axis}"
-        }}
-}},
-yaxis: {{
-  labels: {{
-    formatter: function(val) {{
-    return parseFloat(val).toFixed(1)
-    }}
-    }},
-tickAmount: 7,
-title: {{
-          text: "{y_axis}"
-        }}
-}}
-}};
-
-return (
-      <div className={{styles.graphContainer}}>
-        <div>
-          <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
-        </div>
-        <div className={{styles.graphSubContainer}}>
-          <Chart
-          type= 'scatter'
-          width='220%'
-          height='95%' 
-          series={{options.series}}
-          options={{options}}
-          align= 'center'
-          ></Chart>
-        </div>
-      </div>)
-}}
-
-  """
-
-    try:
-        with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
-            "w",
-        ) as file:
-            file.write(jsx_code)
-
-        update_counter()
-
-    
-
-        
-        if query.find("LIMIT") == -1:
-            query = query.replace(";", " ")
-
-            query += " LIMIT 10;"
-        else:
-            query = query
-            
-        graph_data = {
-            str(counter+1): {
-                "type": "scatter",
-                "query": query,
-                "title": title,
-                "x_axis": x_axis,
-                "y_axis": y_axis,
-                "data":output_string,
-                "filter_added": "No"
-            }
+    graph_data = {
+        str(counter + 1): {
+            "type": "scatter",
+            "query": query,
+            "title": title,
+            "x_axis": x_axis,
+            "y_axis": y_axis,
+            "data": chart_series_data,  # Directly assign the list of dictionaries
+            "filter_added": "No",  # Update this logic if you have filter detection
         }
-        update_graph_data(graph_data)
+    }
+    update_graph_data(graph_data)
 
-        return f"Scatter graph correctly added.Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    return f"Scatter graph correctly added. Title: {title}. Y-axis title: {y_axis}. X-axis: {x_axis} Data:{query_summary}"

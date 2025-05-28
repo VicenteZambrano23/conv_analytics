@@ -18,8 +18,27 @@ function App() {
   const [loaderGraph, setLoaderGraph] = useState(false);
   const [key, setKey] = useState('user');
   const [isGraph, setIsGraph] = useState(false)
+  const [graphData, setGraphData] = useState(null);
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
+
+  const fetchGraphData = async () => {
+    try {
+      const response = await fetch('https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/data');
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+      
+      const jsonData = await response.json();
+      setGraphData(jsonData);
+      
+    } catch (err) {
+      console.error('Error fetching graph data:', err);
+      setGraphData(null);
+    }
+  };
 
   // Function to send message/start chat
   const handleContentSend = async (content) => {
@@ -80,6 +99,8 @@ function App() {
           const isSqlProxy = messageUser === "sql_proxy";
           const isGraphAgent = messageUser === "graph_agent";
           const isFilterAgent = messageUser === "add_filter_agent";
+          const isGraphExecutor = messageUser === "graph_executor";
+          
           
           // Only add the message if it's not the echoed user message from User_Proxy
           if (!isUserProxy || messageContent !== lastSentUserMessage.current) {
@@ -92,10 +113,16 @@ function App() {
           if (isGraphAgent){
             setIsGraph(true)
           }
+
+          if (isGraphExecutor) {
+            fetchGraphData(); // Call the API to fetch graph data
+          }
+          
           if (isSqlProxy) {
             setLoader(false)
             setLoaderGraph(false)
           }
+
           if (isGraphAgent) {
             setLoaderGraph(true)
           }
@@ -180,7 +207,7 @@ function App() {
 
           
 
-          {loaderGraph ? <GraphLoader /> : <Graph isGraph = {isGraph} />}
+          {loaderGraph ? <GraphLoader /> : <Graph isGraph = {isGraph} graphData={graphData} />}
         </div>
       </div>
     </div >

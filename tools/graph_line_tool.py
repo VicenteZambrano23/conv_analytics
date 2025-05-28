@@ -37,82 +37,10 @@ def graph_line_tool(input: Annotated[GraphLineInput, "Input to the graph line to
 
     category_element = [item[0] for item in query_result]
     num_element = [item[1] for item in query_result]
-
-    jsx_code = f"""
-  import React, {{ useState }} from "react";
- import Chart from 'react-apexcharts';
-import styles from "./Graph.module.css";
-
- export function Graph_{counter+1}() {{
- var options = {{
- series: [{{
- name: "{y_axis_title}",
-data: {num_element}
- }}],
- chart: {{
- height: 350,
- type: 'line',
- zoom: {{
- enabled: false
- }}
-  }},
- dataLabels: {{
-enabled: false
- }},
- stroke: {{
-curve: 'smooth',
-colors: ['#008FFB']
- }},
-
- grid: {{
-row: {{
-colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
- opacity: 0.5
-}},
- }},
- xaxis: {{
-categories: {category_element},
-title: {{
-  text: '{x_axis_title}'
-}}
- }},
- yaxis :{{
-  title :{{
-    text: "{y_axis_title}"
-  }}
- }}
- }};
-
- return (
-    <div className={{styles.graphContainer}}>
-      <div>
-        <h1 style={{{{ textAlign: 'center',fontSize:'30px' }}}}>{title}</h1>
-      </div>
-      <div  className={{styles.graphSubContainer}}>
-        <Chart
-        type= 'line'
-        width='220%'
-        height='95%' 
-        series={{options.series}}
-        options={{options}}
-        align= 'center'
-        ></Chart>
-      </div>
-    </div>)
- }}
-
-  """
-
-    try:
-        with open(
-            f"/teamspace/studios/this_studio/conv_analytics/front-end/react-app/src/components/Graph/Graph_{str(counter+1)}.jsx",
-            "w",
-        ) as file:
-            file.write(jsx_code)
-
-        update_counter()
-        count = get_counter()
-        graph_data = {
+    
+    update_counter()
+    count = get_counter()
+    graph_data = {
           str(count): {
             "type": "line",
             "query": query,
@@ -120,13 +48,12 @@ title: {{
             "x_axis_title": x_axis_title,
             "y_axis_title": y_axis_title,
             "x_axis": category_element,
-            "y_element": num_element,
+            "y_axis": num_element,
             "filter_added": "No"
         }
 
         }
 
-        update_graph_data(graph_data)
-        return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    update_graph_data(graph_data)
+    return f"Line graph correctly added. Title: {title}. Y-axis title: {y_axis_title}.X-axis title: {x_axis_title} Data:{query_summary}"
+    
