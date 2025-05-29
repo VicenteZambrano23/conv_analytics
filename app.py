@@ -27,13 +27,13 @@ from utils.update_graph import update_graph
 from utils.clean_graph import graph_clean
 from utils.clean_graph_data import clean_graph_data
 from tools.add_filter_tool import add_filter_tool
+import json
 from tools.acronym_tool import acronym_tool
-
 clean_graph_data()
-graph_clean()
 get_sql_tables()
 reset_counter()
 
+json_path  = os.path.join(os.path.dirname(__file__), 'database/graph_data.json')
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -561,6 +561,32 @@ def get_messages():
         return jsonify({"message": msg, "chat_status": chat_status}), 200
     else:
         return jsonify({"message": None, "chat_status": chat_status}), 200
+
+@app.route('/api/data', methods=['GET'])
+def get_json_data():
+    """
+    API endpoint to retrieve the entire content of a JSON file.
+
+    Reads the specified JSON file and returns its content as a JSON response.
+    Handles cases where the file is not found or cannot be parsed.
+    """
+    if not os.path.exists(json_path):
+        # Return a 404 error if the file does not exist
+        return jsonify({"error": f"JSON file '{json_path}' not found."}), 404
+
+    try:
+        with open(json_path, 'r') as f:
+            # Load the JSON content from the file
+            data = f.read()
+            json_data = json.loads(data)
+            return jsonify(json_data), 200
+    except json.JSONDecodeError:
+        # Return a 500 error if the file content is not valid JSON
+        return jsonify({"error": f"Error decoding JSON from '{json_path}'. File might be malformed."}), 500
+    except Exception as e:
+        # Catch any other unexpected errors
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+
 
 
 if __name__ == "__main__":
