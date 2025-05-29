@@ -26,6 +26,7 @@ from utils.update_graph import update_graph
 from utils.clean_graph import graph_clean
 from utils.clean_graph_data import clean_graph_data
 from tools.add_filter_tool import add_filter_tool
+from tools.acronym_tool import acronym_tool
 
 clean_graph_data()
 graph_clean()
@@ -256,6 +257,20 @@ def create_groupchat(user_proxy):
     )
     assistants.append(RAG_agent)
 
+    terminology_agent = ConversableAgent(
+        name="terminology_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_desc.txt'),
+    )
+
+    terminology_agent.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+    assistants.append(terminology_agent)
+
 
 
     add_filter_executor = ConversableAgent(
@@ -290,6 +305,22 @@ def create_groupchat(user_proxy):
 
 
     assistants.append(RAG_executor)
+
+    terminology_executor = ConversableAgent(
+        name="terminology_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_desc.txt'),
+    )
+
+    terminology_executor.register_reply(
+        [autogen.Agent, None],
+        reply_func=print_messages,
+        config={"callback": None},
+    )
+
+
+    assistants.append(terminology_executor)
 
     register_function(
         query_tool,
@@ -375,6 +406,14 @@ def create_groupchat(user_proxy):
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/retrieve_tool_desc.txt')),
     )
 
+    register_function(
+        acronym_tool,
+        caller=terminology_agent,
+        executor=terminology_executor,
+        name="retrieve_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/acronym_tool_desc.txt')),
+    )
+
     def state_transition(last_speaker, group_chat):
 
         if last_speaker is sql_proxy:
@@ -402,6 +441,9 @@ def create_groupchat(user_proxy):
             return sql_proxy
         elif last_speaker is RAG_agent:
             return RAG_executor
+        
+        elif last_speaker is terminology_agent:
+            return terminology_executor
 
         else:
             return "auto"
@@ -420,6 +462,7 @@ def create_groupchat(user_proxy):
                 query_agent: [user_proxy],
                 graph_agent: [user_proxy],
                 add_filter_agent: [user_proxy],
+                terminology_agent:[user_proxy],
             },
             speaker_transitions_type="disallowed",
         )
