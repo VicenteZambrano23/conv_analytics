@@ -27,7 +27,7 @@ from utils.clean_graph import graph_clean
 from utils.clean_graph_data import clean_graph_data
 from tools.add_filter_tool import add_filter_tool
 import json
-
+from tools.acronym_tool import acronym_tool
 clean_graph_data()
 get_sql_tables()
 reset_counter()
