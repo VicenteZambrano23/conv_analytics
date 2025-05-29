@@ -17,33 +17,43 @@
                 background: #f3f3f3;
             }
             &[data-role="assistant"] {
-                background: lightblue;
+                background: #E0F2F7;
+                /* A very light, soft blue */
                 &[agent="sql_proxy"] {
-                    background: lightblue;
+                    background: #DDF1F7;
+                    /* Slightly different very light blue */
                 }
                 &[agent="graph_agent"] {
-                    background: thistle;
+                    background: #F0E6F7;
+                    /* A light, soft lavender */
                 }
                 &[agent="graph_executor"] {
-                    background: lemonchiffon;
+                    background: #FFFBE6;
+                    /* A very light, pale yellow */
                 }
                 &[agent="query_agent"] {
-                    background: lightcoral;
+                    background: #F7E0E0;
+                    /* A very light, soft coral */
                 }
                 &[agent="executor_query"] {
-                    background: navajowhite;
+                    background: #F7EFDF;
+                    /* A light, creamy tan */
                 }
                 &[agent="add_filter_agent"] {
-                    background: #e6a4b4;
+                    background: #FCEEF1;
+                    /* A very light pinkish hue */
                 }
                 &[agent="add_filter_executor"] {
-                    background: #d3f6d1;
+                    background: #EAF7E8;
+                    /* A very light, fresh green */
                 }
                 &[agent="RAG_agent"] {
-                    background: rgb(169, 135, 197);
+                    background: #E8DFF2;
+                    /* A light, muted purple */
                 }
                 &[agent="RAG_executor"] {
-                    background: rgb(158, 233, 162);
+                    background: #E4F7E7;
+                    /* A light, subtle green */
                 }
             }
         }

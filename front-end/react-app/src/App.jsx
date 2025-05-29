@@ -17,6 +17,7 @@ function App() {
   const [loader, setLoader] = useState(false);
   const [loaderGraph, setLoaderGraph] = useState(false);
   const [key, setKey] = useState('user');
+  const [isGraph, setIsGraph] = useState(false);
   // Initial chat request structure (can be empty or contain an initial message)
   const initialChatRequest = {};
 
@@ -79,15 +80,29 @@ function App() {
           const isSqlProxy = messageUser === "sql_proxy";
           const isGraphAgent = messageUser === "graph_agent";
           const isFilterAgent = messageUser === "add_filter_agent";
+          const isGraph = messageUser === "graph_agent";
+
+          
           
           // Only add the message if it's not the echoed user message from User_Proxy
           if (!isUserProxy || messageContent !== lastSentUserMessage.current) {
+            if (messageContent === "None"){
             setMessages((prevMessages) => [
               ...prevMessages,
-              { content: messageContent, role: isUserProxy ? "user" : "assistant", agent: messageUser },
-            ]);
-          }
+              { content: "Working on it!", role: isUserProxy ? "user" : "assistant", agent: messageUser },
+            ]);} 
+            else {
 
+              setMessages((prevMessages) => [
+                ...prevMessages,
+                { content: messageContent, role: isUserProxy ? "user" : "assistant", agent: messageUser },
+              ]);}
+
+            }
+          
+          if (isGraph){
+            setIsGraph(true)
+          }
           if (isSqlProxy) {
             setLoader(false)
             setLoaderGraph(false)
@@ -132,26 +147,25 @@ function App() {
   return (
 
     <div className={styles.MainContainer}>
-      {loader ? <Loader /> : <div />}
+      {loader ? <Loader isGraph={isGraph}/> : <div />}
 
       <div className={styles.HeaderContainer}>
-        <div className={styles.LogoContainer}>
-          <img className={styles.Logo} src="/robot-assistant.png" alt="AI Chatbot Logo" />
-        </div>
+       
         <div className={styles.TitleContainer}>
-          <img className={styles.Title} src='../public/title.svg' alt="Title" />
+          <img className={styles.Title} src='../public/title.png' alt="Title" />
         </div>
       </div>
-
+{ isGraph ? (
       <div className={styles.ChatGraphContainer}>
         <div className={styles.ChatControlsContainer}>
           <Tabs
             id="controlled-tab-example"
             activeKey={key}
             onSelect={(k) => setKey(k)}
-            className="mb-3"
+            className="m-0"
+
           >
-            <Tab eventKey="user" title="User">
+            <Tab eventKey="user" title="User" >
               <div className={styles.ChatContainer}>
                 <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} eventKey="user"/>
               </div>
@@ -178,7 +192,37 @@ function App() {
 
           {loaderGraph ? <GraphLoader /> : <Graph />}
         </div>
-      </div>
+      </div>): <div className={styles.ChatGraphContainer}>
+        <div className={styles.ChatControlsContainer}>
+          <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="m-0"
+
+          >
+            <Tab eventKey="user" title="User" >
+              <div className={styles.ChatContainer}>
+                <Chat messages={filteredMessages} messagesEndRef={messagesEndRef} eventKey="user"/>
+              </div>
+              <div className={styles.ControlsContainer}>
+
+                <Controls onSend={handleContentSend} />
+              </div>
+            </Tab>
+            <Tab eventKey="agents" title="Agents">
+              <div className={styles.ChatContainer}>
+                <Chat messages= {messages} messagesEndRef={messagesEndRef} eventKey="agents"/>
+              </div>
+              <div className={styles.ControlsContainer}>
+
+                <Controls onSend={handleContentSend} />
+              </div>
+            </Tab>
+
+          </Tabs>
+        </div></div>
+}
     </div >
 
 
