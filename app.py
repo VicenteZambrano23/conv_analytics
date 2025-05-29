@@ -410,7 +410,7 @@ def create_groupchat(user_proxy):
         acronym_tool,
         caller=terminology_agent,
         executor=terminology_executor,
-        name="retrieve_tool",
+        name="acronym_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/acronym_tool_desc.txt')),
     )
 
