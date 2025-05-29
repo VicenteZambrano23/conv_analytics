@@ -17,7 +17,7 @@ def internet_tool(input: Annotated[InternetInput, "Input to the internet tool."]
 
     #Tavily API to perform the internet Search
     tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
-    response = tavily_client.search(input.message,include_answer='advanced',max_results=input.n_results)#, include_raw_content= True) # Perform the internet search
+    response = tavily_client.search(input.message,include_answer='advanced',max_results=input.n_results,search_depth= "advanced")#, include_raw_content= True) # Perform the internet search
     
         # Crear un nuevo diccionario para el JSON simplificado
     info = {}

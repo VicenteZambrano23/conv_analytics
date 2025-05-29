@@ -8,7 +8,7 @@ from utils.update_graph import update_graph
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 
-docs=["/teamspace/studios/this_studio/conv_analytics/database/RAG_files/1996.pdf","/teamspace/studios/this_studio/conv_analytics/database/RAG_files/1997.pdf","/teamspace/studios/this_studio/conv_analytics/database/RAG_files/1998.pdf","/teamspace/studios/this_studio/conv_analytics/database/RAG_files/1990s.pdf"]
+docs=[]
 recur_spliter = RecursiveCharacterTextSplitter(chunk_size=1500,chunk_overlap=200,separators=["\n", "\r", "\t","\n\n", ". ", " ", ""])
 retrieve_agent = RetrieveUserProxyAgent(
         name="retrieve_agent",
