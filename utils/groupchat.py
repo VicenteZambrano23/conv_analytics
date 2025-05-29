@@ -29,18 +29,6 @@ def create_group_chat():
         if last_speaker is agents[1]:
             return agents[0]
 
-##       elif last_speaker is agents[3]:
-##            return agents[1]
-        
-##        elif last_speaker is agents[5]:
-##            return agents[1]
-        
-##        elif last_speaker is agents[7]:
-##            return agents[1]
-        
-##        elif last_speaker is agents[9]:
-##            return agents[1]
-
         elif last_speaker is agents[2]:
             return agents[3]
 
@@ -49,14 +37,12 @@ def create_group_chat():
 
         elif last_speaker is agents [6]:
             return agents[7]
-        
+
         elif last_speaker is agents[8]:
             return agents[9]
 
-        
-        elif last_speaker is agents[8]:
-            return agents[9]
-
+        elif last_speaker is agents[10]:
+            return agents[11]
         else:
             return "auto"
 
@@ -66,20 +52,22 @@ def create_group_chat():
 
     # Define allowed transitions
     allowed_transitions = {
-        agents[0]: [agents[1],agents[2],agents[4],agents[6],agents[8]], 
+        agents[0]: [agents[1],agents[2],agents[4],agents[6],agents[8],agents[10]],
         agents[1]: [agents[0]], 
         agents[2]: [agents[3]],  
-        agents[3]: [agents[1], agents[8]], 
+        agents[3]: [agents[1], agents[8],agents[10]], 
         agents[4]: [agents[5]], 
-        agents[5]: [agents[1], agents[8]],
+        agents[5]: [agents[1], agents[8],agents[10]],
         agents[6]: [agents[7]],
-        agents[7]: [agents[1]], 
+        agents[7]: [agents[1],agents[10]], 
         agents[8]: [agents[9]], 
-        agents[9]: [agents[1]], 
+        agents[9]: [agents[1],agents[2],agents[4],agents[6],agents[10]], 
+        agents[10]: [agents[11]],
+        agents[11]: [agents[1]]
 
     }
     group_chat = GroupChat(
-        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7],agents[8],agents[9]],
+        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7],agents[8],agents[9],agents[10],agents[11]],
         messages=[],
         speaker_selection_method=state_transition,
         max_round=100,

@@ -90,8 +90,8 @@ def register_functions(agents):
     )
     register_function(
         internet_tool,
-        caller=agents[8],
-        executor=agents[9],
+        caller=agents[10],
+        executor=agents[11],
         name="internet_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_tool_desc.txt')),
     )
