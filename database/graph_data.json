@@ -1,33 +1,130 @@
 {
     "1": {
-        "type": "bar",
-        "query": "SELECT Customers.CustomerName, SUM(Products.Price * OrderDetails.Quantity) AS TotalSpent FROM Orders JOIN Customers ON Orders.CustomerID = Customers.CustomerID JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY Customers.CustomerID, Customers.CustomerName ORDER BY TotalSpent DESC LIMIT 10;",
-        "title": "Top 10 Customers by Total Sales",
-        "y_axis_title": "Total Sales (USD)",
+        "type": "line",
+        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS OrderMonth, SUM(Products.Price * OrderDetails.Quantity) AS Revenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY OrderMonth ORDER BY OrderMonth;",
+        "title": "Monthly Revenue Trend",
+        "x_axis_title": "Month",
+        "y_axis_title": "Revenue (USD)",
         "x_axis": [
-            "Ernst Handel",
-            "Mère Paillarde",
-            "Save-a-lot Markets",
-            "Rattlesnake Canyon Grocery",
-            "QUICK-Stop",
-            "Queen Cozinha",
-            "Piccolo und mehr",
-            "Hungry Owl All-Night Grocers",
-            "Blondel père et fils",
-            "Simons bistro"
+            "2024-09",
+            "2024-10",
+            "2024-11",
+            "2024-12",
+            "2025-01",
+            "2025-02",
+            "2025-03",
+            "2025-04"
         ],
         "y_axis": [
-            35631.21,
-            23362.6,
-            22500.06,
-            18421.42,
-            18178.8,
-            17880.6,
-            16040.75,
-            15391.02,
-            15253.75,
-            14619.0
+            36933.85,
+            34131.49,
+            34565.6,
+            51528.69,
+            62163.99,
+            58094.23,
+            89027.47,
+            19978.91
         ],
         "filter_added": true
+    },
+    "2": {
+        "type": "scatter",
+        "query": "SELECT Categories.CategoryName, Products.Price, OrderDetails.Quantity FROM OrderDetails JOIN Products ON OrderDetails.ProductID = Products.ProductID JOIN Categories ON Products.CategoryID = Categories.CategoryID ORDER BY Categories.CategoryName, Products.Price  LIMIT 10;",
+        "title": "Product Price vs Quantity Ordered by Category",
+        "x_axis": "Price (USD)",
+        "y_axis": "Quantity Ordered",
+        "data": [
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        15
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        28
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        12
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        12
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        6
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        10
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        10
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        25
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        10
+                    ]
+                ]
+            },
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        4.5,
+                        15
+                    ]
+                ]
+            }
+        ],
+        "filter_added": false
     }
 }

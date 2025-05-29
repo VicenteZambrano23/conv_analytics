@@ -69,7 +69,7 @@ def graph_scatter_tool(
             "x_axis": x_axis,
             "y_axis": y_axis,
             "data": chart_series_data,  # Directly assign the list of dictionaries
-            "filter_added": "No",  # Update this logic if you have filter detection
+            "filter_added": False,  # Update this logic if you have filter detection
         }
     }
     update_graph_data(graph_data)

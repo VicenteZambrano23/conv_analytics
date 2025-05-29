@@ -60,7 +60,7 @@ def graph_bar_line_tool(
             "category_element": category_element,
             "num_element_bar": num_element_bar,
             "num_element_line": num_element_line,
-            "filter_added": "No"
+            "filter_added": False
         }
     }
 

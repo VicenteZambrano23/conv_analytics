@@ -51,6 +51,7 @@ export function Graph({ isGraph, graphData }) {
             x_axis_title = {item.x_axis_title}
             num_element={item.y_axis}
             category_element={item.x_axis}
+            filter_added={item.filter_added}
           />
         );
       case "bar_line":
@@ -62,6 +63,7 @@ export function Graph({ isGraph, graphData }) {
             num_element_bar={item.num_element_bar}
             num_element_line={item.num_element_line}
             category_element={item.category_element}
+            filter_added={item.filter_added}
           />
         );
       case "pie":
@@ -79,6 +81,7 @@ export function Graph({ isGraph, graphData }) {
             output_string={item.data}
             y_axis={item.y_axis}
             x_axis={item.x_axis}
+            filter_added={item.filter_added}
           />
         );
       default:
