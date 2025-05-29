@@ -8,6 +8,7 @@ from tools.graph_scatter_tool import graph_scatter_tool
 from tools.graph_bar_line_tool import graph_bar_line_tool
 from tools.retrieve_tool import retrieve_tool
 from tools.acronym_tool import acronym_tool
+from tools.internet_tool import internet_tool
 
 
 def register_functions(agents):
@@ -87,6 +88,13 @@ def register_functions(agents):
         name="acronym_tool",
         description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/acronym_tool_desc.txt')),
     )
-
+    register_function(
+        internet_tool,
+        caller=agents[8],
+        executor=agents[9],
+        name="internet_tool",
+        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_tool_desc.txt')),
+    )
+    
 
 

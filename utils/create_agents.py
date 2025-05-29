@@ -93,6 +93,20 @@ def create_agents():
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_desc.txt'),
     )
 
+    internet_agent = ConversableAgent(
+        name="internet_agent",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_agent_prompt.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_agent_desc.txt'),
+    )
+
+    internet_executor = ConversableAgent(
+        name="internet_executor",
+        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_internet_agent.txt'),
+        llm_config=AZURE_OPENAI_CONFIG,
+         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_internet_desc.txt'),
+    )
+
     terminology_executor = ConversableAgent(
         name="terminology_executor",
         system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_agent.txt'),
@@ -106,10 +120,6 @@ def create_agents():
         llm_config=AZURE_OPENAI_CONFIG,
          description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_desc.txt'),
     )
-
-
-    
-
-    return user_proxy,sql_proxy,query_agent,executor_query, graph_agent, graph_executor, RAG_agent, RAG_executor, terminology_agent, terminology_executor
+    return user_proxy,sql_proxy,query_agent,executor_query, graph_agent, graph_executor, RAG_agent, RAG_executor,terminology_agent, terminology_executor ,internet_agent, internet_executor
 
   

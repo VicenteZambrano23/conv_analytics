@@ -8,7 +8,7 @@ from utils.update_graph import update_graph
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 
-docs=["/teamspace/studios/this_studio/conv_analytics/database/RAG_files/Acronyms.pdf"]
+docs=[]
 recur_spliter = RecursiveCharacterTextSplitter(chunk_size=1500,chunk_overlap=200,separators=["\n", "\r", "\t","\n\n", ". ", " ", ""])
 retrieve_agent = RetrieveUserProxyAgent(
         name="retrieve_agent",
@@ -17,8 +17,8 @@ retrieve_agent = RetrieveUserProxyAgent(
         retrieve_config={
             "task": "qa",
             "docs_path": docs ,  
-            "get_or_create": True,  # set to False if you don't want to reuse an existing collection
-            "overwrite": False,  # set to True if you want to overwrite an existing collection      
+            "get_or_create": False,  # set to False if you don't want to reuse an existing collection
+            "overwrite": True,  # set to True if you want to overwrite an existing collection      
             "custom_text_split_function": recur_spliter.split_text,
             #"client": chromadb.PersistentClient().get_or_create_collection(name = 'autogen_agent', embedding_function=openai_ef)
         },

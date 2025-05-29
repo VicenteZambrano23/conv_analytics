@@ -9,6 +9,12 @@ connection = sqlite3.connect(
 cursor = connection.cursor()
 print("Database connection successful!")
 
+connection = sqlite3.connect(
+    "/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db"
+)
+cursor = connection.cursor()
+print("Database connection successful!")
+
 # Execute a simple query
 cursor.execute(
     """

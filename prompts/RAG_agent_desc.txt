@@ -1,1 +1,11 @@
-This agent analyzes the user's question to determine if there is relevant information within the document collection. It is called when the user's question might be answerable by the documents, especially if it seeks explanations, context, or reasons related to previously obtained data or general inquiries about topics covered in the documents.
+'''This agent formulates a search query based on the user's question and calls the `retrieve_tool` to find relevant information within its specialized document collection. It should be called **only when the user's question cannot be answered by querying the SQL database and is highly likely to be directly and usefully addressed by the specific, pre-defined information available in the documents.** Refrain from calling this agent if the documents are unlikely to contain the precise information needed, or if the question is a general query or requires current, real-time data better suited for an internet search.
+
+## Document Collection
+
+The following documents are available for retrieval:
+
+  - annual_economic_report_usa_1996.pdf: Contains the annual economic report for the USA for the year 1996, including details on economic conditions, policies, and significant events.
+  - annual_economic_report_usa_1997.pdf: Contains the annual economic report for the USA for the year 1997, including details on economic conditions, policies, and significant events.
+  - annual_economic_report_usa_1998.pdf: Contains the annual economic report for the USA for the year 1998, including details on economic conditions, policies, and significant events.
+  - annual_economic_report_usa_1999.pdf: Contains the annual economic report for the USA for the year 1999, including details on economic conditions, policies, and significant events.
+'''

@@ -29,14 +29,17 @@ def create_group_chat():
         if last_speaker is agents[1]:
             return agents[0]
 
-        elif last_speaker is agents[3]:
-            return agents[1]
+##       elif last_speaker is agents[3]:
+##            return agents[1]
         
-        elif last_speaker is agents[5]:
-            return agents[1]
+##        elif last_speaker is agents[5]:
+##            return agents[1]
         
-        elif last_speaker is agents[7]:
-            return agents[1]
+##        elif last_speaker is agents[7]:
+##            return agents[1]
+        
+##        elif last_speaker is agents[9]:
+##            return agents[1]
 
         elif last_speaker is agents[2]:
             return agents[3]
@@ -50,24 +53,38 @@ def create_group_chat():
         elif last_speaker is agents[8]:
             return agents[9]
 
+        
+        elif last_speaker is agents[8]:
+            return agents[9]
+
         else:
             return "auto"
 
     register_functions(agents)
 
+    print(agents)
+
+    # Define allowed transitions
+    allowed_transitions = {
+        agents[0]: [agents[1],agents[2],agents[4],agents[6],agents[8]], 
+        agents[1]: [agents[0]], 
+        agents[2]: [agents[3]],  
+        agents[3]: [agents[1], agents[8]], 
+        agents[4]: [agents[5]], 
+        agents[5]: [agents[1], agents[8]],
+        agents[6]: [agents[7]],
+        agents[7]: [agents[1]], 
+        agents[8]: [agents[9]], 
+        agents[9]: [agents[1]], 
+
+    }
     group_chat = GroupChat(
-        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7],agents[8], agents[9]],
+        agents=[agents[0],agents[1],agents[2],agents[3],agents[4],agents[5],agents[6],agents[7],agents[8],agents[9]],
         messages=[],
         speaker_selection_method=state_transition,
         max_round=100,
-        allowed_or_disallowed_speaker_transitions = {
-            agents[4] : [agents[0]],
-            agents[2] : [agents[0]],
-            agents[3] : [agents[0]],
-            agents[5] : [agents[0]], 
-            agents[6] : [agents[0]],
-            agents[7] : [agents[0]],     },
-        speaker_transitions_type="disallowed",
+        allowed_or_disallowed_speaker_transitions = allowed_transitions,
+        speaker_transitions_type="allowed",
     )
 
     group_chat_manager = GroupChatManager(

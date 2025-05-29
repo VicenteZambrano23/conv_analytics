@@ -1,0 +1,1 @@
+"Invoke the 'internet_tool()' tool exclusively after the 'internet_agent' has been called. Do not call any other tools or agents. This agent's sole purpose is to execute the 'internet_tool()'."

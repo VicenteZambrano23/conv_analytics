@@ -10,6 +10,9 @@ AZURE_OPENAI_CONFIG = {
             "api_version": os.environ.get("API_VERSION"),
         }
     ],
-}
+    #"temperature": 0.0,
+    }
 
 db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
+
+TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY")
