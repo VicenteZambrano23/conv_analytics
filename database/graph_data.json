@@ -1,10 +1,56 @@
 {
     "1": {
+        "type": "scatter",
+        "query": "SELECT Categories.CategoryName, SUM(OrderDetails.Quantity) AS TotalOrders, AVG(Products.Price) AS AvgPrice FROM OrderDetails JOIN Products ON OrderDetails.ProductID = Products.ProductID JOIN Categories ON Products.CategoryID = Categories.CategoryID GROUP BY Categories.CategoryName LIMIT 4;",
+        "title": "Relationship Between Number of Orders and Product Price by Category",
+        "x_axis": "Average Product Price (USD)",
+        "y_axis": "Total Number of Orders",
+        "data": [
+            {
+                "name": "Beverages",
+                "data": [
+                    [
+                        2289,
+                        35.365591397849464
+                    ]
+                ]
+            },
+            {
+                "name": "Condiments",
+                "data": [
+                    [
+                        1383,
+                        22.887755102040817
+                    ]
+                ]
+            },
+            {
+                "name": "Confections",
+                "data": [
+                    [
+                        2110,
+                        25.81238095238095
+                    ]
+                ]
+            },
+            {
+                "name": "Dairy Products",
+                "data": [
+                    [
+                        2601,
+                        28.631999999999998
+                    ]
+                ]
+            }
+        ],
+        "filter_added": false
+    },
+    "2": {
         "type": "line",
-        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS OrderMonth, SUM(Products.Price * OrderDetails.Quantity) AS Revenue FROM Orders JOIN OrderDetails ON Orders.OrderID = OrderDetails.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY OrderMonth ORDER BY OrderMonth;",
-        "title": "Monthly Revenue Trend",
+        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS Month, AVG(Products.Price) AS AvgPrice FROM OrderDetails JOIN Orders ON OrderDetails.OrderID = Orders.OrderID JOIN Products ON OrderDetails.ProductID = Products.ProductID GROUP BY Month ORDER BY Month;",
+        "title": "Average Product Price per Month",
         "x_axis_title": "Month",
-        "y_axis_title": "Revenue (USD)",
+        "y_axis_title": "Average Product Price (USD)",
         "x_axis": [
             "2024-09",
             "2024-10",
@@ -16,114 +62,41 @@
             "2025-04"
         ],
         "y_axis": [
-            36933.85,
-            34131.49,
-            34565.6,
-            51528.69,
-            62163.99,
-            58094.23,
-            89027.47,
-            19978.91
+            25.904912280701755,
+            26.73070422535211,
+            29.418070175438594,
+            27.493561643835616,
+            34.766060606060606,
+            30.742666666666665,
+            29.78131868131868,
+            27.20321428571429
         ],
-        "filter_added": true
+        "filter_added": false
     },
-    "2": {
-        "type": "scatter",
-        "query": "SELECT Categories.CategoryName, Products.Price, OrderDetails.Quantity FROM OrderDetails JOIN Products ON OrderDetails.ProductID = Products.ProductID JOIN Categories ON Products.CategoryID = Categories.CategoryID ORDER BY Categories.CategoryName, Products.Price  LIMIT 10;",
-        "title": "Product Price vs Quantity Ordered by Category",
-        "x_axis": "Price (USD)",
-        "y_axis": "Quantity Ordered",
-        "data": [
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        15
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        28
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        12
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        12
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        6
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        10
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        10
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        25
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        10
-                    ]
-                ]
-            },
-            {
-                "name": "Beverages",
-                "data": [
-                    [
-                        4.5,
-                        15
-                    ]
-                ]
-            }
+    "3": {
+        "type": "bar",
+        "query": "SELECT strftime('%Y-%m', Orders.OrderDate) AS Month, COUNT(DISTINCT Orders.OrderID) AS TotalOrders FROM Orders GROUP BY Month ORDER BY Month  LIMIT 10;",
+        "title": "Number of Orders per Month",
+        "y_axis_title": "Total Number of Orders",
+        "x_axis": [
+            "2024-09",
+            "2024-10",
+            "2024-11",
+            "2024-12",
+            "2025-01",
+            "2025-02",
+            "2025-03",
+            "2025-04"
+        ],
+        "y_axis": [
+            21,
+            26,
+            23,
+            26,
+            25,
+            29,
+            35,
+            11
         ],
         "filter_added": false
     }
