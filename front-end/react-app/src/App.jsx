@@ -100,7 +100,7 @@ function App() {
           const isGraphAgent = messageUser === "graph_agent";
           const isFilterAgent = messageUser === "add_filter_agent";
           const isGraphExecutor = messageUser === "graph_executor";
-          const isFilterExecutor = messageUser === "filter_executor";
+          const isFilterExecutor = messageUser === "add_filter_executor";
           
           
           // Only add the message if it's not the echoed user message from User_Proxy
