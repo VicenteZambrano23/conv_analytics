@@ -28,12 +28,13 @@ from utils.clean_graph_data import clean_graph_data
 from tools.add_filter_tool import add_filter_tool
 import json
 from tools.acronym_tool import acronym_tool
+
 clean_graph_data()
 get_sql_tables()
 reset_counter()
 
-json_path  = os.path.join(os.path.dirname(__file__), 'database/graph_data.json')
-
+json_path = os.path.join(os.path.dirname(__file__), "database/graph_data.json")
+prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts/")
 app = Flask(__name__)
 cors = CORS(app)
 
@@ -137,11 +138,11 @@ def create_groupchat(user_proxy):
     executor_query = ConversableAgent(
         name="executor_query",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/executor_query_prompt.txt"
+            os.path.join(prompt_path, "executor_query_prompt.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
         description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/executor_query_desc.txt"
+            os.path.join(prompt_path, "executor_query_desc.txt")
         ),
     )
     executor_query.register_reply(
@@ -155,11 +156,11 @@ def create_groupchat(user_proxy):
     sql_proxy = ConversableAgent(
         name="sql_proxy",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/sql_proxy_prompt.txt"
+            os.path.join(prompt_path, "sql_proxy_prompt.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
         description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/sql_proxy_desc.txt"
+            os.path.join(prompt_path, "executor_query_desc.txt")
         ),
     )
 
@@ -174,12 +175,10 @@ def create_groupchat(user_proxy):
     query_agent = ConversableAgent(
         name="query_agent",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt"
+            os.path.join(prompt_path, "query_agent_prompt.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
-        description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_desc.txt"
-        ),
+        description=read_text_file(os.path.join(prompt_path, "query_agent_desc.txt")),
     )
 
     query_agent.register_reply(
@@ -193,12 +192,10 @@ def create_groupchat(user_proxy):
     graph_agent = ConversableAgent(
         name="graph_agent",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt"
+            os.path.join(prompt_path, "graph_agent_prompt.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
-        description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_desc.txt"
-        ),
+        description=read_text_file(os.path.join(prompt_path, "graph_agent_desc.txt")),
     )
     graph_agent.register_reply(
         [autogen.Agent, None],
@@ -211,11 +208,11 @@ def create_groupchat(user_proxy):
     graph_executor = ConversableAgent(
         name="graph_executor",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_agent.txt"
+            os.path.join(prompt_path, "executor_graph_agent.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
         description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt"
+            os.path.join(prompt_path, "executor_graph_desc.txt")
         ),
     )
     graph_executor.register_reply(
@@ -229,25 +226,27 @@ def create_groupchat(user_proxy):
     add_filter_agent = ConversableAgent(
         name="add_filter_agent",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_agent_prompt.txt"
+            os.path.join(prompt_path, "add_filter_agent_prompt.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
         description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_agent_desc.txt"
+            os.path.join(prompt_path, "add_filter_agent_desc.txt")
         ),
     )
     add_filter_agent.register_reply(
-         [autogen.Agent, None],
+        [autogen.Agent, None],
         reply_func=print_messages,
         config={"callback": None},
     )
     assistants.append(add_filter_agent)
-    
+
     RAG_agent = ConversableAgent(
         name="RAG_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_prompt.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "RAG_agent_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_desc.txt'),
+        description=read_text_file(os.path.join(prompt_path, "RAG_agent_desc.txt")),
     )
 
     RAG_agent.register_reply(
@@ -259,9 +258,13 @@ def create_groupchat(user_proxy):
 
     terminology_agent = ConversableAgent(
         name="terminology_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_prompt.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "terminology_agent_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "terminology_agent_desc.txt")
+        ),
     )
 
     terminology_agent.register_reply(
@@ -271,16 +274,14 @@ def create_groupchat(user_proxy):
     )
     assistants.append(terminology_agent)
 
-
-
     add_filter_executor = ConversableAgent(
         name="add_filter_executor",
         system_message=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_executor_prompt.txt"
+            os.path.join(prompt_path, "add_filter_executor_prompt.txt")
         ),
         llm_config=AZURE_OPENAI_CONFIG,
         description=read_text_file(
-            "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_executor_desc.txt"
+            os.path.join(prompt_path, "add_filter_executor_desc.txt")
         ),
     )
     add_filter_executor.register_reply(
@@ -292,9 +293,11 @@ def create_groupchat(user_proxy):
 
     RAG_executor = ConversableAgent(
         name="RAG_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_agent.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_RAG_agent.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_desc.txt'),
+        description=read_text_file(os.path.join(prompt_path, "executor_RAG_desc.txt")),
     )
 
     RAG_executor.register_reply(
@@ -303,14 +306,17 @@ def create_groupchat(user_proxy):
         config={"callback": None},
     )
 
-
     assistants.append(RAG_executor)
 
     terminology_executor = ConversableAgent(
         name="terminology_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_agent.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_terminology_agent.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "executor_terminology_desc.txt")
+        ),
     )
 
     terminology_executor.register_reply(
@@ -318,7 +324,6 @@ def create_groupchat(user_proxy):
         reply_func=print_messages,
         config={"callback": None},
     )
-
 
     assistants.append(terminology_executor)
 
@@ -328,9 +333,7 @@ def create_groupchat(user_proxy):
         executor=executor_query,
         name="query_tool",
         description=str(
-            read_text_file(
-                "/teamspace/studios/this_studio/conv_analytics/prompts/query_tool_desc.txt"
-            )
+            read_text_file(os.path.join(prompt_path, "query_tool_desc.txt"))
         ),
     )
     register_function(
@@ -339,9 +342,7 @@ def create_groupchat(user_proxy):
         executor=graph_executor,
         name="graph_bar_tool",
         description=str(
-            read_text_file(
-                "/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_tool_desc.txt"
-            )
+            read_text_file(os.path.join(prompt_path, "graph_bar_tool_desc.txt"))
         ),
     )
     register_function(
@@ -350,9 +351,7 @@ def create_groupchat(user_proxy):
         executor=graph_executor,
         name="graph_line_tool",
         description=str(
-            read_text_file(
-                "/teamspace/studios/this_studio/conv_analytics/prompts/graph_line_tool_desc.txt"
-            )
+            read_text_file(os.path.join(prompt_path, "graph_line_tool_desc.txt"))
         ),
     )
     register_function(
@@ -361,9 +360,7 @@ def create_groupchat(user_proxy):
         executor=graph_executor,
         name="graph_pie_tool",
         description=str(
-            read_text_file(
-                "/teamspace/studios/this_studio/conv_analytics/prompts/graph_pie_tool_desc.txt"
-            )
+            read_text_file(os.path.join(prompt_path, "graph_pie_tool_desc.txt"))
         ),
     )
 
@@ -373,9 +370,7 @@ def create_groupchat(user_proxy):
         executor=graph_executor,
         name="graph_scatter_tool",
         description=str(
-            read_text_file(
-                "/teamspace/studios/this_studio/conv_analytics/prompts/graph_scatter_tool_desc.txt"
-            )
+            read_text_file(os.path.join(prompt_path, "graph_scatter_tool_desc.txt"))
         ),
     )
     register_function(
@@ -383,7 +378,9 @@ def create_groupchat(user_proxy):
         caller=graph_agent,
         executor=graph_executor,
         name="graph_bar_line_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_bar_line_tool_desc.txt')),
+        description=str(
+            read_text_file(os.path.join(prompt_path, "graph_bar_line_tool_desc.txt"))
+        ),
     )
 
     register_function(
@@ -392,9 +389,7 @@ def create_groupchat(user_proxy):
         executor=add_filter_executor,
         name="add_filter_tool",
         description=str(
-            read_text_file(
-                "/teamspace/studios/this_studio/conv_analytics/prompts/add_filter_tool_desc.txt"
-            )
+            read_text_file(os.path.join(prompt_path, "add_filter_tool_desc.txt"))
         ),
     )
 
@@ -403,7 +398,9 @@ def create_groupchat(user_proxy):
         caller=RAG_agent,
         executor=RAG_executor,
         name="retrieve_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/retrieve_tool_desc.txt')),
+        description=str(
+            read_text_file(os.path.join(prompt_path, "retrieve_tool_desc.txt"))
+        ),
     )
 
     register_function(
@@ -411,7 +408,9 @@ def create_groupchat(user_proxy):
         caller=terminology_agent,
         executor=terminology_executor,
         name="acronym_tool",
-        description=str(read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/acronym_tool_desc.txt')),
+        description=str(
+            read_text_file(os.path.join(prompt_path, "acronym_tool_desc.txt"))
+        ),
     )
 
     def state_transition(last_speaker, group_chat):
@@ -425,15 +424,15 @@ def create_groupchat(user_proxy):
         elif last_speaker is graph_executor:
             return sql_proxy
 
-        #elif last_speaker is RAG_executor:
-            #return sql_proxy
+        # elif last_speaker is RAG_executor:
+        # return sql_proxy
 
         elif last_speaker is query_agent:
             return executor_query
 
         elif last_speaker is graph_agent:
             return graph_executor
-        
+
         elif last_speaker is add_filter_agent:
             return add_filter_executor
 
@@ -441,7 +440,7 @@ def create_groupchat(user_proxy):
             return sql_proxy
         elif last_speaker is RAG_agent:
             return RAG_executor
-        
+
         elif last_speaker is terminology_agent:
             return terminology_executor
 
@@ -462,7 +461,7 @@ def create_groupchat(user_proxy):
                 query_agent: [user_proxy],
                 graph_agent: [user_proxy],
                 add_filter_agent: [user_proxy],
-                terminology_agent:[user_proxy],
+                terminology_agent: [user_proxy],
             },
             speaker_transitions_type="disallowed",
         )
@@ -518,7 +517,8 @@ def get_messages():
     else:
         return jsonify({"message": None, "chat_status": chat_status}), 200
 
-@app.route('/api/data', methods=['GET'])
+
+@app.route("/api/data", methods=["GET"])
 def get_json_data():
     """
     API endpoint to retrieve the entire content of a JSON file.
@@ -531,18 +531,24 @@ def get_json_data():
         return jsonify({"error": f"JSON file '{json_path}' not found."}), 404
 
     try:
-        with open(json_path, 'r') as f:
+        with open(json_path, "r") as f:
             # Load the JSON content from the file
             data = f.read()
             json_data = json.loads(data)
             return jsonify(json_data), 200
     except json.JSONDecodeError:
         # Return a 500 error if the file content is not valid JSON
-        return jsonify({"error": f"Error decoding JSON from '{json_path}'. File might be malformed."}), 500
+        return (
+            jsonify(
+                {
+                    "error": f"Error decoding JSON from '{json_path}'. File might be malformed."
+                }
+            ),
+            500,
+        )
     except Exception as e:
         # Catch any other unexpected errors
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
-
 
 
 if __name__ == "__main__":

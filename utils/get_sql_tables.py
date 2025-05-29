@@ -1,10 +1,11 @@
 import sqlite3
 from config.config import db_path
+import os
+
 
 def get_sql_tables():
-
     """
-    Retrieves and formats the schema of a SQLite database located at 
+    Retrieves and formats the schema of a SQLite database located at
     '/teamspace/studios/this_studio/conv_analytics/database/chinook.db'.
 
     This function connects to the specified SQLite database, queries the database
@@ -20,31 +21,32 @@ def get_sql_tables():
              Returns an empty string or an error message if an error occurs.
     """
     try:
-        prompt_path_1 = '/teamspace/studios/this_studio/conv_analytics/prompts/query_agent_prompt.txt'
-        prompt_path_2 = '/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'
+        prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts/")
 
+        prompt_path_1 = os.path.join(prompt_path, "query_agent_prompt.txt")
+        prompt_path_2 = os.path.join(prompt_path, "graph_agent_prompt.txt")
 
-        with open(prompt_path_1, 'r') as file:
+        with open(prompt_path_1, "r") as file:
             lines = file.readlines()
 
         if len(lines) >= 21:
-            with open(prompt_path_1, 'w') as file:
+            with open(prompt_path_1, "w") as file:
                 file.writelines(lines[:21])  # Write only the first three lines
             print(f"Lines after the third line deleted from '{prompt_path_1}'.")
         else:
             print(f"File '{prompt_path_1}' has less than 4 lines. No lines deleted.")
-        
-        with open(prompt_path_2, 'r') as file:
+
+        with open(prompt_path_2, "r") as file:
             lines = file.readlines()
 
         if len(lines) >= 98:
-            with open(prompt_path_2, 'w') as file:
+            with open(prompt_path_2, "w") as file:
                 file.writelines(lines[:98])  # Write only the first three lines
             print(f"Lines after the third line deleted from '{prompt_path_2}'.")
         else:
             print(f"File '{prompt_path_2}' has less than 4 lines. No lines deleted.")
-            
-# Connect to the database (or create it if it doesn't exist)
+
+        # Connect to the database (or create it if it doesn't exist)
         connection = sqlite3.connect(db_path)
         cursor = connection.cursor()
         print("Database connection successful!")
@@ -64,12 +66,14 @@ def get_sql_tables():
         formatted_output = ""
         for table_name, columns_and_fk in schema.items():
             formatted_output += f"Table: {table_name}\n"
-            formatted_output = formatted_output + ("-" * (len(f"Table: {table_name}") ) + "\n")
-            foreign_keys = [] #initialize the foreign keys list for this table.
+            formatted_output = formatted_output + (
+                "-" * (len(f"Table: {table_name}")) + "\n"
+            )
+            foreign_keys = []  # initialize the foreign keys list for this table.
             for column in columns_and_fk:
-                if(column[0] == "foreign_keys"):
+                if column[0] == "foreign_keys":
                     foreign_keys = column[1]
-                    continue #skip the foreign key tuple.
+                    continue  # skip the foreign key tuple.
                 cid, name, type_, notnull, dflt_value, pk = column
                 formatted_output += f"  {name} {type_}"
                 if notnull:
@@ -88,14 +92,13 @@ def get_sql_tables():
 
             formatted_output += "\n"
 
-        with open(prompt_path_1, 'a') as file:  # 'a' mode for appending
+        with open(prompt_path_1, "a") as file:  # 'a' mode for appending
             file.write(formatted_output)
-        
-        with open(prompt_path_2, 'a') as file:  # 'a' mode for appending
-            file.write(formatted_output)
-        
 
-        return 
+        with open(prompt_path_2, "a") as file:  # 'a' mode for appending
+            file.write(formatted_output)
+
+        return
     except sqlite3.Error as error:
         print(f"Error occurred: {error}")
 

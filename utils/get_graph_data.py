@@ -2,7 +2,7 @@ import os
 import json
 
 
-path = "/teamspace/studios/this_studio/conv_analytics/database/graph_data.json"
+path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json.pdf")
 
 
 def get_graph_data(key_number):
@@ -19,7 +19,7 @@ def get_graph_data(key_number):
     """
     try:
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, "r") as f:
                 data = json.load(f)
                 key_str = str(key_number)  # Keys in JSON are strings
                 if key_str in data:
@@ -34,11 +34,10 @@ def get_graph_data(key_number):
         print(f"File not found at: {path}")
         return None
     except json.JSONDecodeError:
-        print(f"Error decoding JSON from file: {path}. The file might be empty or corrupted.")
+        print(
+            f"Error decoding JSON from file: {path}. The file might be empty or corrupted."
+        )
         return None
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
-
-
-

@@ -34,7 +34,7 @@ def graph_pie_tool(input: Annotated[GraphPieInput, "Input to the graph pie tool.
     num_element = [item[1] for item in query_result]
 
     update_counter()
-    
+
     graph_data = {
         str(counter + 1): {
             "type": "pie",

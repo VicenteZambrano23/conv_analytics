@@ -12,4 +12,6 @@ AZURE_OPENAI_CONFIG = {
     ],
 }
 
-db_path = '/teamspace/studios/this_studio/conv_analytics/database/mydatabase.db'
+db_path = docs_path = os.path.join(
+    os.path.dirname(__file__), "..", "database/mydatabase.db"
+)

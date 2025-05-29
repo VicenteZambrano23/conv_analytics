@@ -1,8 +1,7 @@
 import json
 import os
 
-path = "/teamspace/studios/this_studio/conv_analytics/database/graph_data.json"
-
+path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json.pdf")
 
 def update_graph_data(data):
 

@@ -37,7 +37,7 @@ def query_tool(input: Annotated[QueryInput, "Input to the query tool."]):
 
         # Execute a simple query
         cursor.execute(query)
-        
+
         query_result = cursor.fetchall()
         print(query_result)
         query_summary = summary_query(str(query_result))

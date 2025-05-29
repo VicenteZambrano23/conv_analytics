@@ -1,6 +1,7 @@
 import os
 
-path = "/teamspace/studios/this_studio/conv_analytics/database/graph_data.json"
+path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json.pdf")
+
 
 def clean_graph_data():
     """
@@ -11,7 +12,7 @@ def clean_graph_data():
         file_path (str): The full path to the JSON file.
     """
     try:
-        with open(path, 'w') as f:
+        with open(path, "w") as f:
             f.truncate(0)  # Truncate the file to 0 bytes, effectively clearing it
         print(f"Successfully cleared the content of: {path}")
     except Exception as e:

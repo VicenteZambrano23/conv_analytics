@@ -7,4 +7,3 @@ graph_clean()
 reset_counter()
 get_sql_tables()
 create_group_chat()
-
