@@ -36,6 +36,10 @@ export function Chat({ messages, messagesEndRef, eventKey}) {
                         <img className={styles.Logo} src="/RAG_agent.png" alt="RAG Agent" />
                       ) : agent === 'RAG_executor' ? (
                         <img className={styles.Logo} src="/RAG_executor.png" alt="RAG Executor" />
+                      ) : agent === 'terminology_agent' ? (
+                        <img className={styles.Logo} src="/terminology_agent.png" alt="Terminology Agent" />
+                      ) : agent === 'terminology_executor' ? (
+                        <img className={styles.Logo} src="/terminology_executor.png" alt="Terminology Executor" />
                       ) : (
                         <img className={styles.Logo} src="/robot-assistant.png" alt="Proxy" />
                       )}
@@ -60,7 +64,11 @@ export function Chat({ messages, messagesEndRef, eventKey}) {
                         <div className={styles.AgentTitle} > RAG Agent</div>
                       ) : agent === 'RAG_executor' ? (
                         <div className={styles.AgentTitle} > RAG Executor Agent</div>
-                      ) :  (
+                      ) : agent === 'terminology_agent' ? (
+                        <div className={styles.AgentTitle} > Terminology Agent</div>
+                      ) : agent === 'terminology_executor' ? (
+                        <div className={styles.AgentTitle} > Terminology Executor Agent</div>
+                      ) : (
                         <div className={styles.AgentTitle}  > Proxy</div>
                       )}
                     </div>

@@ -54,6 +54,14 @@
                 &[agent="RAG_executor"] {
                     background: #E4F7E7;
                     /* A light, subtle green */
+                }                
+                &[agent="terminology_agent"] {
+                    background: #af9711;
+                    /* A light, subtle green */
+                }                
+                &[agent="terminology_executor"] {
+                    background: #E4F7E7;
+                    /* A light, subtle green */
                 }
             }
         }
