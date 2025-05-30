@@ -4,12 +4,11 @@ from typing import Annotated, Literal
 from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
-from utils.update_graph import update_graph
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from autogen.agentchat.contrib.retrieve_user_proxy_agent import RetrieveUserProxyAgent
 import os
 
-docs_path = os.path.join(
+docs = os.path.join(
     os.path.dirname(__file__), "..", "database/RAG_files/Acronyms.pdf"
 )
 recur_spliter = RecursiveCharacterTextSplitter(

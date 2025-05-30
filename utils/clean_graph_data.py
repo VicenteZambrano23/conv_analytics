@@ -1,6 +1,6 @@
 import os
 
-path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json.pdf")
+path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json")
 
 
 def clean_graph_data():

@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./front-end # Updated context based on your file structure
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    container_name: my-frontend
+    restart: always
+
+  backend:
+    build:
+      context: ./backend # Context remains the same
+      dockerfile: Dockerfile
+    ports:
+      - "5009:5009" # Example port for your Python app, adjust if different
+    container_name: my-backend
+    restart: always

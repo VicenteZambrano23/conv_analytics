@@ -1,7 +1,7 @@
 import json
 import os
 
-path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json.pdf")
+path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json")
 
 def update_graph_data(data):
 

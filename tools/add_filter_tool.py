@@ -4,7 +4,6 @@ from typing import Annotated, Literal
 from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
-from utils.update_graph import update_graph
 from utils.get_graph_data import get_graph_data
 from utils.update_json_fields import update_json_fields
 

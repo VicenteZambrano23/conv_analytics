@@ -1,7 +1,7 @@
 import json
 import os
 
-json_path = os.path.join(os.path.dirname(__file__), '..', 'database/graph_data.json')
+json_path = os.path.join(os.path.dirname(__file__), "..", "database/graph_data.json")
 
 def update_json_fields( element_key, field_name, new_value, save_changes=True):
     """

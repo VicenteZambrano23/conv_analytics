@@ -14,7 +14,6 @@ from config.config import AZURE_OPENAI_CONFIG
 from autogen import register_function
 from tools.query_tool import query_tool
 from tools.graph_bar_tool import graph_bar_tool
-from utils.clean_graph import graph_clean
 from utils.get_sql_tables import get_sql_tables
 from tools.graph_line_tool import graph_line_tool
 from tools.graph_pie_tool import graph_pie_tool
@@ -22,8 +21,6 @@ from tools.graph_scatter_tool import graph_scatter_tool
 from tools.graph_bar_line_tool import graph_bar_line_tool
 from tools.retrieve_tool import retrieve_tool
 from utils.update_counter import reset_counter
-from utils.update_graph import update_graph
-from utils.clean_graph import graph_clean
 from utils.clean_graph_data import clean_graph_data
 from tools.add_filter_tool import add_filter_tool
 import json
@@ -34,7 +31,7 @@ get_sql_tables()
 reset_counter()
 
 json_path = os.path.join(os.path.dirname(__file__), "database/graph_data.json")
-prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts/")
+prompt_path = os.path.join(os.path.dirname(__file__),  "prompts/")
 app = Flask(__name__)
 cors = CORS(app)
 

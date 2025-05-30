@@ -1,38 +1,39 @@
 {
-  "name": "react-app",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "proxy": "http://127.0.0.1:5000",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/material": "^7.1.0",
-    "@mui/x-date-pickers": "^8.3.0",
-    "@mui/x-date-pickers-pro": "^8.3.0",
-    "apexcharts": "^4.5.0",
-    "bootstrap": "^5.3.5",
-    "react": "^18.2.0",
-    "react-apexcharts": "^1.7.0",
-    "react-bootstrap": "^2.10.9",
-    "react-datepicker": "^8.3.0",
-    "react-dom": "^18.2.0",
-    "react-markdown": "^10.1.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@vitejs/plugin-react": "^4.4.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.6",
-    "vite": "^5.4.19"
-  }
+    "name": "react-app",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "proxy": "http://127.0.0.1:5000",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview",
+        "exposed-port": "vite --host"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@mui/material": "^7.1.0",
+        "@mui/x-date-pickers": "^8.3.0",
+        "@mui/x-date-pickers-pro": "^8.3.0",
+        "apexcharts": "^4.5.0",
+        "bootstrap": "^5.3.5",
+        "react": "^18.2.0",
+        "react-apexcharts": "^1.7.0",
+        "react-bootstrap": "^2.10.9",
+        "react-datepicker": "^8.3.0",
+        "react-dom": "^18.2.0",
+        "react-markdown": "^10.1.0"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.66",
+        "@types/react-dom": "^18.2.22",
+        "@vitejs/plugin-react": "^4.4.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-react": "^7.34.1",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.6",
+        "vite": "^5.4.19"
+    }
 }

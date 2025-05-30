@@ -1,4 +1,8 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 AZURE_OPENAI_CONFIG = {
     "config_list": [
@@ -12,6 +16,6 @@ AZURE_OPENAI_CONFIG = {
     ],
 }
 
-db_path = docs_path = os.path.join(
+db_path  = os.path.join(
     os.path.dirname(__file__), "..", "database/mydatabase.db"
 )
