@@ -25,7 +25,7 @@ function App() {
   const fetchGraphData = async () => {
     try {
       const response = await fetch(
-        "https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/data"
+        "https://5007-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/data"
       );
 
       if (!response.ok) {
@@ -57,12 +57,12 @@ function App() {
     if (chatStatus === "Chat ongoing" || chatStatus === "inputting") {
       // Send message request
       apiEndpoint =
-        "https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/send_message";
+        "https://5007-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/send_message";
       requestBody = { message: content };
     } else {
       // Start chat request
       apiEndpoint =
-        "https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/start_chat";
+        "https://5007-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/start_chat";
       requestBody = { ...initialChatRequest, message: content };
     }
 
@@ -92,7 +92,7 @@ function App() {
   const fetchMessages = async () => {
     try {
       const response = await fetch(
-        "https://5009-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/get_message"
+        "https://5007-01jr7k2qz227qhygnkh9vjydzp.cloudspaces.litng.ai/api/get_message"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch messages");

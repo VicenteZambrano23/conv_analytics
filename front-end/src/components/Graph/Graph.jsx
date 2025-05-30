@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./Graph.module.css";
 import Carousel from "react-bootstrap/Carousel";
-import Arrow from "/teamspace/studios/this_studio/conv_analytics/front-end/react-app/public/arrow.svg";
 import BarChart from "./BarChart";
 import LineChart from "./LineChart";
 import BarLineChart from "./BarLineChart";
@@ -94,8 +93,8 @@ export function Graph({ isGraph, graphData }) {
       <Carousel
         indicators={false}
         interval={null}
-        prevIcon={<img className={styles.customPrevIcon} src={Arrow} alt="" />}
-        nextIcon={<img className={styles.customNextIcon} src={Arrow} alt="" />}
+        prevIcon={<img className={styles.customPrevIcon} src="/teamspace/studios/this_studio/conv_analytics/front-end/react-app/public/arrow.svg" alt="" />}
+        nextIcon={<img className={styles.customNextIcon} src="/teamspace/studios/this_studio/conv_analytics/front-end/react-app/public/arrow.svg" alt="" />}
       >
         {dataArray.length > 0 ? (
          [...dataArray].reverse().map((item, index) => (
