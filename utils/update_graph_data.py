@@ -1,7 +1,7 @@
 import json
 import os
 
-path = "/teamspace/studios/this_studio/conv_analytics/database/graph_data.json"
+path = os.path.join(os.path.dirname(__file__), "..", "database", "graph_data.json")
 
 
 def update_graph_data(data):
@@ -24,4 +24,3 @@ def update_graph_data(data):
         return f"JSON data appended to: {path}"
     except Exception as e:
         return f"Error writing JSON to file: {e}"
-

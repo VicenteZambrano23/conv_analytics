@@ -5,10 +5,10 @@ import os
 import autogen
 
 
-prompt_path = os.path.join(os.path.dirname(__file__), '..', 'prompts')
+prompt_path = os.path.join(os.path.dirname(__file__), "..", "prompts/")
+
 
 def create_agents():
-    
     """
     Creates and initializes multiple ConversableAgent instances for a SQL querying workflow.
 
@@ -30,96 +30,137 @@ def create_agents():
                (get_sql_tables_agent, executor_database_schema, user_proxy, sql_proxy, query_agent, executor_query).
     """
 
-
     user_proxy = ConversableAgent(
         name="User_Proxy",
         code_execution_config=False,
         is_termination_msg=lambda msg: "TERMINATE" in msg["content"],
         human_input_mode="ALWAYS",
     )
-    
 
     executor_query = ConversableAgent(
         name="executor_query",
-        system_message=read_text_file(os.path.join(prompt_path, 'executor_query_prompt.txt')),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_query_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file(os.path.join(prompt_path, 'executor_query_desc.txt')),
+        description=read_text_file(
+            os.path.join(prompt_path, "executor_query_desc.txt")
+        ),
     )
-
-    
 
     sql_proxy = ConversableAgent(
         name="sql_proxy",
-        system_message=read_text_file(os.path.join(prompt_path, 'sql_proxy_prompt.txt')),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "sql_proxy_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file(os.path.join(prompt_path, 'sql_proxy_desc.txt')),
+        description=read_text_file(os.path.join(prompt_path, "sql_proxy_desc.txt")),
     )
-
-    
-
 
     query_agent = ConversableAgent(
         name="query_agent",
-        system_message=read_text_file(os.path.join(prompt_path, 'query_agent_prompt.txt')),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "query_agent_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file(os.path.join(prompt_path, 'query_agent_desc.txt')),
+        description=read_text_file(os.path.join(prompt_path, "query_agent_desc.txt")),
     )
 
     graph_agent = ConversableAgent(
         name="graph_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_prompt.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "graph_agent_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/graph_agent_desc.txt'),
+        description=read_text_file(os.path.join(prompt_path, "graph_agent_desc.txt")),
     )
     graph_executor = ConversableAgent(
         name="graph_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_agent.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_graph_agent.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_graph_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "executor_graph_desc.txt")
+        ),
     )
 
-    
     RAG_executor = ConversableAgent(
         name="RAG_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_agent.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_RAG_agent.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_RAG_desc.txt'),
+        description=read_text_file(os.path.join(prompt_path, "executor_RAG_desc.txt")),
     )
 
     RAG_agent = ConversableAgent(
         name="RAG_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_prompt.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "RAG_agent_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/RAG_agent_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "RAG_agent_desc.txt")
+        ),
     )
 
     internet_agent = ConversableAgent(
         name="internet_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_agent_prompt.txt'),
+        system_message=read_text_file(
+             os.path.join(prompt_path, "internet_agent_prompt.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/internet_agent_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "internet_agent_desc.txt")
+        ),
     )
 
     internet_executor = ConversableAgent(
         name="internet_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_internet_agent.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_internet_agent.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_internet_desc.txt'),
+        description=read_text_file(
+             os.path.join(prompt_path, "executor_internet_desc.txt")
+      
+        ),
     )
 
     terminology_executor = ConversableAgent(
         name="terminology_executor",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_agent.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "executor_terminology_agent.txt")
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/executor_terminology_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "executor_terminology_desc.txt")
+        ),
     )
 
     terminology_agent = ConversableAgent(
         name="terminology_agent",
-        system_message=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_prompt.txt'),
+        system_message=read_text_file(
+            os.path.join(prompt_path, "terminology_agent_prompt.txt")
+           
+        ),
         llm_config=AZURE_OPENAI_CONFIG,
-         description=read_text_file('/teamspace/studios/this_studio/conv_analytics/prompts/terminology_agent_desc.txt'),
+        description=read_text_file(
+            os.path.join(prompt_path, "terminology_agent_desc.txt")
+        ),
     )
-    return user_proxy,sql_proxy,query_agent,executor_query, graph_agent, graph_executor, RAG_agent, RAG_executor,terminology_agent, terminology_executor ,internet_agent, internet_executor
-
-  
+    return (
+        user_proxy,
+        sql_proxy,
+        query_agent,
+        executor_query,
+        graph_agent,
+        graph_executor,
+        RAG_agent,
+        RAG_executor,
+        terminology_agent,
+        terminology_executor,
+        internet_agent,
+        internet_executor,
+    )

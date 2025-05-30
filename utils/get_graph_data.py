@@ -2,7 +2,7 @@ import os
 import json
 
 
-path = "/teamspace/studios/this_studio/conv_analytics/database/graph_data.json"
+path = os.path.join(os.path.dirname(__file__), "..", "/database/graph_data.json")
 
 
 def get_graph_data(key_number):

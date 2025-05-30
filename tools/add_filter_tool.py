@@ -4,7 +4,6 @@ from typing import Annotated, Literal
 from utils.summary_func import summary_query
 from config.config import db_path
 from utils.update_counter import update_counter, get_counter
-from utils.update_graph import update_graph
 from utils.get_graph_data import get_graph_data
 from utils.update_json_fields import update_json_fields
 
@@ -27,13 +26,12 @@ def add_filter_tool(
             raise ValueError("Input 'data' cannot be None.")
 
         chart_type = data.get("type")  # Using .get() for safer access
-        title = data.get("title")
 
         if chart_type is None:
             raise KeyError("Missing 'type' key in data.")
 
         # Update JSON field - this assumes update_json_fields handles potential errors or expects counter as int
-        update_json_fields(str(counter), "filter_added", True)
+        update_json_fields(counter, "filter_added", True)
 
         if chart_type == "bar":
             y_axis_title = data.get("y_axis_title")
